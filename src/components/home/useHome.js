@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import { useState } from "react";
 import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
 import FactCheckSharpIcon from "@mui/icons-material/FactCheckSharp";
 import TodaySharpIcon from "@mui/icons-material/TodaySharp";
@@ -23,6 +23,7 @@ const useHome = () => {
   ]);
   return {
     items,
+    setItems,
   };
 };
 
