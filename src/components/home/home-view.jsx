@@ -1,20 +1,19 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import {Box, Grid2, Typography} from "@mui/material";
+import { Box, Grid2, Typography } from "@mui/material";
 import useHome from "./useHome";
 import gymBg from "../../images/dumbellsBg.jpg";
 import dumbells from "../../images/dumbells.avif";
 
 const Home = () => {
   const viewModel = useHome();
-  const {items} = viewModel;
+  const { items } = viewModel;
   const itemsBox = (props) => {
-    const {title, url, icon: Icon} = props;
+    const { title, url, icon: Icon } = props;
+    console.log(url);
+
     return (
       <Box
-        border={1}
         sx={{
-          height: "25vh",
+          height: { xs: "20vh", md: "25vh" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -22,12 +21,12 @@ const Home = () => {
           gap: 2,
           borderRadius: 5,
           //   bgcolor: "black",
-            opacity: 0.8,
+          opacity: 0.8,
           backgroundImage: `url(${dumbells})`,
         }}
       >
-        <Box>{<Icon sx={{color: "#64DD17"}} fontSize="large" />}</Box>
-        <Typography fontWeight="bold" sx={{color: "white"}}>
+        <Box>{<Icon sx={{ color: "#64DD17" }} fontSize="large" />}</Box>
+        <Typography fontWeight="bold" sx={{ color: "white" }}>
           {title}
         </Typography>
       </Box>
@@ -39,7 +38,8 @@ const Home = () => {
       height="90vh"
       justifyContent="center"
       alignItems="center"
-      gap={2}
+      columnGap={2}
+      rowGap={1}
       sx={{
         backgroundImage: `url(${gymBg})`,
         backgroundSize: "cover", // Ensures the image covers the whole area
@@ -47,7 +47,7 @@ const Home = () => {
       }}
     >
       {items.map((items, i) => (
-        <Grid2 key={i + 1} size={{md: 2}}>
+        <Grid2 key={i + 1} size={{ xs: 8, md: 2 }}>
           {itemsBox(items)}
         </Grid2>
       ))}
