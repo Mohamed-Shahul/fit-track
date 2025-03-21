@@ -2,8 +2,10 @@ import { useState } from "react";
 import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
 import FactCheckSharpIcon from "@mui/icons-material/FactCheckSharp";
 import TodaySharpIcon from "@mui/icons-material/TodaySharp";
+import { useNavigate } from "react-router-dom";
 
 const useHome = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([
     {
       title: "Choose workout plan",
@@ -24,6 +26,7 @@ const useHome = () => {
   return {
     items,
     setItems,
+    navigate,
   };
 };
 

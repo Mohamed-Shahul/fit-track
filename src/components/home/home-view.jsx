@@ -5,11 +5,9 @@ import dumbells from "../../images/dumbells.avif";
 
 const Home = () => {
   const viewModel = useHome();
-  const { items } = viewModel;
+  const { items, navigate } = viewModel;
   const itemsBox = (props) => {
     const { title, url, icon: Icon } = props;
-    console.log(url);
-
     return (
       <Box
         sx={{
@@ -23,7 +21,9 @@ const Home = () => {
           //   bgcolor: "black",
           opacity: 0.8,
           backgroundImage: `url(${dumbells})`,
+          cursor: "pointer",
         }}
+        onClick={() => navigate(url)}
       >
         <Box>{<Icon sx={{ color: "#64DD17" }} fontSize="large" />}</Box>
         <Typography fontWeight="bold" sx={{ color: "white" }}>
