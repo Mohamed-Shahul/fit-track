@@ -1,14 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const useCreateWorkout = () => {
   const [weekHeaders, setWeekHeaders] = useState([
-    {day: "Sunday", workouts: [{title: "chest"}]},
-    {day: "Monday"},
-    {day: "Tuesday"},
-    {day: "Wednesday"},
-    {day: "Thursday"},
-    {day: "Friday"},
-    {day: "Saturday"},
+    { day: "Sunday", workouts: [{ title: "chest" }] },
+    { day: "Monday" },
+    { day: "Tuesday" },
+    { day: "Wednesday" },
+    { day: "Thursday" },
+    { day: "Friday" },
+    { day: "Saturday" },
   ]);
   const days = [
     "Monday",
@@ -20,15 +20,15 @@ const useCreateWorkout = () => {
     "Saturday",
   ];
   const [workouts, setWorkouts] = useState([
-    {title: "push"},
-    {title: "pull"},
-    {title: "leg"},
-    {title: "push"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "leg"},
+    { title: "push" },
+    { title: "pull" },
+    { title: "leg" },
+    { title: "push" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "leg" },
   ]);
 
   const structure = {
@@ -53,15 +53,29 @@ const useCreateWorkout = () => {
       },
       dumbelfly: {},
     },
-    Tuesday: {pullups: {}, dumbellCurl: {}},
-    Wednesday: {squad: {}, legpress: {}},
+    Tuesday: { pullups: {}, dumbellCurl: {} },
+    Wednesday: { squad: {}, legpress: {} },
     Thursday: {},
     Friday: {},
     Saturday: {},
     Sunday: {},
   };
 
-  return {weekHeaders, workouts, structure,days};
+  // MARK: Workout list
+  const defaultWorkoutRow = { title: "" };
+  const [workoutList, setWorkoutList] = useState([{ title: "" }]);
+  const handleAddWorkout = () => {
+    setWorkoutList((prev) => [...prev, defaultWorkoutRow]);
+  };
+
+  return {
+    weekHeaders,
+    workouts,
+    structure,
+    days,
+    workoutList,
+    handleAddWorkout,
+  };
 };
 
 export default useCreateWorkout;
