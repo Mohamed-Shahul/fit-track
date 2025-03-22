@@ -20,7 +20,37 @@ const useCreateWorkout = () => {
     { title: "rest" },
   ]);
 
-  return { weekHeaders ,workouts};
+  const structure = {
+    Monday: {
+      pushups: {
+        otherDetails: {
+          title: "",
+          notes: "",
+        },
+        reps: {
+          set1reps: 1,
+          set2reps: 1,
+          set3reps: 1,
+          set4reps: 1,
+        },
+        weights: {
+          set1weights: 10,
+          set2weights: 10,
+          set3weights: 10,
+          set4weights: 10,
+        },
+      },
+      dumbelfly: {},
+    },
+    Tuesday: { pullups: {}, dumbellCurl: {} },
+    Wednesday: { squad: {}, legpress: {} },
+    Thursday: {},
+    Friday: {},
+    Saturday: {},
+    Sunday: {},
+  };
+
+  return { weekHeaders, workouts, structure };
 };
 
 export default useCreateWorkout;
