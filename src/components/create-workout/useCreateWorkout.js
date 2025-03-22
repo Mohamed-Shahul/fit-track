@@ -10,11 +10,23 @@ const useCreateWorkout = () => {
     {day: "Friday"},
     {day: "Saturday"},
   ]);
+  const days = [
+    "Monday",
+    "Sunday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   const [workouts, setWorkouts] = useState([
     {title: "push"},
     {title: "pull"},
     {title: "leg"},
     {title: "push"},
+    {title: "pull"},
+    {title: "pull"},
+    {title: "pull"},
     {title: "pull"},
     {title: "leg"},
   ]);
@@ -49,7 +61,7 @@ const useCreateWorkout = () => {
     Sunday: {},
   };
 
-  return {weekHeaders, workouts, structure};
+  return {weekHeaders, workouts, structure,days};
 };
 
 export default useCreateWorkout;
