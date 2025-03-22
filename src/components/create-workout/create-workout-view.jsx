@@ -1,12 +1,12 @@
-import { Box, Button, Grid2, TextField } from "@mui/material";
+import {Box, Button, Grid2, TextField} from "@mui/material";
 import React from "react";
 import useCreateWorkout from "./useCreateWorkout";
 
 const CreateWorkoutPlan = () => {
   const viewModel = useCreateWorkout();
-  const { weekHeaders, workouts, structure } = viewModel;
+  const {weekHeaders, workouts, structure} = viewModel;
   const skewXelement = (props) => {
-    const { day, title } = props;
+    const {day, title} = props;
     return (
       <Box
         sx={{
@@ -38,63 +38,156 @@ const CreateWorkoutPlan = () => {
     console.log("==day", selectedWorkout, weightsObj);
 
     return (
-      <Box>
-        <Box sx={{ display: "flex" }}>
-          <Box>Sets</Box>
-          {Array(4)
-            .fill("")
-            ?.map((key, i) => (
-              <Box>{i + 1}</Box>
+      <Box
+        sx={{
+          background: "#4C4B4B",
+          color: "white",
+          borderRadius: 2,
+          padding: "30px 50px",
+        }}
+      >
+        <Box sx={{border: 1, borderColor: "white", borderRadius: 2}}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              bgcolor: "#00C853",
+              width: "100%",
+              borderTopRightRadius: 5,
+              borderTopLeftRadius: 5,
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                textAlign: "center",
+                p:2
+              }}
+            >
+              Sets
+            </Box>
+            {Array(4)
+              .fill("")
+              ?.map((key, i, arr) => (
+                <Box
+                  sx={{
+                    width: "100%",
+                    borderLeft: 1,
+                    textAlign: "center",
+                p:2
+
+                  }}
+                >
+                  {i + 1}
+                </Box>
+              ))}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              bgcolor: "#4C4B4B",
+              width: "100%",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                borderBottom: 1,
+                textAlign: "center",
+                p:2
+
+              }}
+            >
+              Reps
+            </Box>
+            {repsKeys?.map((key, i) => (
+              <Box
+                sx={{
+                  width: "100%",
+                  borderLeft: 1,
+                  borderBottom: 1,
+                  textAlign: "center",
+                p:2
+
+                }}
+              >
+                {repsObj?.[key]}
+              </Box>
             ))}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              bgcolor: "#4C4B4B",
+              width: "100%",
+              borderBottomRightRadius: 5,
+              borderBottomLeftRadius: 5,
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                textAlign: "center",
+                p:2
+
+              }}
+            >
+              Weights
+            </Box>
+            {weightsKeys?.map((key, i) => (
+              <Box
+                sx={{
+                  width: "100%",
+                  borderLeft: 1,
+                  textAlign: "center",
+                p:2
+
+                }}
+              >
+                {weightsObj?.[key]}
+              </Box>
+            ))}
+          </Box>
         </Box>
-        <Box sx={{ display: "flex" }}>
-          <Box>Reps</Box>
-          {repsKeys?.map((key, i) => (
-            <Box>{repsObj?.[key]}</Box>
-          ))}
-        </Box>
-        <Box sx={{ display: "flex" }}>
-          <Box>Weights</Box>
-          {weightsKeys?.map((key, i) => (
-            <Box>{weightsObj?.[key]}</Box>
-          ))}
-        </Box>
-        <Box>
-            Notes
-        </Box>
+
+        <Box>Notes</Box>
       </Box>
     );
   };
   return (
     <Grid2 container>
-      <Grid2 size={{ xs: 12 }} sx={{ width: "100%", display: "flex", p: 2 }}>
-        <Box sx={{ width: "50%", textAlign: "left" }}>
+      <Grid2 size={{xs: 12}} sx={{width: "100%", display: "flex", p: 2}}>
+        <Box sx={{width: "50%", textAlign: "left"}}>
           <TextField
             required
             type="text"
             placeholder="Split name..."
-            sx={{ bgcolor: "silver" }}
+            sx={{bgcolor: "silver"}}
           />
         </Box>
-        <Box sx={{ width: "50%", textAlign: "right" }}>
+        <Box sx={{width: "50%", textAlign: "right"}}>
           <Button variant="contained">Save</Button>
         </Box>
       </Grid2>
       <Grid2
-        size={{ xs: 12 }}
-        sx={{ width: "100%", display: "flex", justifyContent: "center", p: 2 }}
+        size={{xs: 12}}
+        sx={{width: "100%", display: "flex", justifyContent: "center", p: 2}}
       >
         {weekHeaders.map((row) => skewXelement(row))}
       </Grid2>
       <Grid2
-        size={{ xs: 12 }}
-        sx={{ width: "100%", display: "flex", justifyContent: "center", p: 1 }}
+        size={{xs: 12}}
+        sx={{width: "100%", display: "flex", justifyContent: "center", p: 1}}
       >
         {workouts.map((row) => skewXelement(row))}
       </Grid2>
       <Grid2
-        size={{ xs: 12 }}
-        sx={{ width: "100%", display: "flex", justifyContent: "center", p: 1 }}
+        size={{xs: 12}}
+        sx={{
+          padding: "5px 50px",
+        }}
       >
         {tableView(structure)}
       </Grid2>
