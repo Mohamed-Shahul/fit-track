@@ -23,6 +23,7 @@ const CreateWorkoutPlan = () => {
     workoutList,
     handleAddWorkout,
     handleRemoveWorkout,
+    navigate,
   } = viewModel;
 
   const tableView = (props) => {
@@ -143,13 +144,13 @@ const CreateWorkoutPlan = () => {
             <Typography
               children="Create Workout plan"
               sx={{
-                fontSize: { md: 24 },
+                fontSize: { xs: 15, md: 24 },
                 color: "white",
                 fontFamily: "Poppins, sans-serif",
                 fontWeight: 600,
               }}
             />
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
               <Button
                 variant="outlined"
                 sx={{
@@ -157,6 +158,7 @@ const CreateWorkoutPlan = () => {
                   borderColor: "#1565c0",
                   textTransform: "none",
                 }}
+                onClick={() => navigate("/")}
               >
                 Cancel
               </Button>

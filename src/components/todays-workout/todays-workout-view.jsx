@@ -7,6 +7,7 @@ import {
   InputAdornment,
   TextField,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import useCustomHook from "../custom-hook/useCustomHook";
@@ -15,11 +16,13 @@ import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import createBgImg from "../../images/createBg.png";
 import gymBg from "../../images/dumbellsBg.jpg";
 import useTodaysWokout from "./useTodayWorkout";
+import AppBarView from "../app-bar/app-bar-view";
 
 const TodaysWorkoutPlan = () => {
-  const { commonTextFieldStyles } = useCustomHook();
+  const { commonTextFieldStyles, cloudBgImg, entryTextFieldsStyles } =
+    useCustomHook();
   const viewModel = useTodaysWokout();
-  const { weekHeaders, workouts, structure, days } = viewModel;
+  const { weekHeaders, workouts, structure, days, navigate } = viewModel;
 
   const tableView = (props) => {
     const selectedDay = props?.Monday;
@@ -197,103 +200,133 @@ const TodaysWorkoutPlan = () => {
     <Box
       sx={{
         height: "100vh",
-        // backgroundImage: `url(${gymBg})`,
-        // backgroundSize: "cover", // Ensures the image covers the whole area
-        // backgroundPosition: "center", // Centers the image}}
+        ...cloudBgImg,
       }}
     >
       <Grid2 container>
         <Grid2
           size={{ xs: 12 }}
+          height={{ xs: "5%", md: "10%" }}
+          padding={{ xs: 0.5, md: 1 }}
           sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            padding: "10px 20px 10px 0px",
+            borderBottom: 1,
+            borderBottomColor: "gray",
+            position: "sticky",
+            top: 0,
+            ...cloudBgImg,
           }}
         >
+          <AppBarView />
+        </Grid2>
+        <Grid2 size={{ xs: 12 }}>
           <Box
             sx={{
-              width: "100%",
-              textAlign: "right",
+              borderColor: "white",
+              maxWidth: "100%",
               display: "flex",
-              justifyContent: "right",
+              alignItems: "center",
+              justifyContent: "space-between",
               gap: 1,
+              padding: { xs: "10px 20px", md: "10px 55px" },
             }}
           >
-            <Button
-              color="error"
-              variant="outlined"
-              sx={{ borderRadius: 2, textTransform: "none" }}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
+            <Typography
+              children="Todays plan"
               sx={{
-                bgcolor: "#00C853",
-                borderRadius: 2,
-                textTransform: "none",
+                fontSize: { xs: 15, md: 24 },
+                color: "white",
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: 600,
               }}
-              startIcon={<SaveRoundedIcon />}
-            >
-              Save
-            </Button>
+            />
+            <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRadius: 2,
+                  borderColor: "#1565c0",
+                  textTransform: "none",
+                }}
+                onClick={() => navigate("/")}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#1565c0",
+                  borderRadius: 2,
+                  textTransform: "none",
+                }}
+                startIcon={<SaveRoundedIcon />}
+              >
+                Update
+              </Button>
+            </Box>
           </Box>
         </Grid2>
 
         <Grid2 size={{ xs: 12 }}>
           <Box
             sx={{
+              maxWidth: "100%",
               display: "flex",
+              // flexDirection: { xs: "column", md: "row" },
               gap: 1,
               alignItems: "center",
               padding: { xs: "10px 20px", md: "10px 50px" },
             }}
           >
-            <TextField
-              required
-              variant="outlined"
-              type="text"
-              label="Split Name"
-              sx={{
-                width: "40%",
-                bgcolor: "#D9D9D9",
-                borderRadius: 2,
-                "& .MuiOutlinedInput-root": {
-                  borderRadius: 2,
-                },
-                "& .MuiInputBase-input::placeholder": {
-                  color: "Black",
-                  fontWeight: "bold",
-                },
-              }}
-              size="small"
-              InputLabelProps={{ shrink: true }}
-            />
-
             <Autocomplete
               disablePortal
               options={days}
               sx={{
-                width: "40%",
+                width: { xs: "60%", md: "40%" },
+                color: "white",
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
               }}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Select a Day"
+                  variant="outlined"
+                  placeholder="Select a split"
                   size="small"
                   required
+                  sx={{ ...entryTextFieldsStyles }}
                 />
               )}
               disableClearable
             />
-            <Button
-              variant="contained"
-              sx={{ width: "20%", textTransform: "none" }}
-            >
-              Add Workout
-            </Button>
+            <Autocomplete
+              disablePortal
+              options={days}
+              sx={{
+                width: { xs: "60%", md: "40%" },
+                color: "white",
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a day"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              disableClearable
+            />
           </Box>
         </Grid2>
 

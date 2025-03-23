@@ -1,14 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useTodaysWokout = () => {
+  const navigate = useNavigate();
   const [weekHeaders, setWeekHeaders] = useState([
-    {day: "Sunday", workouts: [{title: "chest"}]},
-    {day: "Monday"},
-    {day: "Tuesday"},
-    {day: "Wednesday"},
-    {day: "Thursday"},
-    {day: "Friday"},
-    {day: "Saturday"},
+    { day: "Sunday", workouts: [{ title: "chest" }] },
+    { day: "Monday" },
+    { day: "Tuesday" },
+    { day: "Wednesday" },
+    { day: "Thursday" },
+    { day: "Friday" },
+    { day: "Saturday" },
   ]);
   const days = [
     "Monday",
@@ -20,15 +22,15 @@ const useTodaysWokout = () => {
     "Saturday",
   ];
   const [workouts, setWorkouts] = useState([
-    {title: "push"},
-    {title: "pull"},
-    {title: "leg"},
-    {title: "push"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "pull"},
-    {title: "leg"},
+    { title: "push" },
+    { title: "pull" },
+    { title: "leg" },
+    { title: "push" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "pull" },
+    { title: "leg" },
   ]);
 
   const structure = {
@@ -53,15 +55,15 @@ const useTodaysWokout = () => {
       },
       dumbelfly: {},
     },
-    Tuesday: {pullups: {}, dumbellCurl: {}},
-    Wednesday: {squad: {}, legpress: {}},
+    Tuesday: { pullups: {}, dumbellCurl: {} },
+    Wednesday: { squad: {}, legpress: {} },
     Thursday: {},
     Friday: {},
     Saturday: {},
     Sunday: {},
   };
 
-  return {weekHeaders, workouts, structure,days};
+  return { weekHeaders, workouts, structure, days, navigate };
 };
 
 export default useTodaysWokout;
