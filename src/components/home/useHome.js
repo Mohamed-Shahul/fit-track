@@ -8,19 +8,19 @@ const useHome = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([
     {
-      title: "Choose workout plan",
-      url: "/choose-workout",
-      icon: FactCheckSharpIcon,
+      title: "Today's workout plan",
+      url: "/todays-workout",
+      icon: TodaySharpIcon,
     },
     {
-      title: "Create new workout plan",
+      title: `Create workout plan`,
       url: "/create-workout",
       icon: AddCircleOutlineSharpIcon,
     },
     {
-      title: "Today's Workout plan",
-      url: "/todays-workout",
-      icon: TodaySharpIcon,
+      title: "Choose workout plan",
+      url: "/choose-workout",
+      icon: FactCheckSharpIcon,
     },
   ]);
   return {

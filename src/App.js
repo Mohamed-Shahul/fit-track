@@ -8,7 +8,7 @@ import TodaysWorkoutPlan from "./components/todays-workout/todays-workout-view";
 function App() {
   return (
     <div className="App">
-      <AppBarView />
+      {/* <AppBarView /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-workout" element={<CreateWorkoutPlan />} />
