@@ -6,6 +6,11 @@ const useCustomHook = () => {
       textAlign: "center",
       color: "white",
     },
+    "& .MuiInputBase-input": {
+      color: "white",
+      fontFamily: "Poppins, sans-serif",
+      fontWeight: 500,
+    },
     "& .MuiOutlinedInput-root": {
       "&:hover fieldset": {
         borderColor: "white",
@@ -28,6 +33,11 @@ const useCustomHook = () => {
       color: "white",
       fontWeight: 500,
       fontFamily: "Poppins, sans-serif",
+    },
+    "& .MuiInputBase-input": {
+      color: "white",
+      fontFamily: "Poppins, sans-serif",
+      fontWeight: 500,
     },
     "& .MuiInputBase-input::placeholder": {
       color: "white",
@@ -57,10 +67,14 @@ const useCustomHook = () => {
   };
 
   const cloudBgImg = {
+    // backgroundImage: `
+    //           linear-gradient(to right, black 50%, transparent 100%),
+    //           url(${cloudBg})
+    //         `,
     backgroundImage: `
-              linear-gradient(to right, black 50%, transparent 100%),
-              url(${cloudBg})
-            `,
+  linear-gradient(to right, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.3) 70%, transparent 100%), 
+  url(${cloudBg}) 
+`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

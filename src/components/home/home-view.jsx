@@ -1,10 +1,11 @@
 import { Box, Card, CardContent, Grid2, Typography } from "@mui/material";
 import useHome from "./useHome";
-import cloudBg from "../../images/cloudBg.jpg";
 import AppBarView from "../app-bar/app-bar-view";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
+import useCustomHook from "../custom-hook/useCustomHook";
 
 const Home = () => {
+  const { cloudBgImg } = useCustomHook();
   const viewModel = useHome();
   const { items, navigate } = viewModel;
 
@@ -38,7 +39,7 @@ const Home = () => {
               fontFamily: "Poppins, sans-serif",
               fontWeight: 400,
               color: "white",
-              fontSize:14
+              fontSize: 14,
             }}
           >
             {title}
@@ -52,13 +53,7 @@ const Home = () => {
       container
       sx={{
         height: "100vh",
-        backgroundImage: `
-          linear-gradient(to right, black 50%, transparent 100%),
-          url(${cloudBg})
-        `,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        ...cloudBgImg,
       }}
     >
       <Grid2
@@ -81,11 +76,11 @@ const Home = () => {
         height={{ xs: "95%", md: "90%" }}
         display="flex"
         flexDirection="column"
-        justifyContent="center"
+        justifyContent="top"
         alignItems="center"
         gap={2}
       >
-        <Box maxWidth="100%" borderColor="white">
+        <Box maxWidth="100%" borderColor="white" mt={10}>
           <Typography
             color="white"
             sx={{

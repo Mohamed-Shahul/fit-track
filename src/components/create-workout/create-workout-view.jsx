@@ -39,10 +39,8 @@ const CreateWorkoutPlan = () => {
     return (
       <Box
         sx={{
-          background: "#444451",
           color: "white",
           borderRadius: 2,
-          padding: { xs: "20px 20px", md: "30px 50px" },
           display: "flex",
           flexDirection: "column",
           gap: 2,
@@ -57,12 +55,16 @@ const CreateWorkoutPlan = () => {
           workoutList?.map((row, i) => (
             <Box
               sx={{
+                // border:1,
+                // borderColor:'white',
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
               <TextField
+                type="text"
                 variant="outlined"
+                autoComplete="off"
                 sx={{
                   border: "none",
                   borderRadius: 2,
@@ -74,18 +76,32 @@ const CreateWorkoutPlan = () => {
                     fontFamily: "Poppins, sans-serif",
                   },
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "white" },
+                    "& fieldset": { borderColor: "#444451" },
                     "&:hover fieldset": { borderColor: "gray" },
                     "&.Mui-focused fieldset": { borderColor: "gray" },
                   },
+                  background: "#444451",
                 }}
                 placeholder="Enter your workout name..."
-              />
-              <IconButton
-                children={
-                  <DeleteOutlineRoundedIcon fontSize="large" color="error" />
-                }
-                onClick={() => handleRemoveWorkout(i)}
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <IconButton
+                        children={
+                          <DeleteOutlineRoundedIcon
+                            fontSize="large"
+                            color="error"
+                            sx={{ color: "red !important" }}
+                          />
+                        }
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRemoveWorkout(i);
+                        }}
+                      />
+                    ),
+                  },
+                }}
               />
             </Box>
           ))
@@ -259,6 +275,8 @@ const CreateWorkoutPlan = () => {
         <Grid2 size={{ xs: 12 }}>
           <Box
             sx={{
+              // border:1,
+              // borderColor:'white',
               maxWidth: "100%",
               padding: { xs: "5px 20px", md: "5px 50px" },
             }}

@@ -37,10 +37,9 @@ const TodaysWorkoutPlan = () => {
     return (
       <Box
         sx={{
-          background: "#4C4B4B",
           color: "white",
           borderRadius: 2,
-          padding: { xs: "20px 20px", md: "30px 50px" },
+          // padding: { xs: "20px 20px", md: "30px 50px" },
           display: "flex",
           flexDirection: "column",
           gap: 2,
@@ -48,8 +47,8 @@ const TodaysWorkoutPlan = () => {
       >
         <Box
           sx={{
-            width: "100%",
-            border: 1,
+            maxWidth: "100%",
+            // border: 1,
             borderColor: "white",
             borderRadius: 2,
           }}
@@ -58,8 +57,10 @@ const TodaysWorkoutPlan = () => {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              bgcolor: "#00C853",
-              width: "100%",
+              bgcolor: "#1976d2",
+              maxWidth: "100%",
+              border: 1,
+              borderColor: "white",
               borderTopRightRadius: 5,
               borderTopLeftRadius: 5,
             }}
@@ -69,7 +70,8 @@ const TodaysWorkoutPlan = () => {
                 width: "20%",
                 textAlign: "center",
                 p: 2,
-                fontWeight: "bold",
+                fontWeight: 600,
+                fontFamily: "Poppins, sans-serif",
               }}
             >
               Sets
@@ -84,6 +86,8 @@ const TodaysWorkoutPlan = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    fontWeight: 600,
+                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
                   {i + 1}
@@ -96,16 +100,21 @@ const TodaysWorkoutPlan = () => {
               display: "flex",
               justifyContent: "space-between",
               bgcolor: "#4C4B4B",
-              width: "100%",
+              maxWidth: "100%",
+              borderLeft: 1,
+              borderRight: 1,
+              borderBottom: 1,
+              borderColor: "white",
             }}
           >
             <Box
               sx={{
                 width: "20%",
-                borderBottom: 1,
                 textAlign: "center",
                 p: 2,
-                fontWeight: "bold",
+                fontWeight: 600,
+                fontFamily: "Poppins, sans-serif",
+                bgcolor: "#1976d2",
               }}
             >
               Reps
@@ -115,7 +124,6 @@ const TodaysWorkoutPlan = () => {
                 sx={{
                   width: "20%",
                   borderLeft: 1,
-                  borderBottom: 1,
                 }}
               >
                 {/* {repsObj?.[key]} */}
@@ -126,6 +134,8 @@ const TodaysWorkoutPlan = () => {
                   sx={{
                     width: "100%",
                     ...commonTextFieldStyles,
+                    color: "white",
+                    bgcolor: "#444451",
                   }}
                 />
               </Box>
@@ -137,7 +147,11 @@ const TodaysWorkoutPlan = () => {
               display: "flex",
               justifyContent: "space-between",
               bgcolor: "#4C4B4B",
-              width: "100%",
+              maxWidth: "100%",
+              borderLeft: 1,
+              borderRight: 1,
+              borderBottom: 1,
+              borderColor: "white",
               borderBottomRightRadius: 5,
               borderBottomLeftRadius: 5,
             }}
@@ -147,7 +161,9 @@ const TodaysWorkoutPlan = () => {
                 width: "20%",
                 textAlign: "center",
                 p: 2,
-                fontWeight: "bold",
+                fontWeight: 600,
+                fontFamily: "Poppins, sans-serif",
+                bgcolor: "#1976d2",
               }}
             >
               Kg
@@ -166,9 +182,9 @@ const TodaysWorkoutPlan = () => {
                   type="number"
                   sx={{
                     width: "100%",
-                    color: "white",
-
                     ...commonTextFieldStyles,
+                    color: "white",
+                    bgcolor: "#444451",
                   }}
                 />
               </Box>
@@ -180,15 +196,15 @@ const TodaysWorkoutPlan = () => {
           <TextField
             variant="outlined"
             multiline
-            minRows={2}
+            minRows={3}
             sx={{
-              bordre: "none",
               borderRadius: 2,
-              bgcolor: "#6C6C6C",
+              bgcolor: "#444451",
               width: "100%",
               "& .MuiInputBase-input::placeholder": {
                 color: "white",
               },
+              ...entryTextFieldsStyles,
             }}
             placeholder="Take a notes..."
           />
@@ -200,10 +216,12 @@ const TodaysWorkoutPlan = () => {
     <Box
       sx={{
         height: "100vh",
+        overflow: "auto",
+        overflowX: "hidden",
         ...cloudBgImg,
       }}
     >
-      <Grid2 container>
+      <Grid2 container gap={2}>
         <Grid2
           size={{ xs: 12 }}
           height={{ xs: "5%", md: "10%" }}
@@ -271,7 +289,6 @@ const TodaysWorkoutPlan = () => {
             sx={{
               maxWidth: "100%",
               display: "flex",
-              // flexDirection: { xs: "column", md: "row" },
               gap: 1,
               alignItems: "center",
               padding: { xs: "10px 20px", md: "10px 50px" },
@@ -281,7 +298,7 @@ const TodaysWorkoutPlan = () => {
               disablePortal
               options={days}
               sx={{
-                width: { xs: "60%", md: "40%" },
+                width: { xs: "50%", md: "30%" },
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -306,7 +323,7 @@ const TodaysWorkoutPlan = () => {
               disablePortal
               options={days}
               sx={{
-                width: { xs: "60%", md: "40%" },
+                width: { xs: "50%", md: "30%" },
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
