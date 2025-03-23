@@ -1,4 +1,4 @@
-import React from "react";
+import cloudBg from "../../images/cloudBg.jpg";
 
 const useCustomHook = () => {
   const commonTextFieldStyles = {
@@ -23,59 +23,72 @@ const useCustomHook = () => {
     },
   };
 
-  // const skewXelementForWeekDay = (props) => {
-  //     const {day, title} = props;
-  //     return (
-  //       <Box
-  //         sx={{
-  //           bgcolor: "rgba(76, 75, 75, 1)",
-  //           color: "white",
-  //           fontWeight: 500,
-  //           borderRadius: 0.5,
-  //           // borderRadius: 2,
-  //           // minWidth: "40px",
-  //           // maxWidth: "100px",
-  //           textAlign: "center",
-  //           transform: "skewX(-30deg) ",
-  //           textDecoration: "none",
-  //           mr: 0.5,
-  //           p: 0.5,
-  //         }}
-  //       >
-  //         <span style={{display: "inline-block", transform: "skewX(30deg)"}}>
-  //           {day || title}
-  //         </span>
-  //       </Box>
-  //     );
-  //   };
-  // const skewXelement = (props) => {
-  //   const {day, title} = props;
-  //   return (
-  //     <Box
-  //       sx={{
-  //         bgcolor: "rgba(76, 75, 75, 1)",
-  //         color: "white",
-  //         fontWeight: 500,
-  //         borderRadius: 0.5,
-  //         // borderRadius: 2,
-  //         minWidth: "40px",
-  //         // maxWidth: "100px",
-  //         textAlign: "center",
-  //         transform: "skewX(-30deg) ",
-  //         textDecoration: "none",
-  //         mr: 0.5,
-  //         p: 0.5,
-  //       }}
-  //     >
-  //       <span style={{display: "inline-block", transform: "skewX(30deg)"}}>
-  //         {day || title}
-  //       </span>
-  //     </Box>
-  //   );
-  // };
+  const entryTextFieldsStyles = {
+    "& .MuiInputLabel-root": {
+      color: "white",
+      fontWeight: 500,
+      fontFamily: "Poppins, sans-serif",
+    },
+    "& .MuiInputBase-input::placeholder": {
+      color: "white",
+      fontWeight: 500,
+      fontFamily: "Poppins, sans-serif",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 1,
+      "&:hover fieldset": {
+        borderColor: "white", // Border color on hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white", // Border color when focused
+      },
+    },
+    "& .MuiFilledInput-underline": {
+      "&:before": { borderBottom: "2px solid #1565c0" }, // Default underline
+      "&:hover:before": { borderBottom: "2px solid #1565c0" }, // Hover effect
+      "&:after": { borderBottom: "2px solid #1565c0" }, // Focused state
+    },
+    "& .MuiSvgIcon-root": {
+      color: "white", // Change to desired color
+    },
+  };
+
+  const cloudBgImg = {
+    backgroundImage: `
+              linear-gradient(to right, black 50%, transparent 100%),
+              url(${cloudBg})
+            `,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  };
+
+  const scrollBarStyle = {
+    /* Scrollbar Styles */
+    "&::-webkit-scrollbar": {
+      width: "8px", // Width of the scrollbar
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#2c2c2c", // Dark background for contrast
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "linear-gradient(120deg, #C0C0C0, #E0E0E0, #F5F5F5)", // Silver gradient
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "linear-gradient(120deg, #B0B0B0, #D0D0D0, #FFFFFF)", // Brighter silver on hover
+    },
+  };
 
   return {
     commonTextFieldStyles,
+    entryTextFieldsStyles,
+    cloudBgImg,
+    scrollBarStyle,
   };
 };
 

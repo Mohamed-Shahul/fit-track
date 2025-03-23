@@ -68,6 +68,11 @@ const useCreateWorkout = () => {
     setWorkoutList((prev) => [...prev, defaultWorkoutRow]);
   };
 
+  const handleRemoveWorkout = (i) => {
+    const filteredList = workoutList?.filter((row, rowIndex) => rowIndex !== i);
+    setWorkoutList(filteredList);
+  };
+
   return {
     weekHeaders,
     workouts,
@@ -75,6 +80,7 @@ const useCreateWorkout = () => {
     days,
     workoutList,
     handleAddWorkout,
+    handleRemoveWorkout
   };
 };
 
