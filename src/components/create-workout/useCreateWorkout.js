@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useCreateWorkout = () => {
+  const navigate=useNavigate()
   const [weekHeaders, setWeekHeaders] = useState([
     { day: "Sunday", workouts: [{ title: "chest" }] },
     { day: "Monday" },
@@ -80,7 +82,8 @@ const useCreateWorkout = () => {
     days,
     workoutList,
     handleAddWorkout,
-    handleRemoveWorkout
+    handleRemoveWorkout,
+    navigate
   };
 };
 
