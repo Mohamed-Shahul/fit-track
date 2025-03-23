@@ -1,56 +1,123 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid2, Typography } from "@mui/material";
 import useHome from "./useHome";
-import gymBg from "../../images/dumbellsBg.jpg";
-import dumbells from "../../images/dumbells.avif";
+import cloudBg from "../../images/cloudBg.jpg";
+import AppBarView from "../app-bar/app-bar-view";
+import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 
 const Home = () => {
   const viewModel = useHome();
   const { items, navigate } = viewModel;
-  const itemsBox = (props) => {
+
+  const viewButtons = (props) => {
     const { title, url, icon: Icon } = props;
     return (
-      <Box
+      <Card
         sx={{
-          height: { xs: "20vh", md: "25vh" },
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 2,
-          borderRadius: 5,
-          //   bgcolor: "black",
-          opacity: 0.8,
-          backgroundImage: `url(${dumbells})`,
-          cursor: "pointer",
+          borderRadius: 2,
+          padding: "5px",
+          bgcolor: "#1976d2",
+          "&:hover": {
+            bgcolor: "#1565c0",
+            cursor: "pointer",
+          },
         }}
         onClick={() => navigate(url)}
       >
-        <Box>{<Icon sx={{ color: "#64DD17" }} fontSize="large" />}</Box>
-        <Typography fontWeight="bold" sx={{ color: "white" }}>
-          {title}
-        </Typography>
-      </Box>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <Icon fontSize="large" sx={{ color: "white" }} />
+          <Typography
+            sx={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 400,
+              color: "white",
+              fontSize:14
+            }}
+          >
+            {title}
+          </Typography>
+        </CardContent>
+      </Card>
     );
   };
   return (
     <Grid2
       container
-      height="90vh"
-      justifyContent="center"
-      alignItems="center"
-      columnGap={2}
-      rowGap={1}
       sx={{
-        backgroundImage: `url(${gymBg})`,
-        backgroundSize: "cover", // Ensures the image covers the whole area
-        backgroundPosition: "center", // Centers the image}}
+        height: "100vh",
+        backgroundImage: `
+          linear-gradient(to right, black 50%, transparent 100%),
+          url(${cloudBg})
+        `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      {items.map((items, i) => (
-        <Grid2 key={i + 1} size={{ xs: 8, md: 2 }}>
-          {itemsBox(items)}
-        </Grid2>
-      ))}
+      <Grid2
+        size={{ xs: 12 }}
+        height={{ xs: "5%", md: "10%" }}
+        padding={{ xs: 0.5, md: 1 }}
+        sx={{
+          borderBottom: 1,
+          borderBottomColor: "gray",
+          position: "sticky",
+          top: 0,
+        }}
+      >
+        <AppBarView />
+      </Grid2>
+
+      <Grid2
+        size={{ xs: 12 }}
+        borderColor="white"
+        height={{ xs: "95%", md: "90%" }}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+      >
+        <Box maxWidth="100%" borderColor="white">
+          <Typography
+            color="white"
+            sx={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 500,
+              textAlign: "center",
+              fontSize: { xs: 20, md: 34 },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Track your fitness goals
+            <TrendingUpRoundedIcon
+              sx={{ color: "#1976d2", fontSize: { xs: 25, md: 50 } }}
+            />
+          </Typography>
+        </Box>
+        <Box
+          borderColor="white"
+          maxWidth="100%"
+          display="flex"
+          flexDirection={{ xs: "column", md: "row" }}
+          justifyContent="center"
+          alignItems="center"
+          gap={2}
+        >
+          {items.map((items, i) => (
+            <>{viewButtons(items)}</>
+          ))}
+        </Box>
+      </Grid2>
     </Grid2>
   );
 };
