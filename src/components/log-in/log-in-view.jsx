@@ -14,6 +14,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import useLogIn from "./useLogIn";
+import { login } from "../../utilis/auth";
 
 const LogInView = () => {
   const { cloudBgImg, logInTextFieldsStyles } = useCustomHook();
@@ -169,7 +170,9 @@ const LogInView = () => {
               color: "black",
             }}
             startIcon={<LoginRoundedIcon />}
-            onClick={() => navigate("/home")}
+            onClick={() => {
+              login();
+            }}
           />
         </Box>
         <Typography
