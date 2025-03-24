@@ -4,6 +4,7 @@ import LogInView from "./components/log-in/log-in-view";
 import ProtectedRoutes from "./routes/protected-routes";
 import PrivateRoute from "./routes/ptivate-routes";
 import { isAuthenticated } from "./utilis/auth";
+import SignUpView from "./components/sign-up/sign-up-view";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           path="/"
           element={isAuthenticated() ? <Navigate to="/home" /> : <LogInView />}
         />
+        <Route path="/sign-up" element={<SignUpView />} />
         <Route
           path="/*"
           element={
