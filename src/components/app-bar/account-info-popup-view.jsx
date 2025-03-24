@@ -1,5 +1,6 @@
 import { Box, Button, Fade, Paper, Popper, Typography } from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import { logout } from "../../utilis/auth";
 
 const AccountInfoPopupView = (props) => {
   const { viewModel, cloudBgImg } = props;
@@ -40,7 +41,9 @@ const AccountInfoPopupView = (props) => {
                 fontFamily: "Poppins, sans-serif",
               }}
               startIcon={<LogoutRoundedIcon />}
-              onClick={() => navigate("/")}
+              onClick={() => {
+                logout();
+              }}
             />
           </Paper>
         </Fade>

@@ -87,7 +87,9 @@ const SignUpView = () => {
                 already have an account?{" "}
                 <span
                   style={{ color: "white", cursor: "pointer" }}
-                  onClick={() => navigate("/")}
+                  onClick={() => {
+                    navigate("/");
+                  }}
                 >
                   Log In
                 </span>
