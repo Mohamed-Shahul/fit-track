@@ -65,6 +65,7 @@ const Home = () => {
           borderBottomColor: "gray",
           position: "sticky",
           top: 0,
+          ...cloudBgImg
         }}
       >
         <AppBarView />

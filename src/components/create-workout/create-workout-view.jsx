@@ -172,9 +172,10 @@ const CreateWorkoutPlan = () => {
                 sx={{
                   borderRadius: 2,
                   borderColor: "#1565c0",
+                  color:'white',
                   textTransform: "none",
                 }}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/home")}
               >
                 Cancel
               </Button>
@@ -275,8 +276,6 @@ const CreateWorkoutPlan = () => {
         <Grid2 size={{ xs: 12 }}>
           <Box
             sx={{
-              // border:1,
-              // borderColor:'white',
               maxWidth: "100%",
               padding: { xs: "5px 20px", md: "5px 50px" },
             }}

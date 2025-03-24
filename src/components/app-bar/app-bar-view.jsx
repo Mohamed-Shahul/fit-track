@@ -4,10 +4,13 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import useAppBar from "./useAppBar";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
+import AccountInfoPopupView from "./account-info-popup-view";
+import useCustomHook from "../custom-hook/useCustomHook";
 
 const AppBarView = () => {
+  const { cloudBgImg } = useCustomHook();
   const viewModel = useAppBar();
-  const { navigate } = viewModel;
+  const { navigate, setOpenAccountInfoPopup, openAccountInfoPopup } = viewModel;
   return (
     <Box
       sx={{
@@ -45,12 +48,23 @@ const AppBarView = () => {
           children={
             <HomeRoundedIcon fontSize="medium" sx={{ color: "#2392eb" }} />
           }
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         />
         <IconButton
-          children={<AccountCircleSharpIcon sx={{ color: "white" }} />}
+          children={<AccountCircleSharpIcon sx={{ color: "#2392eb" }} />}
+          onClick={(e) =>
+            setOpenAccountInfoPopup((prev) => ({
+              state: !prev.state,
+              anchorEl: e.currentTarget,
+            }))
+          }
         />
       </Box>
+      {openAccountInfoPopup.state ? (
+        <AccountInfoPopupView viewModel={viewModel} cloudBgImg={cloudBgImg} />
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
