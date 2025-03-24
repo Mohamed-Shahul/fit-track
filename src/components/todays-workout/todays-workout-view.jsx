@@ -17,6 +17,7 @@ import createBgImg from "../../images/createBg.png";
 import gymBg from "../../images/dumbellsBg.jpg";
 import useTodaysWokout from "./useTodayWorkout";
 import AppBarView from "../app-bar/app-bar-view";
+import BackupRoundedIcon from '@mui/icons-material/BackupRounded';
 
 const TodaysWorkoutPlan = () => {
   const { commonTextFieldStyles, cloudBgImg, entryTextFieldsStyles } =
@@ -263,9 +264,10 @@ const TodaysWorkoutPlan = () => {
                 sx={{
                   borderRadius: 2,
                   borderColor: "#1565c0",
+                  color: "white",
                   textTransform: "none",
                 }}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/home")}
               >
                 Back
               </Button>
@@ -276,7 +278,7 @@ const TodaysWorkoutPlan = () => {
                   borderRadius: 2,
                   textTransform: "none",
                 }}
-                startIcon={<SaveRoundedIcon />}
+                startIcon={<BackupRoundedIcon />}
               >
                 Update
               </Button>

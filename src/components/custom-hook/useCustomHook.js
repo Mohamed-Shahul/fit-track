@@ -64,6 +64,57 @@ const useCustomHook = () => {
     "& .MuiSvgIcon-root": {
       color: "white", // Change to desired color
     },
+    "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "& input[type=number]": {
+      "-moz-appearance": "textfield",
+    },
+  };
+  const logInTextFieldsStyles = {
+    "& .MuiInputLabel-root": {
+      color: "silver",
+      fontWeight: 500,
+      fontFamily: "Poppins, sans-serif",
+    },
+    "& .MuiInputBase-input": {
+      color: "silver",
+      fontFamily: "Poppins, sans-serif",
+      fontWeight: 500,
+    },
+    "& .MuiInputBase-input::placeholder": {
+      color: "silver",
+      fontWeight: 400,
+      fontFamily: "Poppins, sans-serif",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "silver",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 1,
+      "&:hover fieldset": {
+        borderColor: "silver", // Border color on hover
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "silver", // Border color when focused
+      },
+    },
+    "& .MuiFilledInput-underline": {
+      "&:before": { borderBottom: "2px solid #1565c0" }, // Default underline
+      "&:hover:before": { borderBottom: "2px solid #1565c0" }, // Hover effect
+      "&:after": { borderBottom: "2px solid #1565c0" }, // Focused state
+    },
+    "& .MuiSvgIcon-root": {
+      color: "silver", // Change to desired color
+    },
+    "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "& input[type=number]": {
+      "-moz-appearance": "textfield",
+    },
   };
 
   const cloudBgImg = {
@@ -103,6 +154,7 @@ const useCustomHook = () => {
     entryTextFieldsStyles,
     cloudBgImg,
     scrollBarStyle,
+    logInTextFieldsStyles,
   };
 };
 

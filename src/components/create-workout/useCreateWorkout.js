@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useCreateWorkout = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [weekHeaders, setWeekHeaders] = useState([
     { day: "Sunday", workouts: [{ title: "chest" }] },
     { day: "Monday" },
@@ -65,7 +65,7 @@ const useCreateWorkout = () => {
 
   // MARK: Workout list
   const defaultWorkoutRow = { title: "" };
-  const [workoutList, setWorkoutList] = useState([{ title: "" }]);
+  const [workoutList, setWorkoutList] = useState([]);
   const handleAddWorkout = () => {
     setWorkoutList((prev) => [...prev, defaultWorkoutRow]);
   };
@@ -83,7 +83,7 @@ const useCreateWorkout = () => {
     workoutList,
     handleAddWorkout,
     handleRemoveWorkout,
-    navigate
+    navigate,
   };
 };
 
