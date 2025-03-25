@@ -1,12 +1,12 @@
 import {Box, Card, CardContent, Grid2, Typography} from "@mui/material";
-import useHome from "./useHome";
 import AppBarView from "../app-bar/app-bar-view";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import useCustomHook from "../custom-hook/useCustomHook";
+import useChooseWorkout from "./useChooseWorkout";
 
-const Home = () => {
+const ChooseWorkoutView = () => {
   const {cloudBgImg} = useCustomHook();
-  const viewModel = useHome();
+  const viewModel = useChooseWorkout();
   const {items, navigate} = viewModel;
 
   const viewButtons = (props) => {
@@ -33,7 +33,7 @@ const Home = () => {
             gap: 1,
           }}
         >
-          <Icon fontSize="large" sx={{color: "white"}} />
+          {/* <Icon fontSize="large" sx={{ color: "white" }} /> */}
           <Typography
             sx={{
               fontFamily: "Poppins, sans-serif",
@@ -59,7 +59,6 @@ const Home = () => {
           borderBottom: 1,
           borderBottomColor: "gray",
           px: 2,
-          ...cloudBgImg,
         }}
       >
         <AppBarView />
@@ -67,14 +66,16 @@ const Home = () => {
 
       <Grid2
         size={{xs: 12}}
-        height="93%"
+        // border={1}
+        borderColor="white"
+        height={{xs: "95%", md: "94%"}}
         display="flex"
         flexDirection="column"
         justifyContent="top"
         alignItems="center"
         gap={2}
       >
-        <Box maxWidth="100%" mt={{xs: 5, md: 10}}>
+        <Box maxWidth="100%" borderColor="white" mt={10}>
           <Typography
             color="white"
             sx={{
@@ -87,13 +88,14 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            Track your fitness goals
+            workout split list
             <TrendingUpRoundedIcon
               sx={{color: "#1976d2", fontSize: {xs: 25, md: 50}}}
             />
           </Typography>
         </Box>
         <Box
+          borderColor="white"
           maxWidth="100%"
           display="flex"
           flexDirection={{xs: "column", md: "row"}}
@@ -110,4 +112,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default ChooseWorkoutView;
