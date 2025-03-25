@@ -57,9 +57,9 @@ const useCustomHook = () => {
       },
     },
     "& .MuiFilledInput-underline": {
-      "&:before": { borderBottom: "2px solid #1565c0" }, // Default underline
-      "&:hover:before": { borderBottom: "2px solid #1565c0" }, // Hover effect
-      "&:after": { borderBottom: "2px solid #1565c0" }, // Focused state
+      "&:before": {borderBottom: "2px solid #1565c0"}, // Default underline
+      "&:hover:before": {borderBottom: "2px solid #1565c0"}, // Hover effect
+      "&:after": {borderBottom: "2px solid #1565c0"}, // Focused state
     },
     "& .MuiSvgIcon-root": {
       color: "white", // Change to desired color
@@ -101,9 +101,9 @@ const useCustomHook = () => {
       },
     },
     "& .MuiFilledInput-underline": {
-      "&:before": { borderBottom: "2px solid #1565c0" }, // Default underline
-      "&:hover:before": { borderBottom: "2px solid #1565c0" }, // Hover effect
-      "&:after": { borderBottom: "2px solid #1565c0" }, // Focused state
+      "&:before": {borderBottom: "2px solid #1565c0"}, // Default underline
+      "&:hover:before": {borderBottom: "2px solid #1565c0"}, // Hover effect
+      "&:after": {borderBottom: "2px solid #1565c0"}, // Focused state
     },
     "& .MuiSvgIcon-root": {
       color: "silver", // Change to desired color
@@ -122,19 +122,19 @@ const useCustomHook = () => {
     //           linear-gradient(to right, black 50%, transparent 100%),
     //           url(${cloudBg})
     //         `,
-    backgroundImage: `
-  linear-gradient(to right, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.3) 70%, transparent 100%), 
-  url(${cloudBg}) 
-`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    //     backgroundImage: `
+    //   linear-gradient(to right, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.3) 70%, transparent 100%),
+    //   url(${cloudBg})
+    // `,
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //     backgroundRepeat: "no-repeat",
   };
 
   const scrollBarStyle = {
     /* Scrollbar Styles */
     "&::-webkit-scrollbar": {
-      width: "8px", // Width of the scrollbar
+      width: "5px", // Width of the scrollbar
     },
     "&::-webkit-scrollbar-track": {
       background: "#2c2c2c", // Dark background for contrast
