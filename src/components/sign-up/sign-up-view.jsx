@@ -48,7 +48,7 @@ const SignUpView = () => {
               fontFamily: "Poppins, sans-serif",
               textAlign: "center",
               fontSize: { xs: 20, md: 30 },
-              fontWeight: 600,
+              fontWeight: 500,
             }}
             children={
               <>
@@ -57,6 +57,7 @@ const SignUpView = () => {
                   sx={{
                     pl: 1,
                     fontSize: { xs: 18, md: 30 },
+                    color:'#1976d2'
                   }}
                 />
               </>
@@ -116,7 +117,7 @@ const SignUpView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <PersonRoundedIcon
@@ -149,7 +150,7 @@ const SignUpView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <PhoneRoundedIcon
@@ -182,7 +183,7 @@ const SignUpView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <AlternateEmailRoundedIcon
@@ -215,7 +216,7 @@ const SignUpView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <VisibilityRoundedIcon
@@ -233,13 +234,13 @@ const SignUpView = () => {
             children="Sign Up"
             sx={{
               width: { xs: "75%", md: "50%" },
-              bgcolor: "silver",
+              // bgcolor: "silver",
               borderRadius: 1,
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",
-              color: "black",
+              color: "silver",
             }}
-            startIcon={<DomainVerificationRoundedIcon />}
+            endIcon={<DomainVerificationRoundedIcon />}
             onClick={() => navigate("/")}
           />
         </Box>

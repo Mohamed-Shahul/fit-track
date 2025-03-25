@@ -46,7 +46,7 @@ const LogInView = () => {
               fontFamily: "Poppins, sans-serif",
               textAlign: "center",
               fontSize: { xs: 20, md: 30 },
-              fontWeight: 600,
+              fontWeight: 500,
             }}
             children={
               <>
@@ -55,6 +55,7 @@ const LogInView = () => {
                   sx={{
                     pl: 1,
                     fontSize: { xs: 18, md: 30 },
+                    color: "#1976d2",
                   }}
                 />
               </>
@@ -83,7 +84,7 @@ const LogInView = () => {
           }
         />
         <Box
-          //   border={1}
+            // border={1}
           borderColor="white"
           width={{ xs: "100%", md: "50%" }}
           display="flex"
@@ -112,7 +113,7 @@ const LogInView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <PersonRoundedIcon
@@ -145,7 +146,7 @@ const LogInView = () => {
             size="small"
             slotProps={{
               input: {
-                startAdornment: (
+                endAdornment: (
                   <IconButton
                     children={
                       <VisibilityRoundedIcon
@@ -163,13 +164,13 @@ const LogInView = () => {
             children="Log in"
             sx={{
               width: { xs: "75%", md: "50%" },
-              bgcolor: "silver",
+              // bgcolor: "#1976d2",
               borderRadius: 1,
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",
-              color: "black",
+              color: "silver",
             }}
-            startIcon={<LoginRoundedIcon />}
+            endIcon={<LoginRoundedIcon />}
             onClick={() => {
               login();
             }}

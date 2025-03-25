@@ -129,7 +129,7 @@ const CreateWorkoutPlan = () => {
     );
   };
   return (
-    <Grid2 container height="100vh" overflow="hidden">
+    <Grid2 container height="100vh" overflow="hidden" rowGap={1}>
       <Grid2
         size={{xs: 12}}
         height="7%"
