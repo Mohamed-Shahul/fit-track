@@ -134,7 +134,7 @@ const useCustomHook = () => {
   const scrollBarStyle = {
     /* Scrollbar Styles */
     "&::-webkit-scrollbar": {
-      width: "8px", // Width of the scrollbar
+      width: "5px", // Width of the scrollbar
     },
     "&::-webkit-scrollbar-track": {
       background: "#2c2c2c", // Dark background for contrast
