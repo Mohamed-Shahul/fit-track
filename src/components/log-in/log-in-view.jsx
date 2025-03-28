@@ -15,6 +15,7 @@ import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import useLogIn from "./useLogIn";
 import {login} from "../../utilis/auth";
+import {snackBarComponent} from "../custom-components/custom-components";
 
 const LogInView = () => {
   const {cloudBgImg, logInTextFieldsStyles} = useCustomHook();
@@ -25,6 +26,8 @@ const LogInView = () => {
     setUserDetails,
     navigate,
     isUserDetailsIsValid,
+    setOpenSnackBar,
+    openSnackBar,
   } = useLogIn();
 
   const PasswordIcon = userDetails?.isPasswordVisibility ? (
@@ -183,8 +186,8 @@ const LogInView = () => {
               borderRadius: 1,
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",
-              color: !isUserDetailsIsValid ? "black" : "silver",
-              bgcolor: !isUserDetailsIsValid ? "red" : "#1976d2",
+              color: "silver",
+              bgcolor: !isUserDetailsIsValid ? "silver !important" : "#1976d2",
             }}
             endIcon={<LoginRoundedIcon />}
             onClick={handleLogin}
@@ -202,6 +205,13 @@ const LogInView = () => {
           children="forgot password?"
         />
       </Grid2>
+      {openSnackBar &&
+        snackBarComponent({
+          msg: userDetails?.errorMsg,
+          open: openSnackBar,
+          setOpen: setOpenSnackBar,
+          severity: "error",
+        })}
     </Grid2>
   );
 };
