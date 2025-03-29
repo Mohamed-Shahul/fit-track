@@ -5,6 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.7) 30%,
+    rgba(0, 0, 0, 0.3) 70%,
+    transparent 100%
+  ),
+  url("images/cloudBg.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: "no-repeat";
+/* height: "100vh"; */
 }
 
 code {

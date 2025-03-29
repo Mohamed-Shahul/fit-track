@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Grid2,
   IconButton,
   TextField,
@@ -14,17 +15,37 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import useLogIn from "./useLogIn";
-import { login } from "../../utilis/auth";
+import {
+  circularIndeterminate,
+  snackBarComponent,
+} from "../custom-components/custom-components";
 
 const LogInView = () => {
   const { cloudBgImg, logInTextFieldsStyles } = useCustomHook();
-  const { navigate } = useLogIn();
+  const {
+    handleLogin,
+    userDetails,
+    handleOnChange,
+    setUserDetails,
+    navigate,
+    isUserDetailsIsValid,
+    setOpenSnackBar,
+    openSnackBar,
+    isLoading,
+  } = useLogIn();
+
+  const PasswordIcon = userDetails?.isPasswordVisibility ? (
+    <VisibilityOffRoundedIcon fontSize="small" sx={{ color: "silver" }} />
+  ) : (
+    <VisibilityRoundedIcon fontSize="small" sx={{ color: "silver" }} />
+  );
   return (
     <Grid2
       container
       height="100vh"
       justifyContent="center"
       alignItems="center"
+      position="relative"
       sx={{
         ...cloudBgImg,
       }}
@@ -84,8 +105,6 @@ const LogInView = () => {
           }
         />
         <Box
-            // border={1}
-          borderColor="white"
           width={{ xs: "100%", md: "50%" }}
           display="flex"
           flexDirection="column"
@@ -97,7 +116,7 @@ const LogInView = () => {
             required
             variant="outlined"
             type="text"
-            autoComplete="off"
+            // autoComplete="off"
             placeholder="User email"
             sx={{
               width: { xs: "75%", md: "50%" },
@@ -125,12 +144,14 @@ const LogInView = () => {
                 ),
               },
             }}
+            value={userDetails.email}
+            onChange={(e) => handleOnChange(e, "email")}
           />
           <TextField
             required
             variant="outlined"
-            type="password"
-            autoComplete="off"
+            type={userDetails?.isPasswordVisibility ? "text" : "password"}
+            // autoComplete="off"
             placeholder="Password"
             sx={{
               width: { xs: "75%", md: "50%" },
@@ -148,32 +169,42 @@ const LogInView = () => {
               input: {
                 endAdornment: (
                   <IconButton
-                    children={
-                      <VisibilityRoundedIcon
-                        fontSize="small"
-                        sx={{ color: "silver" }}
-                      />
+                    children={PasswordIcon}
+                    onClick={() =>
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        isPasswordVisibility: !prev?.isPasswordVisibility,
+                      }))
                     }
                   />
                 ),
               },
             }}
+            value={userDetails.password}
+            onChange={(e) => handleOnChange(e, "password")}
           />
           <Button
             variant="contained"
-            children="Log in"
+            children={isLoading ? "" : "Log In"}
             sx={{
               width: { xs: "75%", md: "50%" },
-              // bgcolor: "#1976d2",
               borderRadius: 1,
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",
               color: "silver",
+              bgcolor: !isUserDetailsIsValid ? "silver !important" : "#1976d2",
             }}
-            endIcon={<LoginRoundedIcon />}
-            onClick={() => {
-              login();
-            }}
+            endIcon={
+              <>
+                {isLoading ? (
+                  <CircularProgress size={20} sx={{ color: "white" }} />
+                ) : (
+                  <LoginRoundedIcon />
+                )}
+              </>
+            }
+            onClick={handleLogin}
+            disabled={!isUserDetailsIsValid || isLoading}
           />
         </Box>
         <Typography
@@ -187,6 +218,24 @@ const LogInView = () => {
           children="forgot password?"
         />
       </Grid2>
+      {openSnackBar &&
+        snackBarComponent({
+          msg: userDetails?.errorMsg,
+          open: openSnackBar,
+          setOpen: setOpenSnackBar,
+          severity: "error",
+        })}
+      {/* {
+        <Box
+          display="flex"
+          sx={{
+            position:'absolute',
+            top:'50%'
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      } */}
     </Grid2>
   );
 };
