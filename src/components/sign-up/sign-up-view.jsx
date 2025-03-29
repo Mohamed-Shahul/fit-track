@@ -17,10 +17,30 @@ import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
 import DomainVerificationRoundedIcon from "@mui/icons-material/DomainVerificationRounded";
 import useSignUp from "./useSignUp";
+import { snackBarComponent } from "../custom-components/custom-components";
 
 const SignUpView = () => {
   const { cloudBgImg, logInTextFieldsStyles } = useCustomHook();
-  const { navigate } = useSignUp();
+  const {
+    navigate,
+    userDetails,
+    handleOnChange,
+    setUserDetails,
+    setOpenSnackBar,
+    handleEmailOnBlur,
+    openSnackBar,
+    handlePasswordOnBlur,
+    isUserDetailsIsInValid,
+    handleMobileNoOnBlur,
+    handleNameOnBlur,
+    handleSignUp,
+  } = useSignUp();
+
+  const PasswordIcon = userDetails?.isPasswordVisibility ? (
+    <VisibilityOffRoundedIcon fontSize="small" sx={{ color: "silver" }} />
+  ) : (
+    <VisibilityRoundedIcon fontSize="small" sx={{ color: "silver" }} />
+  );
   return (
     <Grid2
       container
@@ -57,7 +77,7 @@ const SignUpView = () => {
                   sx={{
                     pl: 1,
                     fontSize: { xs: 18, md: 30 },
-                    color:'#1976d2'
+                    color: "#1976d2",
                   }}
                 />
               </>
@@ -129,6 +149,9 @@ const SignUpView = () => {
                 ),
               },
             }}
+            value={userDetails.name}
+            onChange={(e) => handleOnChange(e, "name")}
+            onBlur={(e) => handleNameOnBlur()}
           />
           <TextField
             required
@@ -162,6 +185,9 @@ const SignUpView = () => {
                 ),
               },
             }}
+            value={userDetails.mobileNo}
+            onChange={(e) => handleOnChange(e, "mobileNo")}
+            onBlur={(e) => handleMobileNoOnBlur()}
           />
           <TextField
             required
@@ -195,11 +221,14 @@ const SignUpView = () => {
                 ),
               },
             }}
+            value={userDetails.email}
+            onChange={(e) => handleOnChange(e, "email")}
+            onBlur={() => handleEmailOnBlur()}
           />
           <TextField
             required
             variant="outlined"
-            type="password"
+            type={userDetails?.isPasswordVisibility ? "text" : "password"}
             autoComplete="off"
             placeholder="Password"
             sx={{
@@ -218,16 +247,20 @@ const SignUpView = () => {
               input: {
                 endAdornment: (
                   <IconButton
-                    children={
-                      <VisibilityRoundedIcon
-                        fontSize="small"
-                        sx={{ color: "silver" }}
-                      />
+                    children={PasswordIcon}
+                    onClick={() =>
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        isPasswordVisibility: !prev?.isPasswordVisibility,
+                      }))
                     }
                   />
                 ),
               },
             }}
+            value={userDetails.password}
+            onChange={(e) => handleOnChange(e, "password")}
+            onBlur={(e) => handlePasswordOnBlur()}
           />
           <Button
             variant="contained"
@@ -239,12 +272,23 @@ const SignUpView = () => {
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",
               color: "silver",
+              bgcolor: isUserDetailsIsInValid()
+                ? "silver !important"
+                : "#1976d2",
             }}
+            disabled={isUserDetailsIsInValid()}
             endIcon={<DomainVerificationRoundedIcon />}
-            onClick={() => navigate("/")}
+            onClick={() => handleSignUp()}
           />
         </Box>
       </Grid2>
+      {openSnackBar &&
+        snackBarComponent({
+          msg: userDetails?.errorMsg,
+          open: openSnackBar,
+          setOpen: setOpenSnackBar,
+          severity: "error",
+        })}
     </Grid2>
   );
 };

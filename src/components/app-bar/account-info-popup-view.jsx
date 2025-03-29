@@ -3,8 +3,11 @@ import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { logout } from "../../utilis/auth";
 
 const AccountInfoPopupView = (props) => {
+  const loggedInUseName = localStorage.getItem("USER_NAME");
+  const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const { viewModel, cloudBgImg } = props;
   const { navigate, openAccountInfoPopup, setOpenAccountInfoPopup } = viewModel;
+
   return (
     <Popper
       // sx={{ zIndex: 1200 }}
@@ -29,8 +32,14 @@ const AccountInfoPopupView = (props) => {
               gap: 2,
             }}
           >
-            <Typography children="User name" sx={{ color: "#2392eb" }} />
-            <Typography children="User Email" sx={{ color: "#2392eb" }} />
+            <Typography
+              children={loggedInUseName || ""}
+              sx={{ color: "#2392eb" }}
+            />
+            <Typography
+              children={loggedInUserEmail || ""}
+              sx={{ color: "#2392eb" }}
+            />
             <Button
               variant="outlined"
               children="Log out"
