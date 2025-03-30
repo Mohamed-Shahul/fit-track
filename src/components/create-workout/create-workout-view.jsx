@@ -20,10 +20,12 @@ const CreateWorkoutPlan = () => {
   const {
     structure,
     days,
-    workoutList,
     handleAddWorkout,
     handleRemoveWorkout,
     navigate,
+    workoutDetails,
+    setWorkoutDetails,
+    handleWorkoutOnChange,
   } = viewModel;
 
   const tableView = (props) => {
@@ -56,61 +58,65 @@ const CreateWorkoutPlan = () => {
           ...scrollBarStyle,
         }}
       >
-        {workoutList?.length ? (
-          workoutList?.map((row, i) => (
-            <Box
-              sx={{
-                // border:1,
-                // borderColor:'white',
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <TextField
-                type="text"
-                variant="outlined"
-                autoComplete="off"
-                size="small"
+        {workoutDetails?.[workoutDetails?.selectedDay]?.workoutList?.length ? (
+          workoutDetails?.[workoutDetails?.selectedDay]?.workoutList?.map(
+            (row, i) => (
+              <Box
                 sx={{
-                  border: "none",
-                  borderRadius: 2,
-                  width: "100%",
-                  ...entryTextFieldsStyles,
-                  borderColor: "white",
-                  "& .MuiInputBase-input": {
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "#444451" },
-                    "&:hover fieldset": { borderColor: "gray" },
-                    "&.Mui-focused fieldset": { borderColor: "gray" },
-                  },
-                  background: "#444451",
+                  // border:1,
+                  // borderColor:'white',
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
-                placeholder="Enter your workout name..."
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <IconButton
-                        children={
-                          <DeleteOutlineRoundedIcon
-                            fontSize="large"
-                            color="error"
-                            sx={{ color: "red !important" }}
-                          />
-                        }
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRemoveWorkout(i);
-                        }}
-                      />
-                    ),
-                  },
-                }}
-              />
-            </Box>
-          ))
+              >
+                <TextField
+                  type="text"
+                  variant="outlined"
+                  autoComplete="off"
+                  size="small"
+                  sx={{
+                    border: "none",
+                    borderRadius: 2,
+                    width: "100%",
+                    ...entryTextFieldsStyles,
+                    borderColor: "white",
+                    "& .MuiInputBase-input": {
+                      color: "white",
+                      fontFamily: "Poppins, sans-serif",
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": { borderColor: "#444451" },
+                      "&:hover fieldset": { borderColor: "gray" },
+                      "&.Mui-focused fieldset": { borderColor: "gray" },
+                    },
+                    background: "#444451",
+                  }}
+                  placeholder="Enter your workout name..."
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <IconButton
+                          children={
+                            <DeleteOutlineRoundedIcon
+                              fontSize="large"
+                              color="error"
+                              sx={{ color: "red !important" }}
+                            />
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveWorkout(i);
+                          }}
+                        />
+                      ),
+                    },
+                  }}
+                  value={row?.name}
+                  onChange={(e) => handleWorkoutOnChange(e, i)}
+                />
+              </Box>
+            )
+          )
         ) : (
           <Box
             sx={{
@@ -192,7 +198,7 @@ const CreateWorkoutPlan = () => {
               sx={{
                 bgcolor: "#1565c0",
                 borderRadius: 1,
-                
+
                 textTransform: "none",
               }}
               startIcon={<SaveRoundedIcon />}
@@ -274,6 +280,13 @@ const CreateWorkoutPlan = () => {
                 />
               )}
               disableClearable
+              value={workoutDetails?.selectedDay}
+              onChange={(e, newValue) => {
+                setWorkoutDetails((prev) => ({
+                  ...prev,
+                  selectedDay: newValue,
+                }));
+              }}
             />
             <Button
               variant="contained"

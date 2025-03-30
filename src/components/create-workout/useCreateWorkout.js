@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
@@ -42,16 +43,16 @@ const useCreateWorkout = () => {
           notes: "",
         },
         reps: {
-          set1reps: 1,
-          set2reps: 1,
-          set3reps: 1,
-          set4reps: 1,
+          set1reps: 0,
+          set2reps: 0,
+          set3reps: 0,
+          set4reps: 0,
         },
         weights: {
-          set1weights: 10,
-          set2weights: 10,
-          set3weights: 10,
-          set4weights: 10,
+          set1weights: 0,
+          set2weights: 0,
+          set3weights: 0,
+          set4weights: 0,
         },
       },
       dumbelfly: {},
@@ -64,27 +65,101 @@ const useCreateWorkout = () => {
     Sunday: {},
   };
 
-  const weekDays = Array.from({ length: 7 }, (_, i) => ({
-    [dayjs().day(i).format("dddd")]: {},
-  }));
-
-  console.log("==che",weekDays);
-
   // MARK: States
   const [workoutDetails, setWorkoutDetails] = useState({
     splitName: "",
+    selectedDay: dayjs().format("dddd"),
+    Monday: {},
+    Tuesday: {},
+    Wednesday: {},
+    Thursday: {},
+    Friday: {},
+    Saturday: {},
+    Sunday: {},
   });
 
+  useEffect(() => {
+    const repsObj = {
+      set1reps:
+        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set1reps || 0,
+      set2reps:
+        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set2reps || 0,
+      set3reps:
+        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set3reps || 0,
+      set4reps:
+        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set4reps || 0,
+    };
+    const weightsObj = {
+      set1weights:
+        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set1weights ||
+        0,
+      set2weights:
+        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set2weights ||
+        0,
+      set3weights:
+        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set3weights ||
+        0,
+      set4weights:
+        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set4weights ||
+        0,
+    };
+    const weekdays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    weekdays?.forEach((day) => {
+      setWorkoutDetails((prev) => ({
+        ...prev,
+        [day]: { ...prev?.[day], reps: repsObj, weights: weightsObj },
+      }));
+    });
+  }, []);
+  console.log("==details", workoutDetails);
+
   // MARK: Handle Workout list
-  const defaultWorkoutRow = { title: "" };
-  const [workoutList, setWorkoutList] = useState([]);
   const handleAddWorkout = () => {
-    setWorkoutList((prev) => [...prev, defaultWorkoutRow]);
+    const prevList = [
+      ...(workoutDetails?.[workoutDetails?.selectedDay]?.workoutList || []),
+    ];
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [workoutDetails?.selectedDay]: {
+        ...workoutDetails?.[workoutDetails?.selectedDay],
+        workoutList: [...prevList, { name: "" }],
+      },
+    }));
   };
 
   const handleRemoveWorkout = (i) => {
-    const filteredList = workoutList?.filter((row, rowIndex) => rowIndex !== i);
-    setWorkoutList(filteredList);
+    const filteredList = workoutDetails?.[
+      workoutDetails?.selectedDay
+    ]?.workoutList?.filter((row, rowIndex) => rowIndex !== i);
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [workoutDetails?.selectedDay]: {
+        workoutList: filteredList,
+      },
+    }));
+  };
+
+  const handleWorkoutOnChange = (e, i) => {
+    const value = e?.target?.value;
+    const tempList = [
+      ...workoutDetails?.[workoutDetails?.selectedDay]?.workoutList,
+    ];
+    tempList[i].name = value;
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [workoutDetails?.selectedDay]: {
+        ...prev?.[workoutDetails?.selectedDay],
+        workoutList: tempList,
+      },
+    }));
   };
 
   return {
@@ -92,10 +167,12 @@ const useCreateWorkout = () => {
     workouts,
     structure,
     days,
-    workoutList,
     handleAddWorkout,
     handleRemoveWorkout,
     navigate,
+    workoutDetails,
+    handleWorkoutOnChange,
+    setWorkoutDetails,
   };
 };
 
