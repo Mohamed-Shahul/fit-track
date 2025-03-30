@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const useCreateWorkout = () => {
   const navigate = useNavigate();
@@ -63,7 +64,18 @@ const useCreateWorkout = () => {
     Sunday: {},
   };
 
-  // MARK: Workout list
+  const weekDays = Array.from({ length: 7 }, (_, i) => ({
+    [dayjs().day(i).format("dddd")]: {},
+  }));
+
+  console.log("==che",weekDays);
+
+  // MARK: States
+  const [workoutDetails, setWorkoutDetails] = useState({
+    splitName: "",
+  });
+
+  // MARK: Handle Workout list
   const defaultWorkoutRow = { title: "" };
   const [workoutList, setWorkoutList] = useState([]);
   const handleAddWorkout = () => {
