@@ -26,6 +26,7 @@ const CreateWorkoutPlan = () => {
     workoutDetails,
     setWorkoutDetails,
     handleWorkoutOnChange,
+    handleSaveWorkout,
   } = viewModel;
 
   const tableView = (props) => {
@@ -202,6 +203,7 @@ const CreateWorkoutPlan = () => {
                 textTransform: "none",
               }}
               startIcon={<SaveRoundedIcon />}
+              onClick={handleSaveWorkout}
             >
               Save
             </Button>
@@ -245,7 +247,13 @@ const CreateWorkoutPlan = () => {
               ...entryTextFieldsStyles,
             }}
             size="small"
-            value
+            value={workoutDetails?.splitName}
+            onChange={(e) =>
+              setWorkoutDetails((prev) => ({
+                ...prev,
+                splitName: e?.target?.value || "",
+              }))
+            }
           />
 
           <Box

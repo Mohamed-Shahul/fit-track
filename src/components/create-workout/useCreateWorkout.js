@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { getAuth } from "firebase/auth";
 
 const useCreateWorkout = () => {
+  const loggedInUseName = localStorage.getItem("USER_NAME");
+  const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
   const [weekHeaders, setWeekHeaders] = useState([
     { day: "Sunday", workouts: [{ title: "chest" }] },
@@ -65,6 +70,22 @@ const useCreateWorkout = () => {
     Sunday: {},
   };
 
+  // MARK: Firebase database fetch
+  const [dbCollections, setDbCollections] = useState([]);
+  useEffect(() => {
+    const collectionRef = collection(db, "fit-track");
+    getDocs(collectionRef)
+      .then((snapshot) => {
+        let result = [];
+        snapshot.docs.forEach((doc) => {
+          result.push({ ...doc.data(), id: doc.id });
+        });
+        setDbCollections(result);
+      })
+      .catch((err) => console.log("==err", err));
+  }, []);
+  console.log("==db", dbCollections);
+
   // MARK: States
   const [workoutDetails, setWorkoutDetails] = useState({
     splitName: "",
@@ -78,31 +99,31 @@ const useCreateWorkout = () => {
     Sunday: {},
   });
 
+  const repsObj = {
+    set1reps:
+      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set1reps || 0,
+    set2reps:
+      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set2reps || 0,
+    set3reps:
+      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set3reps || 0,
+    set4reps:
+      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set4reps || 0,
+  };
+  const weightsObj = {
+    set1weights:
+      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set1weights || 0,
+    set2weights:
+      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set2weights || 0,
+    set3weights:
+      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set3weights || 0,
+    set4weights:
+      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set4weights || 0,
+  };
+  const auth = getAuth();
+  const user = auth.currentUser;
+  console.log("==user", user);
+
   useEffect(() => {
-    const repsObj = {
-      set1reps:
-        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set1reps || 0,
-      set2reps:
-        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set2reps || 0,
-      set3reps:
-        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set3reps || 0,
-      set4reps:
-        workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set4reps || 0,
-    };
-    const weightsObj = {
-      set1weights:
-        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set1weights ||
-        0,
-      set2weights:
-        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set2weights ||
-        0,
-      set3weights:
-        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set3weights ||
-        0,
-      set4weights:
-        workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set4weights ||
-        0,
-    };
     const weekdays = [
       "Sunday",
       "Monday",
@@ -112,12 +133,12 @@ const useCreateWorkout = () => {
       "Friday",
       "Saturday",
     ];
-    weekdays?.forEach((day) => {
-      setWorkoutDetails((prev) => ({
-        ...prev,
-        [day]: { ...prev?.[day], reps: repsObj, weights: weightsObj },
-      }));
-    });
+    // weekdays?.forEach((day) => {
+    //   setWorkoutDetails((prev) => ({
+    //     ...prev,
+    //     [day]: { ...prev?.[day], reps: repsObj, weights: weightsObj },
+    //   }));
+    // });
   }, []);
   console.log("==details", workoutDetails);
 
@@ -130,7 +151,19 @@ const useCreateWorkout = () => {
       ...prev,
       [workoutDetails?.selectedDay]: {
         ...workoutDetails?.[workoutDetails?.selectedDay],
-        workoutList: [...prevList, { name: "" }],
+        workoutList: [
+          ...prevList,
+          {
+            name: "",
+            reps: { set1Reps: 0, set2Reps: 0, set3Reps: 0, set4Reps: 0 },
+            weights: {
+              set1Weights: 0,
+              set2Weights: 0,
+              set3Weights: 0,
+              set4Weights: 0,
+            },
+          },
+        ],
       },
     }));
   };
@@ -162,6 +195,21 @@ const useCreateWorkout = () => {
     }));
   };
 
+  const handleSaveWorkout = async () => {
+    const userId = dbCollections?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    )?.[0]?.id;
+    try {
+      const userRef = doc(db, "fit-track", userId);
+      await updateDoc(userRef, {
+        DETAILS: workoutDetails,
+      });
+      navigate("/home");
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
   return {
     weekHeaders,
     workouts,
@@ -173,6 +221,7 @@ const useCreateWorkout = () => {
     workoutDetails,
     handleWorkoutOnChange,
     setWorkoutDetails,
+    handleSaveWorkout,
   };
 };
 
