@@ -10,15 +10,7 @@ const useCreateWorkout = () => {
   const loggedInUseName = localStorage.getItem("USER_NAME");
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
-  const [weekHeaders, setWeekHeaders] = useState([
-    { day: "Sunday", workouts: [{ title: "chest" }] },
-    { day: "Monday" },
-    { day: "Tuesday" },
-    { day: "Wednesday" },
-    { day: "Thursday" },
-    { day: "Friday" },
-    { day: "Saturday" },
-  ]);
+
   const days = [
     "Monday",
     "Sunday",
@@ -28,17 +20,6 @@ const useCreateWorkout = () => {
     "Friday",
     "Saturday",
   ];
-  const [workouts, setWorkouts] = useState([
-    { title: "push" },
-    { title: "pull" },
-    { title: "leg" },
-    { title: "push" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "leg" },
-  ]);
 
   const structure = {
     Monday: {
@@ -98,30 +79,6 @@ const useCreateWorkout = () => {
     Saturday: {},
     Sunday: {},
   });
-
-  const repsObj = {
-    set1reps:
-      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set1reps || 0,
-    set2reps:
-      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set2reps || 0,
-    set3reps:
-      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set3reps || 0,
-    set4reps:
-      workoutDetails?.[workoutDetails?.selectedDay]?.reps?.set4reps || 0,
-  };
-  const weightsObj = {
-    set1weights:
-      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set1weights || 0,
-    set2weights:
-      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set2weights || 0,
-    set3weights:
-      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set3weights || 0,
-    set4weights:
-      workoutDetails?.[workoutDetails?.selectedDay]?.weights?.set4weights || 0,
-  };
-  const auth = getAuth();
-  const user = auth.currentUser;
-  console.log("==user", user);
 
   useEffect(() => {
     const weekdays = [
@@ -196,13 +153,16 @@ const useCreateWorkout = () => {
   };
 
   const handleSaveWorkout = async () => {
-    const userId = dbCollections?.filter(
+    const userDetails = dbCollections?.filter(
       (row) => row?.EMAIL === loggedInUserEmail
-    )?.[0]?.id;
+    );
     try {
-      const userRef = doc(db, "fit-track", userId);
+      const userRef = doc(db, "fit-track", userDetails?.[0]?.id);
       await updateDoc(userRef, {
-        DETAILS: workoutDetails,
+        DETAILS: {
+          ...userDetails?.[0]?.DETAILS,
+          [workoutDetails?.splitName]: workoutDetails,
+        },
       });
       navigate("/home");
     } catch (error) {
@@ -211,8 +171,6 @@ const useCreateWorkout = () => {
   };
 
   return {
-    weekHeaders,
-    workouts,
     structure,
     days,
     handleAddWorkout,

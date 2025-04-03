@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase/config";
+import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
+  const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
-  const [weekHeaders, setWeekHeaders] = useState([
-    { day: "Sunday", workouts: [{ title: "chest" }] },
-    { day: "Monday" },
-    { day: "Tuesday" },
-    { day: "Wednesday" },
-    { day: "Thursday" },
-    { day: "Friday" },
-    { day: "Saturday" },
-  ]);
-  const days = [
+
+  // MARK: States
+  const todaysTitleFormat = dayjs().format("dddd");
+  const [splitList, setSplitList] = useState([]);
+  const [workoutList, setWorkoutList] = useState([]);
+  const daysList = [
     "Monday",
     "Sunday",
     "Tuesday",
@@ -21,49 +22,92 @@ const useTodaysWokout = () => {
     "Friday",
     "Saturday",
   ];
-  const [workouts, setWorkouts] = useState([
-    { title: "push" },
-    { title: "pull" },
-    { title: "leg" },
-    { title: "push" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "pull" },
-    { title: "leg" },
-  ]);
+  const [selectedDay, setSelectedDay] = useState(todaysTitleFormat);
+  const [selectedSplit, setSelectedSplit] = useState("");
+  const [selectedWorkout, setSelectedWorkout] = useState("");
+  const [workoutDetails, setWorkoutDetails] = useState({});
 
-  const structure = {
-    Monday: {
-      pushups: {
-        otherDetails: {
-          title: "",
-          notes: "",
-        },
-        reps: {
-          set1reps: 1,
-          set2reps: 1,
-          set3reps: 1,
-          set4reps: 1,
-        },
-        weights: {
-          set1weights: 10,
-          set2weights: 10,
-          set3weights: 10,
-          set4weights: 10,
-        },
-      },
-      dumbelfly: {},
-    },
-    Tuesday: { pullups: {}, dumbellCurl: {} },
-    Wednesday: { squad: {}, legpress: {} },
-    Thursday: {},
-    Friday: {},
-    Saturday: {},
-    Sunday: {},
+  console.log("==details", workoutDetails);
+
+  // MARK: Firebase database fetch
+  const [dbCollections, setDbCollections] = useState([]);
+  console.log("==db", dbCollections);
+
+  useEffect(() => {
+    const collectionRef = collection(db, "fit-track");
+    getDocs(collectionRef)
+      .then((snapshot) => {
+        let result = [];
+        snapshot.docs.forEach((doc) => {
+          result.push({ ...doc.data(), id: doc.id });
+        });
+        setDbCollections(result);
+        handleInitialFetch(result);
+      })
+      .catch((err) => console.log("==err", err));
+  }, []);
+
+  const handleInitialFetch = (result) => {
+    const loggedInuserDetails = result?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    );
+    const selectedWorkoutSplit =
+      loggedInuserDetails?.[0]?.DETAILS?.["Push pull leg"];
+    // setWorkoutDetails({[selectedWorkoutSplit]: selectedWorkoutSplit });
+    setWorkoutDetails({ "Push pull leg": selectedWorkoutSplit });
+
+    const userSplitLists = Object.keys(loggedInuserDetails?.[0]?.DETAILS);
+    setSplitList(userSplitLists);
+    setSelectedSplit(selectedWorkoutSplit?.splitName); // new key selectedWorkoutSplit currently hardcoded
+
+    const todaysWorkoutList = selectedWorkoutSplit?.[
+      todaysTitleFormat
+    ]?.workoutList?.map((row) => row?.name);
+    setWorkoutList(todaysWorkoutList);
+
+    setSelectedWorkout(todaysWorkoutList?.[0]);
+    result?.forEach((row, i) => {});
   };
 
-  return { weekHeaders, workouts, structure, days, navigate };
+  // MARK: Handle update
+  const handleUpdate = async () => {
+    const userDetails = dbCollections?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    );
+    console.log('==id',userDetails);
+    
+    try {
+      const userRef = doc(db, "fit-track", userDetails?.[0]?.id);
+      await updateDoc(userRef, {
+        DETAILS: {
+          ...userDetails?.[0]?.DETAILS,
+          ...workoutDetails,
+        },
+      });
+      navigate("/home");
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  return {
+    dbCollections,
+    setWorkoutList,
+    selectedDay,
+    handleUpdate,
+    setSelectedDay,
+    navigate,
+    splitList,
+    workoutList,
+    daysList,
+    workoutDetails,
+    selectedSplit,
+    selectedWorkout,
+    setWorkoutDetails,
+    setSelectedSplit,
+    setSelectedWorkout,
+    loggedInUserEmail,
+  };
 };
 
 export default useTodaysWokout;
