@@ -21,36 +21,6 @@ const useCreateWorkout = () => {
     "Saturday",
   ];
 
-  const structure = {
-    Monday: {
-      pushups: {
-        otherDetails: {
-          title: "",
-          notes: "",
-        },
-        reps: {
-          set1reps: 0,
-          set2reps: 0,
-          set3reps: 0,
-          set4reps: 0,
-        },
-        weights: {
-          set1weights: 0,
-          set2weights: 0,
-          set3weights: 0,
-          set4weights: 0,
-        },
-      },
-      dumbelfly: {},
-    },
-    Tuesday: { pullups: {}, dumbellCurl: {} },
-    Wednesday: { squad: {}, legpress: {} },
-    Thursday: {},
-    Friday: {},
-    Saturday: {},
-    Sunday: {},
-  };
-
   // MARK: Firebase database fetch
   const [dbCollections, setDbCollections] = useState([]);
   useEffect(() => {
@@ -80,23 +50,7 @@ const useCreateWorkout = () => {
     Sunday: {},
   });
 
-  useEffect(() => {
-    const weekdays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    // weekdays?.forEach((day) => {
-    //   setWorkoutDetails((prev) => ({
-    //     ...prev,
-    //     [day]: { ...prev?.[day], reps: repsObj, weights: weightsObj },
-    //   }));
-    // });
-  }, []);
+  const [radioButtonValue, setRadioButtonValue] = useState("create");
   console.log("==details", workoutDetails);
 
   // MARK: Handle Workout list
@@ -171,7 +125,6 @@ const useCreateWorkout = () => {
   };
 
   return {
-    structure,
     days,
     handleAddWorkout,
     handleRemoveWorkout,
@@ -180,6 +133,8 @@ const useCreateWorkout = () => {
     handleWorkoutOnChange,
     setWorkoutDetails,
     handleSaveWorkout,
+    radioButtonValue,
+    setRadioButtonValue,
   };
 };
 

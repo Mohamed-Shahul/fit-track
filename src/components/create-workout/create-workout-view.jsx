@@ -2,8 +2,11 @@ import {
   Autocomplete,
   Box,
   Button,
+  FormControlLabel,
   Grid2,
   IconButton,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
@@ -27,6 +30,8 @@ const CreateWorkoutPlan = () => {
     setWorkoutDetails,
     handleWorkoutOnChange,
     handleSaveWorkout,
+    radioButtonValue,
+    setRadioButtonValue,
   } = viewModel;
 
   const tableView = (props) => {
@@ -152,7 +157,8 @@ const CreateWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        // border={1} borderColor="white"
+        // border={1}
+        // borderColor="white"
         size={{ xs: 12 }}
         height="7%"
         alignContent="center"
@@ -161,25 +167,77 @@ const CreateWorkoutPlan = () => {
           sx={{
             borderColor: "white",
             maxWidth: "100%",
+            maxHeight: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            // gap: 1,
-            // padding: {xs: "10px 20px", md: "10px 55px"},
+            // justifyContent: "space-between",
             px: 4,
-            //  py:2
           }}
         >
-          <Typography
-            children="Create Workout plan"
+          <Box width="50%">
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="create"
+              name="radio-buttons-group"
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                fontFamily: "Poppins, sans-serif",
+              }}
+              value={radioButtonValue}
+              onChange={(e) => {
+                setRadioButtonValue(e?.target?.value);
+              }}
+            >
+              <FormControlLabel
+                value="create"
+                control={
+                  <Radio
+                    sx={{
+                      color: "#1565c0",
+                      "&.Mui-checked": { color: "#1565c0" },
+                    }}
+                  />
+                }
+                label="Create Workout"
+                sx={{
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}
+              />
+              <FormControlLabel
+                value="edit"
+                control={
+                  <Radio
+                    sx={{
+                      color: "#1565c0",
+                      "&.Mui-checked": { color: "#1565c0" },
+                    }}
+                  />
+                }
+                label="Edit Workout"
+                sx={{
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: 12,
+                  fontWeight: 500,
+                }}
+              />
+            </RadioGroup>
+          </Box>
+
+          <Box
+            width="50%"
+            // border={1}
+            // borderColor="white"
             sx={{
-              fontSize: { xs: 15, md: 24 },
-              color: "white",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 600,
+              display: "flex",
+              justifyContent: "right",
+              gap: { xs: 1, md: 2 },
             }}
-          />
-          <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+          >
             <Button
               variant="outlined"
               size="small"
@@ -212,7 +270,6 @@ const CreateWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        // border={1} borderColor="white"
         size={{ xs: 12 }}
         alignContent="center"
         height={{ xs: "10%", md: "7%" }}
@@ -229,32 +286,81 @@ const CreateWorkoutPlan = () => {
             // py:2
           }}
         >
-          <TextField
-            required
-            variant="outlined"
-            type="text"
-            autoComplete="off"
-            placeholder="Split name"
-            sx={{
-              width: { xs: "100%", md: "40%" },
-              color: "white",
-              bgcolor: "#444451",
-              borderRadius: 1,
-              "& .MuiInputBase-input": {
+          {radioButtonValue === "create" ? (
+            <TextField
+              required
+              variant="outlined"
+              type="text"
+              autoComplete="off"
+              placeholder="Split name"
+              sx={{
+                width: { xs: "100%", md: "40%" },
                 color: "white",
-                fontFamily: "Poppins, sans-serif",
-              },
-              ...entryTextFieldsStyles,
-            }}
-            size="small"
-            value={workoutDetails?.splitName}
-            onChange={(e) =>
-              setWorkoutDetails((prev) => ({
-                ...prev,
-                splitName: e?.target?.value || "",
-              }))
-            }
-          />
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+                ...entryTextFieldsStyles,
+              }}
+              size="small"
+              value={workoutDetails?.splitName}
+              onChange={(e) =>
+                setWorkoutDetails((prev) => ({
+                  ...prev,
+                  splitName: e?.target?.value || "",
+                }))
+              }
+            />
+          ) : (
+            <Autocomplete
+              disablePortal
+              // options={splitList}
+              options={['splitList']}
+              sx={{
+                width: { xs: "50%", md: "30%" },
+                color: "white",
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a split"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              disableClearable
+              // value={selectedSplit}
+              value={'selectedSplit'}
+              // onChange={(e, newValue) => {
+              //   setSelectedSplit(newValue);
+              //   const loggedInuserDetails = dbCollections?.filter(
+              //     (row) => row?.EMAIL === loggedInUserEmail
+              //   );
+
+              //   const selectedWorkoutSplit =
+              //     loggedInuserDetails?.[0]?.DETAILS?.[newValue];
+              //   setWorkoutDetails((prev) => ({
+              //     ...prev,
+              //     [newValue]: selectedWorkoutSplit,
+              //   }));
+              //   const todaysWorkoutList = selectedWorkoutSplit?.[
+              //     selectedDay
+              //   ]?.workoutList?.map((row) => row?.name);
+              //   setWorkoutList(todaysWorkoutList);
+              //   setSelectedWorkout(todaysWorkoutList?.[0]);
+              // }}
+            />
+          )}
 
           <Box
             sx={{
