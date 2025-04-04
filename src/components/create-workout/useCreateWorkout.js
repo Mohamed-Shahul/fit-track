@@ -38,9 +38,12 @@ const useCreateWorkout = () => {
   console.log("==db", dbCollections);
 
   // MARK: States
-  const [workoutDetails, setWorkoutDetails] = useState({
+  const [splitList, setSplitList] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(dayjs().format("dddd"));
+  const [selectedSplit, setSelectedSplit] = useState("");
+
+  const defaultWorkoutDetailsState = {
     splitName: "",
-    selectedDay: dayjs().format("dddd"),
     Monday: {},
     Tuesday: {},
     Wednesday: {},
@@ -48,7 +51,18 @@ const useCreateWorkout = () => {
     Friday: {},
     Saturday: {},
     Sunday: {},
-  });
+  };
+  const [workoutDetails, setWorkoutDetails] = useState({});
+  //   {
+  //   splitName: "",
+  //   Monday: {},
+  //   Tuesday: {},
+  //   Wednesday: {},
+  //   Thursday: {},
+  //   Friday: {},
+  //   Saturday: {},
+  //   Sunday: {},
+  // }
 
   const [radioButtonValue, setRadioButtonValue] = useState("create");
   console.log("==details", workoutDetails);
@@ -56,37 +70,43 @@ const useCreateWorkout = () => {
   // MARK: Handle Workout list
   const handleAddWorkout = () => {
     const prevList = [
-      ...(workoutDetails?.[workoutDetails?.selectedDay]?.workoutList || []),
+      ...(workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList || []),
     ];
     setWorkoutDetails((prev) => ({
       ...prev,
-      [workoutDetails?.selectedDay]: {
-        ...workoutDetails?.[workoutDetails?.selectedDay],
-        workoutList: [
-          ...prevList,
-          {
-            name: "",
-            reps: { set1Reps: 0, set2Reps: 0, set3Reps: 0, set4Reps: 0 },
-            weights: {
-              set1Weights: 0,
-              set2Weights: 0,
-              set3Weights: 0,
-              set4Weights: 0,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: [
+            ...prevList,
+            {
+              name: "",
+              notes: "",
+              reps: { set1Reps: 0, set2Reps: 0, set3Reps: 0, set4Reps: 0 },
+              weights: {
+                set1Weights: 0,
+                set2Weights: 0,
+                set3Weights: 0,
+                set4Weights: 0,
+              },
             },
-          },
-        ],
+          ],
+        },
       },
     }));
   };
 
   const handleRemoveWorkout = (i) => {
-    const filteredList = workoutDetails?.[
-      workoutDetails?.selectedDay
+    const filteredList = workoutDetails?.[selectedSplit]?.[
+      selectedDay
     ]?.workoutList?.filter((row, rowIndex) => rowIndex !== i);
     setWorkoutDetails((prev) => ({
       ...prev,
-      [workoutDetails?.selectedDay]: {
-        workoutList: filteredList,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: filteredList,
+        },
       },
     }));
   };
@@ -94,15 +114,43 @@ const useCreateWorkout = () => {
   const handleWorkoutOnChange = (e, i) => {
     const value = e?.target?.value;
     const tempList = [
-      ...workoutDetails?.[workoutDetails?.selectedDay]?.workoutList,
+      ...workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList,
     ];
     tempList[i].name = value;
     setWorkoutDetails((prev) => ({
       ...prev,
-      [workoutDetails?.selectedDay]: {
-        ...prev?.[workoutDetails?.selectedDay],
-        workoutList: tempList,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: tempList,
+        },
       },
+    }));
+  };
+
+  // MARK: Handle edit radio fetch details
+  const handleEditRadioFetch = (value) => {
+    setRadioButtonValue(value);
+    setSelectedSplit("");
+    setWorkoutDetails({});
+    if (value === "edit") {
+      const userDetails = dbCollections?.filter(
+        (row) => row?.EMAIL === loggedInUserEmail
+      );
+      const splitDetailsList = Object.keys(userDetails?.[0]?.DETAILS);
+      setSplitList(splitDetailsList);
+    }
+  };
+
+  const handleSplitSelectionFetch = (value) => {
+    setSelectedSplit(value);
+    const loggedInuserDetails = dbCollections?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    );
+    const selectedWorkoutSplit = loggedInuserDetails?.[0]?.DETAILS?.[value];
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [value]: selectedWorkoutSplit,
     }));
   };
 
@@ -115,7 +163,8 @@ const useCreateWorkout = () => {
       await updateDoc(userRef, {
         DETAILS: {
           ...userDetails?.[0]?.DETAILS,
-          [workoutDetails?.splitName]: workoutDetails,
+          // [workoutDetails?.splitName]: workoutDetails,
+          ...workoutDetails,
         },
       });
       navigate("/home");
@@ -135,6 +184,15 @@ const useCreateWorkout = () => {
     handleSaveWorkout,
     radioButtonValue,
     setRadioButtonValue,
+    selectedDay,
+    setSelectedDay,
+    splitList,
+    setSplitList,
+    selectedSplit,
+    setSelectedSplit,
+    handleEditRadioFetch,
+    handleSplitSelectionFetch,
+    defaultWorkoutDetailsState,
   };
 };
 

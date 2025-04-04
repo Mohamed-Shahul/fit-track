@@ -32,18 +32,18 @@ const CreateWorkoutPlan = () => {
     handleSaveWorkout,
     radioButtonValue,
     setRadioButtonValue,
+    selectedDay,
+    setSelectedDay,
+    splitList,
+    setSplitList,
+    selectedSplit,
+    setSelectedSplit,
+    handleEditRadioFetch,
+    handleSplitSelectionFetch,
+    defaultWorkoutDetailsState,
   } = viewModel;
 
   const tableView = (props) => {
-    const selectedDay = props?.Monday;
-    const selectedWorkout = selectedDay?.pushups;
-    const otherDetails = selectedWorkout?.otherDetails;
-    const weightsObj = selectedWorkout?.weights;
-    const weightsKeys = weightsObj ? Object.keys(weightsObj) : [];
-    const repsObj = selectedWorkout?.reps;
-    const repsKeys = repsObj ? Object.keys(repsObj) : [];
-    console.log("==day", selectedWorkout, weightsObj);
-
     return (
       <Box
         sx={{
@@ -64,8 +64,8 @@ const CreateWorkoutPlan = () => {
           ...scrollBarStyle,
         }}
       >
-        {workoutDetails?.[workoutDetails?.selectedDay]?.workoutList?.length ? (
-          workoutDetails?.[workoutDetails?.selectedDay]?.workoutList?.map(
+        {workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList?.length ? (
+          workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList?.map(
             (row, i) => (
               <Box
                 sx={{
@@ -170,7 +170,6 @@ const CreateWorkoutPlan = () => {
             maxHeight: "100%",
             display: "flex",
             alignItems: "center",
-            // justifyContent: "space-between",
             px: 4,
           }}
         >
@@ -186,7 +185,7 @@ const CreateWorkoutPlan = () => {
               }}
               value={radioButtonValue}
               onChange={(e) => {
-                setRadioButtonValue(e?.target?.value);
+                handleEditRadioFetch(e?.target?.value);
               }}
             >
               <FormControlLabel
@@ -305,21 +304,28 @@ const CreateWorkoutPlan = () => {
                 ...entryTextFieldsStyles,
               }}
               size="small"
-              value={workoutDetails?.splitName}
-              onChange={(e) =>
+              value={selectedSplit}
+              onChange={(e) => {
+                setSelectedSplit(e?.target?.value);
+              }}
+              onBlur={(e) => {
                 setWorkoutDetails((prev) => ({
                   ...prev,
-                  splitName: e?.target?.value || "",
-                }))
-              }
+                  [e?.target?.value]: {
+                    ...defaultWorkoutDetailsState,
+                    splitName: e?.target?.value,
+                  },
+                }));
+                setSelectedSplit(e?.target?.value);
+              }}
             />
           ) : (
             <Autocomplete
               disablePortal
               // options={splitList}
-              options={['splitList']}
+              options={splitList}
               sx={{
-                width: { xs: "50%", md: "30%" },
+                width: { xs: "100%", md: "40%" },
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -339,26 +345,10 @@ const CreateWorkoutPlan = () => {
                 />
               )}
               disableClearable
-              // value={selectedSplit}
-              value={'selectedSplit'}
-              // onChange={(e, newValue) => {
-              //   setSelectedSplit(newValue);
-              //   const loggedInuserDetails = dbCollections?.filter(
-              //     (row) => row?.EMAIL === loggedInUserEmail
-              //   );
-
-              //   const selectedWorkoutSplit =
-              //     loggedInuserDetails?.[0]?.DETAILS?.[newValue];
-              //   setWorkoutDetails((prev) => ({
-              //     ...prev,
-              //     [newValue]: selectedWorkoutSplit,
-              //   }));
-              //   const todaysWorkoutList = selectedWorkoutSplit?.[
-              //     selectedDay
-              //   ]?.workoutList?.map((row) => row?.name);
-              //   setWorkoutList(todaysWorkoutList);
-              //   setSelectedWorkout(todaysWorkoutList?.[0]);
-              // }}
+              value={selectedSplit}
+              onChange={(e, newValue) => {
+                handleSplitSelectionFetch(newValue);
+              }}
             />
           )}
 
@@ -394,12 +384,13 @@ const CreateWorkoutPlan = () => {
                 />
               )}
               disableClearable
-              value={workoutDetails?.selectedDay}
+              value={selectedDay}
               onChange={(e, newValue) => {
-                setWorkoutDetails((prev) => ({
-                  ...prev,
-                  selectedDay: newValue,
-                }));
+                // setWorkoutDetails((prev) => ({
+                //   ...prev,
+                //   selectedDay: newValue,
+                // }));
+                setSelectedDay(newValue);
               }}
             />
             <Button
@@ -408,7 +399,11 @@ const CreateWorkoutPlan = () => {
                 width: { xs: "40%", md: "20%" },
                 textTransform: "none",
                 fontFamily: "Poppins, sans-serif",
+                bgcolor: !selectedSplit?.length
+                  ? "silver !important"
+                  : "#1976d2",
               }}
+              disabled={!selectedSplit?.length}
               onClick={() => handleAddWorkout()}
             >
               Add Workout
