@@ -38,6 +38,7 @@ const useCreateWorkout = () => {
   console.log("==db", dbCollections);
 
   // MARK: States
+  const [isDelete, setIsDelete] = useState({ state: false, index: 0 });
   const [splitList, setSplitList] = useState([]);
   const [selectedDay, setSelectedDay] = useState(dayjs().format("dddd"));
   const [selectedSplit, setSelectedSplit] = useState("");
@@ -108,6 +109,10 @@ const useCreateWorkout = () => {
           workoutList: filteredList,
         },
       },
+    }));
+    setIsDelete((prev) => ({
+      ...prev,
+      state: false,
     }));
   };
 
@@ -193,6 +198,8 @@ const useCreateWorkout = () => {
     handleEditRadioFetch,
     handleSplitSelectionFetch,
     defaultWorkoutDetailsState,
+    isDelete,
+    setIsDelete,
   };
 };
 
