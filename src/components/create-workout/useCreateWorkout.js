@@ -2,7 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase/config";
 import { getAuth } from "firebase/auth";
 
@@ -159,6 +166,25 @@ const useCreateWorkout = () => {
     }));
   };
 
+  const handleDeleteSplit = async () => {
+    const userDetails = dbCollections?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    );
+    try {
+      const userRef = doc(db, "fit-track", userDetails?.[0]?.id);
+      const { [selectedSplit]: removed, ...restDetails } =
+        userDetails[0].DETAILS;
+      await updateDoc(userRef, {
+        DETAILS: {
+          ...restDetails,
+        },
+      });
+      navigate("/home");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
   const handleSaveWorkout = async () => {
     const userDetails = dbCollections?.filter(
       (row) => row?.EMAIL === loggedInUserEmail
@@ -179,6 +205,7 @@ const useCreateWorkout = () => {
   };
 
   return {
+    handleDeleteSplit,
     days,
     handleAddWorkout,
     handleRemoveWorkout,
