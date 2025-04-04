@@ -183,83 +183,8 @@ const CreateWorkoutPlan = () => {
             px: 4,
           }}
         >
-          <Box width="70%">
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="create"
-              name="radio-buttons-group"
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                fontFamily: "Poppins, sans-serif",
-              }}
-              value={radioButtonValue}
-              onChange={(e) => {
-                handleEditRadioFetch(e?.target?.value);
-              }}
-            >
-              <FormControlLabel
-                value="create"
-                control={
-                  <Radio
-                    sx={{
-                      color: "#1565c0",
-                      "&.Mui-checked": { color: "#1565c0" },
-                    }}
-                  />
-                }
-                label="Create workou splitt"
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="edit"
-                control={
-                  <Radio
-                    sx={{
-                      color: "#1565c0",
-                      "&.Mui-checked": { color: "#1565c0" },
-                    }}
-                  />
-                }
-                label="Edit workout split"
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="delete"
-                control={
-                  <Radio
-                    sx={{
-                      color: "#1565c0",
-                      "&.Mui-checked": { color: "#1565c0" },
-                    }}
-                  />
-                }
-                label="Delete workout split"
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                  },
-                }}
-              />
-            </RadioGroup>
-          </Box>
-
           <Box
-            width="30%"
+            width="100%"
             // border={1}
             // borderColor="white"
             sx={{
@@ -295,6 +220,99 @@ const CreateWorkoutPlan = () => {
               onClick={handleSaveWorkout}
             >
               {radioButtonValue === "Create" ? "Save" : "Update"}
+            </Button>
+          </Box>
+        </Box>
+      </Grid2>
+      <Grid2
+        // border={1}
+        // borderColor="white"
+        size={{ xs: 12 }}
+        height="7%"
+        alignContent="center"
+      >
+        <Box
+          sx={{
+            borderColor: "white",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            display: "flex",
+            alignItems: "center",
+            px: 4,
+          }}
+        >
+          <Box width="70%">
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="create"
+              name="radio-buttons-group"
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                fontFamily: "Poppins, sans-serif",
+              }}
+              value={radioButtonValue}
+              onChange={(e) => {
+                handleEditRadioFetch(e?.target?.value);
+              }}
+            >
+              <FormControlLabel
+                value="create"
+                control={
+                  <Radio
+                    sx={{
+                      color: "#1565c0",
+                      "&.Mui-checked": { color: "#1565c0" },
+                    }}
+                  />
+                }
+                label="Create workout split"
+                sx={{
+                  "& .MuiFormControlLabel-label": {
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                  },
+                }}
+              />
+              <FormControlLabel
+                value="edit"
+                control={
+                  <Radio
+                    sx={{
+                      color: "#1565c0",
+                      "&.Mui-checked": { color: "#1565c0" },
+                    }}
+                  />
+                }
+                label="Edit workout split"
+                sx={{
+                  "& .MuiFormControlLabel-label": {
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                  },
+                }}
+              />
+            </RadioGroup>
+          </Box>
+          <Box width="30%" display="flex" justifyContent="right">
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                borderRadius: 1,
+                borderColor: "#1565c0",
+                color: radioButtonValue === "create" ? "black" : "white",
+                textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
+                bgcolor:
+                  radioButtonValue === "create" ? "silver !important" : "black",
+              }}
+              disabled={radioButtonValue === "create"}
+              // onClick={() => navigate("/home")}
+            >
+              Delete this split
             </Button>
           </Box>
         </Box>
@@ -447,13 +465,12 @@ const CreateWorkoutPlan = () => {
       <Grid2
         size={{ xs: 12 }}
         // border={1} borderColor="white"
-        height={{ xs: "76%", md: "79%" }}
+        height={{ xs: "59%", md: "62%" }}
       >
         <Box
           sx={{
             maxWidth: "100%",
             maxHeight: "100%",
-            // padding: {xs: "5px 20px", md: "5px 50px"},
             overflow: "auto",
             overflowX: "hidden",
             px: 2,
