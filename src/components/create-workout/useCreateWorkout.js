@@ -1,23 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
-import { getAuth } from "firebase/auth";
+import { findAllByDisplayValue } from "@testing-library/dom";
 
 const useCreateWorkout = () => {
-  const loggedInUseName = localStorage.getItem("USER_NAME");
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
 
+  // MARK: States
+  const [isDelete, setIsDelete] = useState({ state: false, index: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [radioButtonValue, setRadioButtonValue] = useState("create");
+  const [splitList, setSplitList] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(dayjs().format("dddd"));
+  const [selectedSplit, setSelectedSplit] = useState("");
+  const [workoutDetails, setWorkoutDetails] = useState({});
+  const defaultWorkoutDetailsState = {
+    splitName: "",
+    Monday: {},
+    Tuesday: {},
+    Wednesday: {},
+    Thursday: {},
+    Friday: {},
+    Saturday: {},
+    Sunday: {},
+  };
   const days = [
     "Monday",
     "Sunday",
@@ -27,6 +38,7 @@ const useCreateWorkout = () => {
     "Friday",
     "Saturday",
   ];
+  console.log("==details", workoutDetails);
 
   // MARK: Firebase database fetch
   const [dbCollections, setDbCollections] = useState([]);
@@ -43,37 +55,6 @@ const useCreateWorkout = () => {
       .catch((err) => console.log("==err", err));
   }, []);
   console.log("==db", dbCollections);
-
-  // MARK: States
-  const [isDelete, setIsDelete] = useState({ state: false, index: 0 });
-  const [splitList, setSplitList] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(dayjs().format("dddd"));
-  const [selectedSplit, setSelectedSplit] = useState("");
-
-  const defaultWorkoutDetailsState = {
-    splitName: "",
-    Monday: {},
-    Tuesday: {},
-    Wednesday: {},
-    Thursday: {},
-    Friday: {},
-    Saturday: {},
-    Sunday: {},
-  };
-  const [workoutDetails, setWorkoutDetails] = useState({});
-  //   {
-  //   splitName: "",
-  //   Monday: {},
-  //   Tuesday: {},
-  //   Wednesday: {},
-  //   Thursday: {},
-  //   Friday: {},
-  //   Saturday: {},
-  //   Sunday: {},
-  // }
-
-  const [radioButtonValue, setRadioButtonValue] = useState("create");
-  console.log("==details", workoutDetails);
 
   // MARK: Handle Workout list
   const handleAddWorkout = () => {
@@ -167,6 +148,11 @@ const useCreateWorkout = () => {
   };
 
   const handleDeleteSplit = async () => {
+    setIsDelete((prev) => ({
+      ...prev,
+      state: false,
+    }));
+    setIsLoadingDelete(true);
     const userDetails = dbCollections?.filter(
       (row) => row?.EMAIL === loggedInUserEmail
     );
@@ -179,13 +165,17 @@ const useCreateWorkout = () => {
           ...restDetails,
         },
       });
+      setIsLoadingDelete(false);
       navigate("/home");
     } catch (error) {
+      setIsLoading(false);
       console.error("Error deleting user:", error);
     }
   };
 
+  // MARK: Handle save
   const handleSaveWorkout = async () => {
+    setIsLoading(true);
     const userDetails = dbCollections?.filter(
       (row) => row?.EMAIL === loggedInUserEmail
     );
@@ -194,12 +184,13 @@ const useCreateWorkout = () => {
       await updateDoc(userRef, {
         DETAILS: {
           ...userDetails?.[0]?.DETAILS,
-          // [workoutDetails?.splitName]: workoutDetails,
           ...workoutDetails,
         },
       });
+      setIsLoading(false);
       navigate("/home");
     } catch (error) {
+      setIsLoading(false);
       console.error("Error updating user:", error);
     }
   };
@@ -227,6 +218,8 @@ const useCreateWorkout = () => {
     defaultWorkoutDetailsState,
     isDelete,
     setIsDelete,
+    isLoading,
+    isLoadingDelete,
   };
 };
 
