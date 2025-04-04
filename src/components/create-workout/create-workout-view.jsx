@@ -13,15 +13,18 @@ import {
 import React from "react";
 import useCreateWorkout from "./useCreateWorkout";
 import useCustomHook from "../custom-hook/useCustomHook";
-import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
+import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
+
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AppBarView from "../app-bar/app-bar-view";
+import DeleteDialog from "./delete-dialog";
 
 const CreateWorkoutPlan = () => {
   const { entryTextFieldsStyles, scrollBarStyle } = useCustomHook();
   const viewModel = useCreateWorkout();
   const {
-    structure,
+    isDelete,
+    setIsDelete,
     days,
     handleAddWorkout,
     handleRemoveWorkout,
@@ -41,9 +44,10 @@ const CreateWorkoutPlan = () => {
     handleEditRadioFetch,
     handleSplitSelectionFetch,
     defaultWorkoutDetailsState,
+    handleDeleteConfirm,
   } = viewModel;
 
-  const tableView = (props) => {
+  const tableView = () => {
     return (
       <Box
         sx={{
@@ -111,7 +115,13 @@ const CreateWorkoutPlan = () => {
                           }
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleRemoveWorkout(i);
+                            setIsDelete((prev) => ({
+                              ...prev,
+                              state: true,
+                              index: i,
+                              title: row?.name,
+                            }));
+                            // handleRemoveWorkout(i);
                           }}
                         />
                       ),
@@ -173,7 +183,7 @@ const CreateWorkoutPlan = () => {
             px: 4,
           }}
         >
-          <Box width="50%">
+          <Box width="70%">
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue="create"
@@ -198,12 +208,13 @@ const CreateWorkoutPlan = () => {
                     }}
                   />
                 }
-                label="Create Workout"
+                label="Create workou splitt"
                 sx={{
-                  color: "white",
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: 12,
-                  fontWeight: 500,
+                  "& .MuiFormControlLabel-label": {
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                  },
                 }}
               />
               <FormControlLabel
@@ -216,19 +227,39 @@ const CreateWorkoutPlan = () => {
                     }}
                   />
                 }
-                label="Edit Workout"
+                label="Edit workout split"
                 sx={{
-                  color: "white",
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: 12,
-                  fontWeight: 500,
+                  "& .MuiFormControlLabel-label": {
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                  },
+                }}
+              />
+              <FormControlLabel
+                value="delete"
+                control={
+                  <Radio
+                    sx={{
+                      color: "#1565c0",
+                      "&.Mui-checked": { color: "#1565c0" },
+                    }}
+                  />
+                }
+                label="Delete workout split"
+                sx={{
+                  "& .MuiFormControlLabel-label": {
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 500,
+                  },
                 }}
               />
             </RadioGroup>
           </Box>
 
           <Box
-            width="50%"
+            width="30%"
             // border={1}
             // borderColor="white"
             sx={{
@@ -245,6 +276,7 @@ const CreateWorkoutPlan = () => {
                 borderColor: "#1565c0",
                 color: "white",
                 textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
               }}
               onClick={() => navigate("/home")}
             >
@@ -256,13 +288,13 @@ const CreateWorkoutPlan = () => {
               sx={{
                 bgcolor: "#1565c0",
                 borderRadius: 1,
-
                 textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
               }}
-              startIcon={<SaveRoundedIcon />}
+              startIcon={<BackupRoundedIcon />}
               onClick={handleSaveWorkout}
             >
-              Save
+              {radioButtonValue === "Create" ? "Save" : "Update"}
             </Button>
           </Box>
         </Box>
@@ -429,10 +461,20 @@ const CreateWorkoutPlan = () => {
             ...scrollBarStyle,
           }}
         >
-          {tableView(structure)}
+          {tableView()}
         </Box>
       </Grid2>
+
+      <DeleteDialog
+        open={isDelete?.state}
+        setOpen={setIsDelete}
+        title={isDelete?.title}
+        handleConfirm={() => {
+          handleRemoveWorkout(isDelete?.index);
+        }}
+      />
     </Grid2>
+
     // </Box>
   );
 };
