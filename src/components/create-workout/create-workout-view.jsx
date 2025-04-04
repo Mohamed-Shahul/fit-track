@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  CircularProgress,
   FormControlLabel,
   Grid2,
   IconButton,
@@ -34,17 +35,17 @@ const CreateWorkoutPlan = () => {
     handleWorkoutOnChange,
     handleSaveWorkout,
     radioButtonValue,
-    setRadioButtonValue,
     selectedDay,
     setSelectedDay,
     splitList,
-    setSplitList,
     selectedSplit,
     setSelectedSplit,
     handleEditRadioFetch,
     handleSplitSelectionFetch,
     defaultWorkoutDetailsState,
     handleDeleteSplit,
+    isLoading,
+    isLoadingDelete,
   } = viewModel;
 
   const tableView = () => {
@@ -57,12 +58,9 @@ const CreateWorkoutPlan = () => {
           borderRadius: 1,
           display: "flex",
           flexDirection: "column",
-          // rowGap:1,
           gap: 1,
           height: "100%",
           maxHeight: "100%",
-          // minHeight: "300px",
-          // maxHeight: "300px",
           overflow: "auto",
           overflowX: "hidden",
           ...scrollBarStyle,
@@ -73,8 +71,6 @@ const CreateWorkoutPlan = () => {
             (row, i) => (
               <Box
                 sx={{
-                  // border:1,
-                  // borderColor:'white',
                   display: "flex",
                   justifyContent: "space-between",
                 }}
@@ -121,7 +117,6 @@ const CreateWorkoutPlan = () => {
                               index: i,
                               title: row?.name,
                             }));
-                            // handleRemoveWorkout(i);
                           }}
                         />
                       ),
@@ -275,10 +270,22 @@ const CreateWorkoutPlan = () => {
                 display: "flex",
                 alignItems: "center",
               }}
-              startIcon={<BackupRoundedIcon />}
+              startIcon={
+                <>
+                  {isLoading ? (
+                    <CircularProgress size={20} sx={{ color: "white" }} />
+                  ) : (
+                    <BackupRoundedIcon />
+                  )}
+                </>
+              }
               onClick={handleSaveWorkout}
             >
-              {radioButtonValue === "create" ? "Save" : "Update"}
+              {isLoading
+                ? ""
+                : radioButtonValue === "create"
+                ? "Save"
+                : "Update"}
             </Button>
             <Button
               variant="contained"
@@ -299,11 +306,20 @@ const CreateWorkoutPlan = () => {
               }}
               onClick={() => {
                 if (radioButtonValue !== "create") {
-                  handleDeleteSplit();
+                  setIsDelete((prev) => ({
+                    ...prev,
+                    state: true,
+                    title: selectedSplit,
+                    index: 0,
+                  }));
                 }
               }}
             >
-              Delete this split
+              {isLoadingDelete ? (
+                <CircularProgress size={20} sx={{ color: "white" }} />
+              ) : (
+                "Delete this split"
+              )}
             </Button>
           </Box>
         </Box>
@@ -478,7 +494,11 @@ const CreateWorkoutPlan = () => {
         setOpen={setIsDelete}
         title={isDelete?.title}
         handleConfirm={() => {
-          handleRemoveWorkout(isDelete?.index);
+          if (isDelete?.index) {
+            handleRemoveWorkout(isDelete?.index);
+          } else {
+            handleDeleteSplit();
+          }
         }}
       />
     </Grid2>
