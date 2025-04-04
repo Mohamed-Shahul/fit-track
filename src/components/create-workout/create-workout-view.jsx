@@ -44,7 +44,7 @@ const CreateWorkoutPlan = () => {
     handleEditRadioFetch,
     handleSplitSelectionFetch,
     defaultWorkoutDetailsState,
-    handleDeleteConfirm,
+    handleDeleteSplit,
   } = viewModel;
 
   const tableView = () => {
@@ -170,7 +170,7 @@ const CreateWorkoutPlan = () => {
         // border={1}
         // borderColor="white"
         size={{ xs: 12 }}
-        height="7%"
+        height={{ xs: "12%", md: "7%" }}
         alignContent="center"
       >
         <Box
@@ -179,11 +179,13 @@ const CreateWorkoutPlan = () => {
             maxWidth: "100%",
             maxHeight: "100%",
             display: "flex",
+            flexDirection: { xs: "column-reverse", md: "row" },
+            rowGap: 2,
             alignItems: "center",
             px: 4,
           }}
         >
-          <Box width="70%">
+          <Box width={{ xs: "100%", md: "50%" }}>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               defaultValue="create"
@@ -208,7 +210,7 @@ const CreateWorkoutPlan = () => {
                     }}
                   />
                 }
-                label="Create workou splitt"
+                label="Create split"
                 sx={{
                   "& .MuiFormControlLabel-label": {
                     color: "white",
@@ -227,26 +229,7 @@ const CreateWorkoutPlan = () => {
                     }}
                   />
                 }
-                label="Edit workout split"
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    color: "white",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="delete"
-                control={
-                  <Radio
-                    sx={{
-                      color: "#1565c0",
-                      "&.Mui-checked": { color: "#1565c0" },
-                    }}
-                  />
-                }
-                label="Delete workout split"
+                label="Edit split"
                 sx={{
                   "& .MuiFormControlLabel-label": {
                     color: "white",
@@ -257,9 +240,8 @@ const CreateWorkoutPlan = () => {
               />
             </RadioGroup>
           </Box>
-
           <Box
-            width="30%"
+            width={{ xs: "100%", md: "50%" }}
             // border={1}
             // borderColor="white"
             sx={{
@@ -290,11 +272,38 @@ const CreateWorkoutPlan = () => {
                 borderRadius: 1,
                 textTransform: "none",
                 fontFamily: "Poppins, sans-serif",
+                display: "flex",
+                alignItems: "center",
               }}
               startIcon={<BackupRoundedIcon />}
               onClick={handleSaveWorkout}
             >
-              {radioButtonValue === "Create" ? "Save" : "Update"}
+              {radioButtonValue === "create" ? "Save" : "Update"}
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              disableTouchRipple={!selectedSplit?.length}
+              sx={{
+                borderRadius: 1,
+                borderColor: "#1565c0",
+                textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
+                display: radioButtonValue === "create" ? "none" : "",
+                ...(!selectedSplit?.length && {
+                  backgroundColor: "#b0bec5",
+                  color: "#37474f",
+                  cursor: "default",
+                }),
+              }}
+              onClick={() => {
+                if (radioButtonValue !== "create") {
+                  handleDeleteSplit();
+                }
+              }}
+            >
+              Delete this split
             </Button>
           </Box>
         </Box>
@@ -453,7 +462,6 @@ const CreateWorkoutPlan = () => {
           sx={{
             maxWidth: "100%",
             maxHeight: "100%",
-            // padding: {xs: "5px 20px", md: "5px 50px"},
             overflow: "auto",
             overflowX: "hidden",
             px: 2,
