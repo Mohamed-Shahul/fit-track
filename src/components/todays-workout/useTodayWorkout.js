@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../../firebase/config";
 import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
+  const location = useLocation();
 
   // MARK: States
   const todaysTitleFormat = dayjs().format("dddd");
@@ -69,13 +70,27 @@ const useTodaysWokout = () => {
     result?.forEach((row, i) => {});
   };
 
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e) => {
+  //     e.preventDefault();
+  //     e.returnValue = ""; // Required for most browsers
+  //     console.log('==test');
+      
+      
+  //   };
+
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [location]);
+
   // MARK: Handle update
   const handleUpdate = async () => {
     const userDetails = dbCollections?.filter(
       (row) => row?.EMAIL === loggedInUserEmail
     );
-    console.log('==id',userDetails);
-    
     try {
       const userRef = doc(db, "fit-track", userDetails?.[0]?.id);
       await updateDoc(userRef, {
@@ -84,7 +99,7 @@ const useTodaysWokout = () => {
           ...workoutDetails,
         },
       });
-      navigate("/home");
+      // navigate("/home");
     } catch (error) {
       console.error("Error updating user:", error);
     }
