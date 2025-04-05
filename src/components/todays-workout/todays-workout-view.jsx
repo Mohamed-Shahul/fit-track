@@ -55,7 +55,6 @@ const TodaysWorkoutPlan = () => {
     const notesValue = selectedWorkoutList?.filter(
       (row) => row?.name === selectedWorkout
     )?.[0]?.notes;
-    console.log("==test", notesValue);
 
     return (
       <>
@@ -182,6 +181,7 @@ const TodaysWorkoutPlan = () => {
                           },
                         }));
                       }}
+                      onBlur={() => handleUpdate()}
                     />
                   </Box>
                 ))}
@@ -253,6 +253,7 @@ const TodaysWorkoutPlan = () => {
                           },
                         }));
                       }}
+                      onBlur={() => handleUpdate()}
                     />
                   </Box>
                 ))}
@@ -296,6 +297,7 @@ const TodaysWorkoutPlan = () => {
                     },
                   }));
                 }}
+                onBlur={() => handleUpdate()}
               />
             </Box>
           </Box>
@@ -377,7 +379,7 @@ const TodaysWorkoutPlan = () => {
                 textTransform: "none",
               }}
               startIcon={<BackupRoundedIcon />}
-              onClick={handleUpdate}
+              // onClick={handleUpdate}
             >
               Update
             </Button>
