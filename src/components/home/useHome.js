@@ -17,12 +17,6 @@ const useHome = () => {
       url: "/todays-workout",
       icon: TodaySharpIcon,
     },
-
-    // {
-    //   title: "Choose workout plan",
-    //   url: "/choose-workout",
-    //   icon: FactCheckSharpIcon,
-    // },
   ]);
   return {
     items,

@@ -385,99 +385,106 @@ const TodaysWorkoutPlan = () => {
         </Box>
       </Grid2>
 
-      <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
+      <Grid2
+        size={{ xs: 12 }}
+        height={{ xs: "12%", md: "7%" }}
+        alignContent="center"
+      >
         <Box
           sx={{
             maxWidth: "100%",
             display: "flex",
+            flexDirection: { xs: "column", md: "row" },
             gap: 1,
             alignItems: "center",
             px: 4,
           }}
         >
-          <Autocomplete
-            disablePortal
-            options={splitList}
-            sx={{
-              width: { xs: "50%", md: "30%" },
-              color: "white",
-              bgcolor: "#444451",
-              borderRadius: 1,
-              "& .MuiInputBase-input": {
+          <Box width={{ xs: "100%", md: "50%" }} display="flex" gap={1}>
+            <Autocomplete
+              disablePortal
+              options={splitList}
+              sx={{
+                width: { xs: "50%", md: "50%" },
                 color: "white",
-                fontFamily: "Poppins, sans-serif",
-              },
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder="Select a split"
-                size="small"
-                required
-                sx={{ ...entryTextFieldsStyles }}
-              />
-            )}
-            disableClearable
-            value={selectedSplit}
-            onChange={(e, newValue) => {
-              setSelectedSplit(newValue);
-              const loggedInuserDetails = dbCollections?.filter(
-                (row) => row?.EMAIL === loggedInUserEmail
-              );
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a split"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              disableClearable
+              value={selectedSplit}
+              onChange={(e, newValue) => {
+                setSelectedSplit(newValue);
+                const loggedInuserDetails = dbCollections?.filter(
+                  (row) => row?.EMAIL === loggedInUserEmail
+                );
 
-              const selectedWorkoutSplit =
-                loggedInuserDetails?.[0]?.DETAILS?.[newValue];
-              setWorkoutDetails((prev) => ({
-                ...prev,
-                [newValue]: selectedWorkoutSplit,
-              }));
-              const todaysWorkoutList = selectedWorkoutSplit?.[
-                selectedDay
-              ]?.workoutList?.map((row) => row?.name);
-              setWorkoutList(todaysWorkoutList);
-              setSelectedWorkout(todaysWorkoutList?.[0]);
-            }}
-          />
-          <Autocomplete
-            disablePortal
-            options={daysList}
-            sx={{
-              width: { xs: "50%", md: "30%" },
-              color: "white",
-              bgcolor: "#444451",
-              borderRadius: 1,
-              "& .MuiInputBase-input": {
+                const selectedWorkoutSplit =
+                  loggedInuserDetails?.[0]?.DETAILS?.[newValue];
+                setWorkoutDetails((prev) => ({
+                  ...prev,
+                  [newValue]: selectedWorkoutSplit,
+                }));
+                const todaysWorkoutList = selectedWorkoutSplit?.[
+                  selectedDay
+                ]?.workoutList?.map((row) => row?.name);
+                setWorkoutList(todaysWorkoutList);
+                setSelectedWorkout(todaysWorkoutList?.[0]);
+              }}
+            />
+            <Autocomplete
+              disablePortal
+              options={daysList}
+              sx={{
+                width: { xs: "50%", md: "50%" },
                 color: "white",
-                fontFamily: "Poppins, sans-serif",
-              },
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder="Select a day"
-                size="small"
-                required
-                sx={{ ...entryTextFieldsStyles }}
-              />
-            )}
-            disableClearable
-            value={selectedDay || ""}
-            onChange={(e, newValue) => {
-              setSelectedDay(newValue);
-              const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
-                newValue
-              ]?.workoutList?.map((row) => row?.name);
-              setWorkoutList(todaysWorkoutList || []);
-              setSelectedWorkout(todaysWorkoutList?.[0]);
-            }}
-          />
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a day"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              disableClearable
+              value={selectedDay || ""}
+              onChange={(e, newValue) => {
+                setSelectedDay(newValue);
+                const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
+                  newValue
+                ]?.workoutList?.map((row) => row?.name);
+                setWorkoutList(todaysWorkoutList || []);
+                setSelectedWorkout(todaysWorkoutList?.[0]);
+              }}
+            />
+          </Box>
           <Autocomplete
             disablePortal
             options={workoutList}
             sx={{
-              width: { xs: "50%", md: "30%" },
+              width: { xs: "100%", md: "30%" },
               color: "white",
               bgcolor: "#444451",
               borderRadius: 1,
