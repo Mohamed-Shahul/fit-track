@@ -11,6 +11,7 @@ import useCustomHook from "../custom-hook/useCustomHook";
 import useTodaysWokout from "./useTodayWorkout";
 import AppBarView from "../app-bar/app-bar-view";
 import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
+import StopwatchView from "./stopwatch-view";
 
 const TodaysWorkoutPlan = () => {
   const { commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle } =
@@ -333,7 +334,8 @@ const TodaysWorkoutPlan = () => {
           px: 2,
         }}
       >
-        <AppBarView />
+        {/* <AppBarView /> */}
+        <StopwatchView />
       </Grid2>
 
       <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
@@ -365,6 +367,7 @@ const TodaysWorkoutPlan = () => {
                 borderColor: "#1565c0",
                 color: "white",
                 textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
               }}
               onClick={() => navigate("/home")}
             >
@@ -377,6 +380,7 @@ const TodaysWorkoutPlan = () => {
                 bgcolor: "#1565c0",
                 borderRadius: 1,
                 textTransform: "none",
+                fontFamily: "Poppins, sans-serif",
               }}
               startIcon={<BackupRoundedIcon />}
               // onClick={handleUpdate}
