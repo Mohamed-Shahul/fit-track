@@ -263,13 +263,16 @@ const CreateWorkoutPlan = () => {
               variant="contained"
               size="small"
               sx={{
-                bgcolor: "#1565c0",
                 borderRadius: 1,
                 textTransform: "none",
                 fontFamily: "Poppins, sans-serif",
                 display: "flex",
                 alignItems: "center",
+                bgcolor: !selectedSplit?.length
+                  ? "silver !important"
+                  : "#1565c0",
               }}
+              disabled={!selectedSplit?.length}
               startIcon={
                 <>
                   {isLoading ? (
@@ -279,7 +282,9 @@ const CreateWorkoutPlan = () => {
                   )}
                 </>
               }
-              onClick={handleSaveWorkout}
+              onClick={() => {
+                !isLoading && handleSaveWorkout();
+              }}
             >
               {isLoading
                 ? ""
@@ -291,21 +296,25 @@ const CreateWorkoutPlan = () => {
               variant="contained"
               color="error"
               size="small"
-              disableTouchRipple={!selectedSplit?.length}
+              disableTouchRipple={!selectedSplit?.length || !isLoadingDelete}
               sx={{
                 borderRadius: 1,
                 borderColor: "#1565c0",
                 textTransform: "none",
                 fontFamily: "Poppins, sans-serif",
                 display: radioButtonValue === "create" ? "none" : "",
-                ...(!selectedSplit?.length && {
+                ...((!selectedSplit?.length || !isLoadingDelete) && {
                   backgroundColor: "#b0bec5",
                   color: "#37474f",
                   cursor: "default",
                 }),
               }}
               onClick={() => {
-                if (radioButtonValue !== "create") {
+                if (
+                  radioButtonValue !== "create" &&
+                  !isLoadingDelete &&
+                  selectedSplit?.length
+                ) {
                   setIsDelete((prev) => ({
                     ...prev,
                     state: true,
