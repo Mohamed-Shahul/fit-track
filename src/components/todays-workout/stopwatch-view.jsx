@@ -12,6 +12,7 @@ const StopwatchView = () => {
     milliSec: 0,
     sec: 0,
     min: 0,
+    hour: 0,
   });
   console.log("==stopwatch", stopwatchState);
 
@@ -21,21 +22,25 @@ const StopwatchView = () => {
     if (mode === "play") {
       if (!intervalRef.current) {
         intervalRef.current = setInterval(() => {
-          timeRef.current.milliSec += 1;
+          //   timeRef.current.milliSec += 1;
 
-          if (timeRef.current.milliSec === 100) {
-            timeRef.current.milliSec = 0;
-            timeRef.current.sec += 1;
-          }
+          //   if (timeRef.current.milliSec === 1000) {
+          //     timeRef.current.milliSec = 0;
+          timeRef.current.sec += 1;
+          //   }
 
           if (timeRef.current.sec === 60) {
             timeRef.current.sec = 0;
             timeRef.current.min += 1;
           }
+          if (timeRef.current.min === 60) {
+            timeRef.current.min = 0;
+            timeRef.current.hour += 1;
+          }
 
           // Update UI state
           setStopwatchState({ ...timeRef.current });
-        }, 1);
+        }, 1000);
       }
     } else {
       if (intervalRef.current) {
@@ -46,6 +51,15 @@ const StopwatchView = () => {
   };
   const handleReset = () => {
     isPlay && setIsPlay(false);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    setStopwatchState({ sec: 0, min: 0, hour: 0 });
+  };
+
+  const timerHandler = (time, colon) => {
+    return `${time?.toString()?.length > 1 ? time : `0${time || "0"}`}`;
   };
 
   const fontStyles = {
@@ -53,6 +67,10 @@ const StopwatchView = () => {
     fontSize: { xs: 30, md: 20 },
     fontWeight: 500,
     fontFamily: "Poppins, sans-serif",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   };
   return (
     <Box
@@ -62,7 +80,7 @@ const StopwatchView = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Box width="30%">
+      <Box width={{ xs: "20%", md: "30%" }}>
         <IconButton
           children={
             <>
@@ -86,30 +104,46 @@ const StopwatchView = () => {
         />
       </Box>
       <Box
-        width="40%"
+        width={{ xs: "60%", md: "40%" }}
+        height="100%"
         display="flex"
         justifyContent="center"
         alignItems="center"
         alignContent="center"
         columnGap={0.5}
       >
-        <Typography sx={{ ...fontStyles }}>
-          {stopwatchState?.min?.toString()?.length > 1
-            ? stopwatchState?.min
-            : `0${stopwatchState?.min}`}
-        </Typography>
-        <Typography sx={{ ...fontStyles }}>:</Typography>
-        <Typography sx={{ ...fontStyles }}>
-          {stopwatchState?.sec?.toString()?.length > 1
-            ? stopwatchState?.sec
-            : `0${stopwatchState?.sec}`}
-          .
-          {stopwatchState?.milliSec?.toString()?.length > 1
-            ? stopwatchState?.milliSec
-            : `0${stopwatchState?.milliSec}`}
-        </Typography>
+        <Box
+          width={{ xs: "70%", md: "22%" }}
+          height="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          alignContent="center"
+        >
+          <Box
+            width="30%"
+            sx={{ ...fontStyles }}
+            children={`${timerHandler(stopwatchState?.hour)}`}
+          />
+          <Box width="5%" sx={{ ...fontStyles }} children=":" />
+          <Box
+            width="30%"
+            sx={{ ...fontStyles }}
+            children={`${timerHandler(stopwatchState?.min)}`}
+          />
+          <Box width="5%" sx={{ ...fontStyles }} children=":" />
+          <Box
+            width="30%"
+            sx={{ ...fontStyles }}
+            children={timerHandler(stopwatchState?.sec)}
+          />
+        </Box>
       </Box>
-      <Box width="30%" display="flex" justifyContent="right">
+      <Box
+        width={{ xs: "20%", md: "30%" }}
+        display="flex"
+        justifyContent="right"
+      >
         <IconButton
           children={
             <RestartAltRoundedIcon
