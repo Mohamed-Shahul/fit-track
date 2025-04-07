@@ -55,6 +55,10 @@ const StopwatchView = () => {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
+    timeRef.current.sec = 0;
+    timeRef.current.min = 0;
+    timeRef.current.hour = 0;
+
     setStopwatchState({ sec: 0, min: 0, hour: 0 });
   };
 
