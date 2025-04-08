@@ -296,7 +296,7 @@ const TodaysWorkoutPlan = () => {
     );
   };
   return (
-    <Grid2 container height="100vh" rowGap={1}>
+    <Grid2 container height="100vh">
       <Grid2
         size={{xs: 12}}
         height="7%"
@@ -308,7 +308,6 @@ const TodaysWorkoutPlan = () => {
           px: 2,
         }}
       >
-        {/* <AppBarView /> */}
         <StopwatchView />
       </Grid2>
 
@@ -494,7 +493,7 @@ const TodaysWorkoutPlan = () => {
 
       <Grid2
         size={{xs: 12}}
-        height="79%"
+        height={{xs: "74%", md: "79%"}}
         sx={{
           overflow: "auto",
           overflowX: "hidden",
