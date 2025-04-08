@@ -102,7 +102,7 @@ const Home = () => {
           gap={2}
         >
           {items.map((items, i) => (
-            <>{viewButtons(items)}</>
+            <Box minWidth={{xs: "100%", md: ""}}>{viewButtons(items)}</Box>
           ))}
         </Box>
       </Grid2>
