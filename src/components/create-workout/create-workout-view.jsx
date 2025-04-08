@@ -296,14 +296,14 @@ const CreateWorkoutPlan = () => {
               variant="contained"
               color="error"
               size="small"
-              disableTouchRipple={!selectedSplit?.length || !isLoadingDelete}
+              disableTouchRipple={!selectedSplit?.length || isLoadingDelete}
               sx={{
                 borderRadius: 1,
                 borderColor: "#1565c0",
                 textTransform: "none",
                 fontFamily: "Poppins, sans-serif",
                 display: radioButtonValue === "create" ? "none" : "",
-                ...((!selectedSplit?.length || !isLoadingDelete) && {
+                ...((!selectedSplit?.length || isLoadingDelete) && {
                   backgroundColor: "#b0bec5",
                   color: "#37474f",
                   cursor: "default",
