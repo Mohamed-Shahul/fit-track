@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
-import  { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { db } from "../../firebase/config";
+import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
+import {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {db} from "../../firebase/config";
 import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
@@ -40,7 +40,7 @@ const useTodaysWokout = () => {
       .then((snapshot) => {
         let result = [];
         snapshot.docs.forEach((doc) => {
-          result.push({ ...doc.data(), id: doc.id });
+          result.push({...doc.data(), id: doc.id});
         });
         setDbCollections(result);
         handleInitialFetch(result);
@@ -66,13 +66,69 @@ const useTodaysWokout = () => {
     // setSelectedWorkout(todaysWorkoutList?.[0]);
   };
 
+  // MARK: Onchange
+  const repsOnChange = (props) => {
+    const {e, selectedWorkoutRepsObj, selectedWorkoutList, i} = props;
+    const typedValue = e?.target?.value?.toString() || "0";
+    const value =
+      typedValue === "0"
+        ? typedValue
+        : typedValue?.toString()?.replace(/^0+/, "");
+    selectedWorkoutRepsObj[`set${i + 1}Reps`] = value;
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: selectedWorkoutList?.map((row) => {
+            if (row?.name === selectedWorkout) {
+              return {
+                ...row,
+                reps: selectedWorkoutRepsObj,
+              };
+            } else {
+              return {...row};
+            }
+          }),
+        },
+      },
+    }));
+  };
+
+  const weightsOnChange = (props) => {
+    const {e, selectedWorkoutWeightsObj, selectedWorkoutList, i} = props;
+    const typedValue = e?.target?.value?.toString() || "0";
+    const value =
+      typedValue === "0"
+        ? typedValue
+        : typedValue?.toString()?.replace(/^0+/, "");
+    selectedWorkoutWeightsObj[`set${i + 1}Weights`] = value;
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: selectedWorkoutList?.map((row) => {
+            if (row?.name === selectedWorkout) {
+              return {
+                ...row,
+                weights: selectedWorkoutWeightsObj,
+              };
+            } else {
+              return {...row};
+            }
+          }),
+        },
+      },
+    }));
+  };
+
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     e.preventDefault();
   //     e.returnValue = ""; // Required for most browsers
   //     console.log('==test');
-      
-      
+
   //   };
 
   //   window.addEventListener("beforeunload", handleBeforeUnload);
@@ -118,6 +174,8 @@ const useTodaysWokout = () => {
     setSelectedSplit,
     setSelectedWorkout,
     loggedInUserEmail,
+    repsOnChange,
+    weightsOnChange,
   };
 };
 
