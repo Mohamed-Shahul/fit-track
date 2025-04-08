@@ -14,7 +14,7 @@ import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
 import StopwatchView from "./stopwatch-view";
 
 const TodaysWorkoutPlan = () => {
-  const { commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle } =
+  const {commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle} =
     useCustomHook();
   const viewModel = useTodaysWokout();
   const {
@@ -35,6 +35,8 @@ const TodaysWorkoutPlan = () => {
     dbCollections,
     loggedInUserEmail,
     handleUpdate,
+    repsOnChange,
+    weightsOnChange,
   } = viewModel;
 
   const tableView = (props) => {
@@ -161,26 +163,12 @@ const TodaysWorkoutPlan = () => {
                       }}
                       value={selectedWorkoutRepsObj?.[`set${i + 1}Reps`]}
                       onChange={(e) => {
-                        selectedWorkoutRepsObj[`set${i + 1}Reps`] =
-                          e?.target?.value?.toString()?.replace(/^0+/, "");
-                        setWorkoutDetails((prev) => ({
-                          ...prev,
-                          [selectedSplit]: {
-                            ...prev?.[selectedSplit],
-                            [selectedDay]: {
-                              workoutList: selectedWorkoutList?.map((row) => {
-                                if (row?.name === selectedWorkout) {
-                                  return {
-                                    ...row,
-                                    reps: selectedWorkoutRepsObj,
-                                  };
-                                } else {
-                                  return { ...row };
-                                }
-                              }),
-                            },
-                          },
-                        }));
+                        repsOnChange({
+                          e,
+                          selectedWorkoutRepsObj,
+                          selectedWorkoutList,
+                          i,
+                        });
                       }}
                       onBlur={() => handleUpdate()}
                     />
@@ -233,26 +221,12 @@ const TodaysWorkoutPlan = () => {
                       }}
                       value={selectedWorkoutWeightsObj?.[`set${i + 1}Weights`]}
                       onChange={(e) => {
-                        selectedWorkoutWeightsObj[`set${i + 1}Weights`] =
-                          e?.target?.value?.toString()?.replace(/^0+/, "");
-                        setWorkoutDetails((prev) => ({
-                          ...prev,
-                          [selectedSplit]: {
-                            ...prev?.[selectedSplit],
-                            [selectedDay]: {
-                              workoutList: selectedWorkoutList?.map((row) => {
-                                if (row?.name === selectedWorkout) {
-                                  return {
-                                    ...row,
-                                    weights: selectedWorkoutWeightsObj,
-                                  };
-                                } else {
-                                  return { ...row };
-                                }
-                              }),
-                            },
-                          },
-                        }));
+                        weightsOnChange({
+                          e,
+                          selectedWorkoutWeightsObj,
+                          selectedWorkoutList,
+                          i,
+                        });
                       }}
                       onBlur={() => handleUpdate()}
                     />
@@ -285,7 +259,7 @@ const TodaysWorkoutPlan = () => {
                         notes: e?.target?.value,
                       };
                     } else {
-                      return { ...row };
+                      return {...row};
                     }
                   });
                   setWorkoutDetails((prev) => ({
@@ -324,7 +298,7 @@ const TodaysWorkoutPlan = () => {
   return (
     <Grid2 container height="100vh" rowGap={1}>
       <Grid2
-        size={{ xs: 12 }}
+        size={{xs: 12}}
         height="7%"
         sx={{
           position: "sticky",
@@ -338,7 +312,7 @@ const TodaysWorkoutPlan = () => {
         <StopwatchView />
       </Grid2>
 
-      <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
+      <Grid2 size={{xs: 12}} height="7%" alignContent="center">
         <Box
           sx={{
             maxWidth: "100%",
@@ -352,13 +326,13 @@ const TodaysWorkoutPlan = () => {
           <Typography
             children="Todays plan"
             sx={{
-              fontSize: { xs: 15, md: 24 },
+              fontSize: {xs: 15, md: 24},
               color: "white",
               fontFamily: "Poppins, sans-serif",
               fontWeight: 600,
             }}
           />
-          <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+          <Box sx={{display: "flex", gap: {xs: 1, md: 2}}}>
             <Button
               variant="outlined"
               size="small"
@@ -392,26 +366,26 @@ const TodaysWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "12%", md: "7%" }}
+        size={{xs: 12}}
+        height={{xs: "12%", md: "7%"}}
         alignContent="center"
       >
         <Box
           sx={{
             maxWidth: "100%",
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
+            flexDirection: {xs: "column", md: "row"},
             gap: 1,
             alignItems: "center",
             px: 4,
           }}
         >
-          <Box width={{ xs: "100%", md: "50%" }} display="flex" gap={1}>
+          <Box width={{xs: "100%", md: "50%"}} display="flex" gap={1}>
             <Autocomplete
               disablePortal
               options={splitList}
               sx={{
-                width: { xs: "50%", md: "50%" },
+                width: {xs: "50%", md: "50%"},
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -427,7 +401,7 @@ const TodaysWorkoutPlan = () => {
                   placeholder="Select a split"
                   size="small"
                   required
-                  sx={{ ...entryTextFieldsStyles }}
+                  sx={{...entryTextFieldsStyles}}
                 />
               )}
               disableClearable
@@ -455,7 +429,7 @@ const TodaysWorkoutPlan = () => {
               disablePortal
               options={daysList}
               sx={{
-                width: { xs: "50%", md: "50%" },
+                width: {xs: "50%", md: "50%"},
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -471,7 +445,7 @@ const TodaysWorkoutPlan = () => {
                   placeholder="Select a day"
                   size="small"
                   required
-                  sx={{ ...entryTextFieldsStyles }}
+                  sx={{...entryTextFieldsStyles}}
                 />
               )}
               disableClearable
@@ -490,7 +464,7 @@ const TodaysWorkoutPlan = () => {
             disablePortal
             options={workoutList}
             sx={{
-              width: { xs: "100%", md: "30%" },
+              width: {xs: "100%", md: "30%"},
               color: "white",
               bgcolor: "#444451",
               borderRadius: 1,
@@ -506,7 +480,7 @@ const TodaysWorkoutPlan = () => {
                 placeholder="Select a Workout"
                 size="small"
                 required
-                sx={{ ...entryTextFieldsStyles }}
+                sx={{...entryTextFieldsStyles}}
               />
             )}
             disableClearable
@@ -519,7 +493,7 @@ const TodaysWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        size={{ xs: 12 }}
+        size={{xs: 12}}
         height="79%"
         sx={{
           overflow: "auto",
