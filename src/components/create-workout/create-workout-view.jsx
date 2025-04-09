@@ -304,11 +304,11 @@ const CreateWorkoutPlan = () => {
                 fontFamily: "Poppins, sans-serif",
                 display: radioButtonValue === "create" ? "none" : "",
                 ...((!selectedSplit?.length || isLoadingDelete) && {
-                  backgroundColor: "#b0bec5",
-                  color: "#37474f",
+                  backgroundColor: "silver !important",
                   cursor: "default",
                 }),
               }}
+              disabled={!selectedSplit?.length || isLoadingDelete}
               onClick={() => {
                 if (
                   radioButtonValue !== "create" &&
