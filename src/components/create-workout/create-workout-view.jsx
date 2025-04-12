@@ -394,7 +394,6 @@ const CreateWorkoutPlan = () => {
           ) : (
             <Autocomplete
               disablePortal
-              // options={splitList}
               options={splitList}
               sx={{
                 width: {xs: "100%", md: "40%"},
@@ -416,6 +415,19 @@ const CreateWorkoutPlan = () => {
                   sx={{...entryTextFieldsStyles}}
                 />
               )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    // bgcolor: "#444451",
+                    backgroundImage: 'url("images/newBg.jpg")',
+                    // backgroundPosition: "center",
+                    // backgroundSize: "cover",
+                    // backgroundRepeat: "no-repeat",
+                    color: "white",
+                    fontFamily: "Poppins, sans-serif",
+                  },
+                },
+              }}
               disableClearable
               value={selectedSplit}
               onChange={(e, newValue) => {
