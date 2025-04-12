@@ -9,9 +9,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography,
 } from "@mui/material";
-import React from "react";
 import useCreateWorkout from "./useCreateWorkout";
 import useCustomHook from "../custom-hook/useCustomHook";
 import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
@@ -46,6 +44,9 @@ const CreateWorkoutPlan = () => {
     handleDeleteSplit,
     isLoading,
     isLoadingDelete,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
   } = viewModel;
 
   const tableView = () => {
@@ -76,6 +77,10 @@ const CreateWorkoutPlan = () => {
                 }}
               >
                 <TextField
+                  draggable
+                  onDragStart={() => handleDragStart(i)}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(i)}
                   type="text"
                   variant="outlined"
                   autoComplete="off"
