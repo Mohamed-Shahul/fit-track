@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
-import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {db} from "../../firebase/config";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { db } from "../../firebase/config";
 import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
@@ -16,12 +16,12 @@ const useTodaysWokout = () => {
   const [workoutList, setWorkoutList] = useState([]);
   const daysList = [
     "Monday",
-    "Sunday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
+    "Sunday",
   ];
   const [selectedDay, setSelectedDay] = useState(todaysTitleFormat);
   const [selectedSplit, setSelectedSplit] = useState("");
@@ -40,7 +40,7 @@ const useTodaysWokout = () => {
       .then((snapshot) => {
         let result = [];
         snapshot.docs.forEach((doc) => {
-          result.push({...doc.data(), id: doc.id});
+          result.push({ ...doc.data(), id: doc.id });
         });
         setDbCollections(result);
         handleInitialFetch(result);
@@ -68,7 +68,7 @@ const useTodaysWokout = () => {
 
   // MARK: Onchange
   const repsOnChange = (props) => {
-    const {e, selectedWorkoutRepsObj, selectedWorkoutList, i} = props;
+    const { e, selectedWorkoutRepsObj, selectedWorkoutList, i } = props;
     const typedValue = e?.target?.value?.toString() || "0";
     const value =
       typedValue === "0"
@@ -87,7 +87,7 @@ const useTodaysWokout = () => {
                 reps: selectedWorkoutRepsObj,
               };
             } else {
-              return {...row};
+              return { ...row };
             }
           }),
         },
@@ -96,7 +96,7 @@ const useTodaysWokout = () => {
   };
 
   const weightsOnChange = (props) => {
-    const {e, selectedWorkoutWeightsObj, selectedWorkoutList, i} = props;
+    const { e, selectedWorkoutWeightsObj, selectedWorkoutList, i } = props;
     const typedValue = e?.target?.value?.toString() || "0";
     const value =
       typedValue === "0"
@@ -115,7 +115,7 @@ const useTodaysWokout = () => {
                 weights: selectedWorkoutWeightsObj,
               };
             } else {
-              return {...row};
+              return { ...row };
             }
           }),
         },
