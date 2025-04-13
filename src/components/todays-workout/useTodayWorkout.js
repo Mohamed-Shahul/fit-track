@@ -123,6 +123,23 @@ const useTodaysWokout = () => {
     }));
   };
 
+  const handleSelectSplitAutoCompleteOnChange = (newValue) => {
+    setSelectedSplit(newValue);
+    const loggedInuserDetails = dbCollections?.filter(
+      (row) => row?.EMAIL === loggedInUserEmail
+    );
+    const selectedWorkoutSplit = loggedInuserDetails?.[0]?.DETAILS?.[newValue];
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [newValue]: selectedWorkoutSplit,
+    }));
+    const todaysWorkoutList = selectedWorkoutSplit?.[
+      selectedDay
+    ]?.workoutList?.map((row) => row?.name);
+    setWorkoutList(todaysWorkoutList || []);
+    setSelectedWorkout(todaysWorkoutList?.[0]);
+  };
+
   // useEffect(() => {
   //   const handleBeforeUnload = (e) => {
   //     e.preventDefault();
@@ -176,6 +193,7 @@ const useTodaysWokout = () => {
     loggedInUserEmail,
     repsOnChange,
     weightsOnChange,
+    handleSelectSplitAutoCompleteOnChange,
   };
 };
 

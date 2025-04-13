@@ -1,10 +1,9 @@
-import { Box, Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import {  Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import React from "react";
-import useCustomHook from "../custom-hook/useCustomHook";
 import cloudBg from "../../images/cloudBg.jpg";
 
 const DeleteDialog = (props) => {
-  const { open, setOpen, title, handleConfirm } = props;
+  const { open, setOpen, title, handleConfirm, modeTitle } = props;
 
   const handleClose = () => {
     setOpen?.((prev) => {
@@ -43,7 +42,7 @@ const DeleteDialog = (props) => {
           fontWeight: 400,
         }}
       >
-        Do you want to delete {title}
+        Do you want to {modeTitle || "delete"} {title}
       </DialogTitle>
 
       <DialogActions>
