@@ -9,8 +9,7 @@ import {
 import React from "react";
 import useCustomHook from "../custom-hook/useCustomHook";
 import useTodaysWokout from "./useTodayWorkout";
-import AppBarView from "../app-bar/app-bar-view";
-import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import StopwatchView from "./stopwatch-view";
 
 const TodaysWorkoutPlan = () => {
@@ -28,15 +27,13 @@ const TodaysWorkoutPlan = () => {
     selectedSplit,
     selectedWorkout,
     setWorkoutDetails,
-    setSelectedSplit,
     setSelectedWorkout,
     selectedDay,
     setSelectedDay,
-    dbCollections,
-    loggedInUserEmail,
     handleUpdate,
     repsOnChange,
     weightsOnChange,
+    handleSelectSplitAutoCompleteOnChange,
   } = viewModel;
 
   const tableView = (props) => {
@@ -335,6 +332,7 @@ const TodaysWorkoutPlan = () => {
             <Button
               variant="outlined"
               size="small"
+              startIcon={<ChevronLeftRoundedIcon/>}
               sx={{
                 borderRadius: 1,
                 borderColor: "#1565c0",
@@ -346,7 +344,7 @@ const TodaysWorkoutPlan = () => {
             >
               Back
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               size="small"
               sx={{
@@ -359,7 +357,7 @@ const TodaysWorkoutPlan = () => {
               // onClick={handleUpdate}
             >
               Update
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </Grid2>
@@ -404,24 +402,20 @@ const TodaysWorkoutPlan = () => {
                   sx={{ ...entryTextFieldsStyles }}
                 />
               )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    bgcolor: "#E6E6E6",
+                    color: "black",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                  },
+                },
+              }}
               disableClearable
               value={selectedSplit}
               onChange={(e, newValue) => {
-                setSelectedSplit(newValue);
-                const loggedInuserDetails = dbCollections?.filter(
-                  (row) => row?.EMAIL === loggedInUserEmail
-                );
-                const selectedWorkoutSplit =
-                  loggedInuserDetails?.[0]?.DETAILS?.[newValue];
-                setWorkoutDetails((prev) => ({
-                  ...prev,
-                  [newValue]: selectedWorkoutSplit,
-                }));
-                const todaysWorkoutList = selectedWorkoutSplit?.[
-                  selectedDay
-                ]?.workoutList?.map((row) => row?.name);
-                setWorkoutList(todaysWorkoutList || []);
-                setSelectedWorkout(todaysWorkoutList?.[0]);
+                handleSelectSplitAutoCompleteOnChange(newValue);
               }}
             />
             <Autocomplete
@@ -447,6 +441,16 @@ const TodaysWorkoutPlan = () => {
                   sx={{ ...entryTextFieldsStyles }}
                 />
               )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    bgcolor: "#E6E6E6",
+                    color: "black",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                  },
+                },
+              }}
               disableClearable
               value={selectedDay || ""}
               onChange={(e, newValue) => {
@@ -454,8 +458,6 @@ const TodaysWorkoutPlan = () => {
                 const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
                   newValue
                 ]?.workoutList?.map((row) => row?.name);
-                console.log("==list", todaysWorkoutList);
-
                 setWorkoutList(todaysWorkoutList || []);
                 setSelectedWorkout(todaysWorkoutList?.[0]);
               }}
@@ -485,6 +487,16 @@ const TodaysWorkoutPlan = () => {
                 sx={{ ...entryTextFieldsStyles }}
               />
             )}
+            slotProps={{
+              paper: {
+                sx: {
+                  bgcolor: "#E6E6E6",
+                  color: "black",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: 600,
+                },
+              },
+            }}
             disableClearable
             value={selectedWorkout}
             onChange={(e, newValue) => {

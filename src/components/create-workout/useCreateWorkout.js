@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
-import {db} from "../../firebase/config";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const useCreateWorkout = () => {
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
 
   // MARK: States
-  const [isDelete, setIsDelete] = useState({state: false, index: 0});
+  const [isDelete, setIsDelete] = useState({ state: false, index: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [radioButtonValue, setRadioButtonValue] = useState("create");
@@ -30,12 +30,12 @@ const useCreateWorkout = () => {
   };
   const days = [
     "Monday",
-    "Sunday",
     "Tuesday",
     "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
+    "Sunday",
   ];
   console.log("==details", workoutDetails);
 
@@ -47,7 +47,7 @@ const useCreateWorkout = () => {
       .then((snapshot) => {
         let result = [];
         snapshot.docs.forEach((doc) => {
-          result.push({...doc.data(), id: doc.id});
+          result.push({ ...doc.data(), id: doc.id });
         });
         setDbCollections(result);
       })
@@ -96,7 +96,7 @@ const useCreateWorkout = () => {
             {
               name: "",
               notes: "",
-              reps: {set1Reps: 0, set2Reps: 0, set3Reps: 0, set4Reps: 0},
+              reps: { set1Reps: 0, set2Reps: 0, set3Reps: 0, set4Reps: 0 },
               weights: {
                 set1Weights: 0,
                 set2Weights: 0,
@@ -183,7 +183,8 @@ const useCreateWorkout = () => {
     );
     try {
       const userRef = doc(db, "fit-track", userDetails?.[0]?.id);
-      const {[selectedSplit]: removed, ...restDetails} = userDetails[0].DETAILS;
+      const { [selectedSplit]: removed, ...restDetails } =
+        userDetails[0].DETAILS;
       await updateDoc(userRef, {
         DETAILS: {
           ...restDetails,

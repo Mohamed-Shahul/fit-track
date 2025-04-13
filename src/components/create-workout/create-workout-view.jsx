@@ -464,13 +464,19 @@ const CreateWorkoutPlan = () => {
                   sx={{ ...entryTextFieldsStyles }}
                 />
               )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    bgcolor: "#E6E6E6",
+                    color: "black",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                  },
+                },
+              }}
               disableClearable
               value={selectedDay}
               onChange={(e, newValue) => {
-                // setWorkoutDetails((prev) => ({
-                //   ...prev,
-                //   selectedDay: newValue,
-                // }));
                 setSelectedDay(newValue);
               }}
             />
