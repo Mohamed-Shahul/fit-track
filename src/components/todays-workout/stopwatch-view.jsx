@@ -9,63 +9,6 @@ const StopwatchView = () => {
   const {handlePlayPause, handleReset, stopwatchState, isPlay} =
     useContext(MyContext);
 
-  // const intervalRef = useRef(null);
-  // const timeRef = useRef({ milliSec: 0, sec: 0, min: 0 });
-  // const [isPlay, setIsPlay] = useState(false);
-  // const [stopwatchState, setStopwatchState] = useState({
-  //   milliSec: 0,
-  //   sec: 0,
-  //   min: 0,
-  //   hour: 0,
-  // });
-  // console.log("==stopwatch", stopwatchState);
-
-  // const handlePlayPause = (mode) => {
-  //   setIsPlay((prev) => !prev);
-
-  //   if (mode === "play") {
-  //     if (!intervalRef.current) {
-  //       intervalRef.current = setInterval(() => {
-  //         //   timeRef.current.milliSec += 1;
-
-  //         //   if (timeRef.current.milliSec === 1000) {
-  //         //     timeRef.current.milliSec = 0;
-  //         timeRef.current.sec += 1;
-  //         //   }
-
-  //         if (timeRef.current.sec === 60) {
-  //           timeRef.current.sec = 0;
-  //           timeRef.current.min += 1;
-  //         }
-  //         if (timeRef.current.min === 60) {
-  //           timeRef.current.min = 0;
-  //           timeRef.current.hour += 1;
-  //         }
-
-  //         // Update UI state
-  //         setStopwatchState({ ...timeRef.current });
-  //       }, 1000);
-  //     }
-  //   } else {
-  //     if (intervalRef.current) {
-  //       clearInterval(intervalRef.current);
-  //       intervalRef.current = null;
-  //     }
-  //   }
-  // };
-  // const handleReset = () => {
-  //   isPlay && setIsPlay(false);
-  //   if (intervalRef.current) {
-  //     clearInterval(intervalRef.current);
-  //     intervalRef.current = null;
-  //   }
-  //   timeRef.current.sec = 0;
-  //   timeRef.current.min = 0;
-  //   timeRef.current.hour = 0;
-
-  //   setStopwatchState({ sec: 0, min: 0, hour: 0 });
-  // };
-
   const timerHandler = (time, colon) => {
     return `${time?.toString()?.length > 1 ? time : `0${time || "0"}`}`;
   };
@@ -83,6 +26,7 @@ const StopwatchView = () => {
   return (
     <Box
       width="100%"
+      height='100%'
       maxHeight="100%"
       display="flex"
       justifyContent="center"
