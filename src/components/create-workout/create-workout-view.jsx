@@ -377,9 +377,10 @@ const CreateWorkoutPlan = () => {
               onBlur={(e) => {
                 setWorkoutDetails((prev) => ({
                   ...prev,
-                  [e?.target?.value]: {
+                  [selectedSplit]: {
                     ...defaultWorkoutDetailsState,
                     splitName: e?.target?.value,
+                    ...workoutDetails?.[selectedSplit],
                   },
                 }));
                 setSelectedSplit(e?.target?.value);
