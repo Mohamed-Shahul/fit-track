@@ -20,20 +20,14 @@ const MyProvider = ({children}) => {
     if (mode === "play") {
       if (!intervalRef.current) {
         intervalRef.current = setInterval(() => {
-          //   timeRef.current.milliSec += 1;
-
-          //   if (timeRef.current.milliSec === 1000) {
-          //     timeRef.current.milliSec = 0;
           timeRef.current.sec += 1;
-          //   }
-
           if (timeRef.current.sec === 60) {
             timeRef.current.sec = 0;
             timeRef.current.min += 1;
           }
           if (timeRef.current.min === 60) {
             timeRef.current.min = 0;
-            timeRef.current.hour += 1;
+            timeRef.current.hour = (timeRef.current.hour ?? 0) + 1;
           }
 
           // Update UI state
