@@ -16,8 +16,8 @@ import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
 import AddLinkRoundedIcon from "@mui/icons-material/AddLinkRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AppBarView from "../app-bar/app-bar-view";
-import DeleteDialog from "./delete-dialog";
-import AddVideoLinkDialog from "./add-video-link-dialog";
+import DeleteDialog from "./dialogs/delete-dialog";
+import AddVideoLinkDialog from "./dialogs/add-video-link-dialog";
 
 const CreateWorkoutPlan = () => {
   const {entryTextFieldsStyles, scrollBarStyle} = useCustomHook();
@@ -117,12 +117,6 @@ const CreateWorkoutPlan = () => {
                                 state: true,
                                 index: i,
                               }));
-                              // setIsDelete((prev) => ({
-                              //   ...prev,
-                              //   state: true,
-                              //   index: i,
-                              //   title: row?.name,
-                              // }));
                             }}
                           />
                           <IconButton

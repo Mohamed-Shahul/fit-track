@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import { logout } from "../../utilis/auth";
-import DeleteDialog from "../create-workout/delete-dialog";
+import DeleteDialog from "../create-workout/dialogs/delete-dialog";
 import img from "../../images/cloudBg.jpg";
 import { useState } from "react";
 

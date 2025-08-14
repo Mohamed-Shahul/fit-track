@@ -8,20 +8,21 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import cloudBg from "../../images/cloudBg.jpg";
+import cloudBg from "../../../images/cloudBg.jpg";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useCustomHook from "../../custom-hook/useCustomHook";
+import SlideshowRoundedIcon from "@mui/icons-material/SlideshowRounded";
 
 const AddVideoLinkDialog = (props) => {
-  const {entryTextFieldsStyles, scrollBarStyle} = useCustomHook();
+  const { entryTextFieldsStyles, scrollBarStyle } = useCustomHook();
 
-  const {open, setOpen, title, handleConfirm, viewModel} = props;
+  const { open, setOpen, title, handleConfirm, viewModel } = props;
 
   const selectedVideoLinkDemoList =
     viewModel.workoutDetails?.[viewModel.selectedSplit]?.[
       viewModel?.selectedDay
-    ]?.workoutList?.[viewModel?.openAddVideoDialog?.index]?.demoLinks ||
-    Array(20).fill({});
+    ]?.workoutList?.[viewModel?.openAddVideoDialog?.index]?.demoLinks || [];
+  // Array(20).fill({});
 
   console.log(
     "==check",
@@ -54,7 +55,7 @@ const AddVideoLinkDialog = (props) => {
         }}
       >
         {data?.length ? (
-          data?.map((row, i) => (
+          data?.map((val, i) => (
             <Box
               sx={{
                 display: "flex",
@@ -81,9 +82,9 @@ const AddVideoLinkDialog = (props) => {
                     fontFamily: "Poppins, sans-serif",
                   },
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": {borderColor: "#444451"},
-                    "&:hover fieldset": {borderColor: "gray"},
-                    "&.Mui-focused fieldset": {borderColor: "gray"},
+                    "& fieldset": { borderColor: "#444451" },
+                    "&:hover fieldset": { borderColor: "gray" },
+                    "&.Mui-focused fieldset": { borderColor: "gray" },
                   },
                   background: "#444451",
                 }}
@@ -94,15 +95,14 @@ const AddVideoLinkDialog = (props) => {
                       <>
                         <IconButton
                           children={
-                            <DeleteOutlineRoundedIcon
+                            <SlideshowRoundedIcon
                               fontSize="large"
-                              color="error"
-                              sx={{color: "red !important"}}
+                              color="info"
                             />
                           }
                           onClick={(e) => {
                             e.stopPropagation();
-                            viewModel.handleRemoveRowVideoDemoLink(i);
+                            // viewModel.handleRemoveRowVideoDemoLink(i);
                             // setIsDelete((prev) => ({
                             //   ...prev,
                             //   state: true,
@@ -111,12 +111,27 @@ const AddVideoLinkDialog = (props) => {
                             // }));
                           }}
                         />
+                        <IconButton
+                          children={
+                            <>
+                              <DeleteOutlineRoundedIcon
+                                fontSize="large"
+                                color="error"
+                                sx={{ color: "red !important" }}
+                              />
+                            </>
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            viewModel.handleRemoveRowVideoDemoLink(i);
+                          }}
+                        />
                       </>
                     ),
                   },
                 }}
-                value={row?.name}
-                // onChange={(e) => handleWorkoutOnChange(e, i)}
+                value={val}
+                onChange={(e) => viewModel.handleDemoLinkOnChange(e, i,)}
               />
             </Box>
           ))
@@ -184,7 +199,7 @@ const AddVideoLinkDialog = (props) => {
             size="small"
             children="Close"
             color="inherit"
-            sx={{color: "black", ml: 1}}
+            sx={{ color: "black", ml: 1 }}
           />
         </Box>
       </DialogTitle>

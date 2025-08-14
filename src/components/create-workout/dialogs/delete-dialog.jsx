@@ -1,6 +1,5 @@
 import {  Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
-import React from "react";
-import cloudBg from "../../images/cloudBg.jpg";
+import cloudBg from "../../../images/cloudBg.jpg";
 
 const DeleteDialog = (props) => {
   const { open, setOpen, title, handleConfirm, modeTitle } = props;
