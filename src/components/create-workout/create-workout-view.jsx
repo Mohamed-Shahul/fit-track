@@ -13,10 +13,11 @@ import {
 import useCreateWorkout from "./useCreateWorkout";
 import useCustomHook from "../custom-hook/useCustomHook";
 import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
-
+import AddLinkRoundedIcon from "@mui/icons-material/AddLinkRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import AppBarView from "../app-bar/app-bar-view";
 import DeleteDialog from "./delete-dialog";
+import AddVideoLinkDialog from "./add-video-link-dialog";
 
 const CreateWorkoutPlan = () => {
   const {entryTextFieldsStyles, scrollBarStyle} = useCustomHook();
@@ -106,24 +107,43 @@ const CreateWorkoutPlan = () => {
                   slotProps={{
                     input: {
                       endAdornment: (
-                        <IconButton
-                          children={
-                            <DeleteOutlineRoundedIcon
-                              fontSize="large"
-                              color="error"
-                              sx={{color: "red !important"}}
-                            />
-                          }
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setIsDelete((prev) => ({
-                              ...prev,
-                              state: true,
-                              index: i,
-                              title: row?.name,
-                            }));
-                          }}
-                        />
+                        <>
+                          <IconButton
+                            children={<AddLinkRoundedIcon fontSize="large" />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              viewModel.setOpenAddVideoDialog((prev) => ({
+                                ...prev,
+                                state: true,
+                                index: i,
+                              }));
+                              // setIsDelete((prev) => ({
+                              //   ...prev,
+                              //   state: true,
+                              //   index: i,
+                              //   title: row?.name,
+                              // }));
+                            }}
+                          />
+                          <IconButton
+                            children={
+                              <DeleteOutlineRoundedIcon
+                                fontSize="large"
+                                color="error"
+                                sx={{color: "red !important"}}
+                              />
+                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setIsDelete((prev) => ({
+                                ...prev,
+                                state: true,
+                                index: i,
+                                title: row?.name,
+                              }));
+                            }}
+                          />
+                        </>
                       ),
                     },
                   }}
@@ -531,6 +551,22 @@ const CreateWorkoutPlan = () => {
           }
         }}
       />
+      {viewModel.openAddVideoDialog?.state ? (
+        <AddVideoLinkDialog
+          viewModel={viewModel}
+          open={viewModel.openAddVideoDialog?.state}
+          setOpen={viewModel.setOpenAddVideoDialog}
+          // handleConfirm={() => {
+          //   if (isDelete?.path === "split") {
+          //     handleDeleteSplit();
+          //   } else {
+          //     handleRemoveWorkout(isDelete?.index);
+          //   }
+          // }}
+        />
+      ) : (
+        <></>
+      )}
     </Grid2>
 
     // </Box>

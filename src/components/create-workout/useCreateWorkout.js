@@ -146,6 +146,42 @@ const useCreateWorkout = () => {
     }));
   };
 
+  // MARK: Handle add video demo link
+  const [openAddVideoDialog, setOpenAddVideoDialog] = useState({state: false});
+  const handleAddRowVideoDemoLink = (e, i) => {
+    const tempList = [
+      ...workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList,
+    ];
+    tempList[0].demoLinks = [...(tempList?.[0]?.demoLinks || []), ""];
+    setWorkoutDetails((prev) => ({
+      ...prev,
+      [selectedSplit]: {
+        ...prev?.[selectedSplit],
+        [selectedDay]: {
+          workoutList: tempList,
+        },
+      },
+    }));
+  };
+
+  const handleRemoveRowVideoDemoLink = (i) => {
+    const tempList = [
+      ...workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList,
+    ];
+    tempList[0].demoLinks = [];
+    console.log("==list", tempList);
+
+    // setWorkoutDetails((prev) => ({
+    //   ...prev,
+    //   [selectedSplit]: {
+    //     ...prev?.[selectedSplit],
+    //     [selectedDay]: {
+    //       workoutList: tempList,
+    //     },
+    //   },
+    // }));
+  };
+
   // MARK: Handle edit radio fetch details
   const handleEditRadioFetch = (value) => {
     setRadioButtonValue(value);
@@ -247,6 +283,10 @@ const useCreateWorkout = () => {
     handleDragStart,
     handleDragOver,
     handleDrop,
+    handleAddRowVideoDemoLink,
+    openAddVideoDialog,
+    setOpenAddVideoDialog,
+    handleRemoveRowVideoDemoLink,
   };
 };
 
