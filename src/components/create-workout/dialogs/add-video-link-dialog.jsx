@@ -2,34 +2,25 @@ import {
   Box,
   Button,
   Dialog,
-  DialogActions,
   DialogTitle,
   IconButton,
   TextField,
 } from "@mui/material";
-import React from "react";
 import cloudBg from "../../../images/cloudBg.jpg";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import useCustomHook from "../../custom-hook/useCustomHook";
 import SlideshowRoundedIcon from "@mui/icons-material/SlideshowRounded";
+import VideoPlayer from "../../common-components/video-player";
 
 const AddVideoLinkDialog = (props) => {
-  const { entryTextFieldsStyles, scrollBarStyle } = useCustomHook();
+  const {entryTextFieldsStyles, scrollBarStyle} = useCustomHook();
 
-  const { open, setOpen, title, handleConfirm, viewModel } = props;
+  const {open, setOpen, title, handleConfirm, viewModel} = props;
 
   const selectedVideoLinkDemoList =
     viewModel.workoutDetails?.[viewModel.selectedSplit]?.[
       viewModel?.selectedDay
     ]?.workoutList?.[viewModel?.openAddVideoDialog?.index]?.demoLinks || [];
-  // Array(20).fill({});
-
-  console.log(
-    "==check",
-    viewModel.workoutDetails?.[viewModel.selectedSplit]?.[
-      viewModel?.selectedDay
-    ]?.workoutList?.[viewModel?.openAddVideoDialog?.index]?.demoLinks
-  );
 
   const handleClose = () => {
     setOpen?.((prev) => {
@@ -82,9 +73,9 @@ const AddVideoLinkDialog = (props) => {
                     fontFamily: "Poppins, sans-serif",
                   },
                   "& .MuiOutlinedInput-root": {
-                    "& fieldset": { borderColor: "#444451" },
-                    "&:hover fieldset": { borderColor: "gray" },
-                    "&.Mui-focused fieldset": { borderColor: "gray" },
+                    "& fieldset": {borderColor: "#444451"},
+                    "&:hover fieldset": {borderColor: "gray"},
+                    "&.Mui-focused fieldset": {borderColor: "gray"},
                   },
                   background: "#444451",
                 }}
@@ -102,13 +93,11 @@ const AddVideoLinkDialog = (props) => {
                           }
                           onClick={(e) => {
                             e.stopPropagation();
-                            // viewModel.handleRemoveRowVideoDemoLink(i);
-                            // setIsDelete((prev) => ({
-                            //   ...prev,
-                            //   state: true,
-                            //   index: i,
-                            //   title: row?.name,
-                            // }));
+                            viewModel.setPlayVideoDetails((prev) => ({
+                              ...prev,
+                              url: val,
+                              open: true,
+                            }));
                           }}
                         />
                         <IconButton
@@ -117,7 +106,7 @@ const AddVideoLinkDialog = (props) => {
                               <DeleteOutlineRoundedIcon
                                 fontSize="large"
                                 color="error"
-                                sx={{ color: "red !important" }}
+                                sx={{color: "red !important"}}
                               />
                             </>
                           }
@@ -131,7 +120,7 @@ const AddVideoLinkDialog = (props) => {
                   },
                 }}
                 value={val}
-                onChange={(e) => viewModel.handleDemoLinkOnChange(e, i,)}
+                onChange={(e) => viewModel.handleDemoLinkOnChange(e, i)}
               />
             </Box>
           ))
@@ -151,6 +140,8 @@ const AddVideoLinkDialog = (props) => {
       </Box>
     );
   };
+
+  console.log("==video", viewModel.playVideoDetails);
 
   return (
     <Dialog
@@ -199,7 +190,7 @@ const AddVideoLinkDialog = (props) => {
             size="small"
             children="Close"
             color="inherit"
-            sx={{ color: "black", ml: 1 }}
+            sx={{color: "black", ml: 1}}
           />
         </Box>
       </DialogTitle>
@@ -217,6 +208,22 @@ const AddVideoLinkDialog = (props) => {
       >
         {tableView(selectedVideoLinkDemoList)}
       </Box>
+
+      {viewModel.playVideoDetails?.open ? (
+        <VideoPlayer
+          open={viewModel.playVideoDetails?.open}
+          url={viewModel.playVideoDetails?.url}
+          handleCloseVideo={() => {
+            viewModel.setPlayVideoDetails((prev) => ({
+              ...prev,
+              open: false,
+              url: "",
+            }));
+          }}
+        />
+      ) : (
+        <></>
+      )}
     </Dialog>
   );
 };

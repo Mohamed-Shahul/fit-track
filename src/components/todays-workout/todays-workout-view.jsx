@@ -3,17 +3,20 @@ import {
   Box,
   Button,
   Grid2,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import SlideshowRoundedIcon from "@mui/icons-material/SlideshowRounded";
 import useCustomHook from "../custom-hook/useCustomHook";
 import useTodaysWokout from "./useTodayWorkout";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import StopwatchView from "./stopwatch-view";
+import VideoPlayer from "../common-components/video-player";
+import DemoVideoListDialog from "./dialogs/demo-video-list-dialog";
 
 const TodaysWorkoutPlan = () => {
-  const { commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle } =
+  const {commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle} =
     useCustomHook();
   const viewModel = useTodaysWokout();
   const {
@@ -256,7 +259,7 @@ const TodaysWorkoutPlan = () => {
                         notes: e?.target?.value,
                       };
                     } else {
-                      return { ...row };
+                      return {...row};
                     }
                   });
                   setWorkoutDetails((prev) => ({
@@ -295,7 +298,7 @@ const TodaysWorkoutPlan = () => {
   return (
     <Grid2 container height="100vh">
       <Grid2
-        size={{ xs: 12 }}
+        size={{xs: 12}}
         height="7%"
         sx={{
           position: "sticky",
@@ -308,7 +311,7 @@ const TodaysWorkoutPlan = () => {
         <StopwatchView />
       </Grid2>
 
-      <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
+      <Grid2 size={{xs: 12}} height="7%" alignContent="center">
         <Box
           sx={{
             maxWidth: "100%",
@@ -322,17 +325,17 @@ const TodaysWorkoutPlan = () => {
           <Typography
             children="Todays plan"
             sx={{
-              fontSize: { xs: 15, md: 24 },
+              fontSize: {xs: 15, md: 24},
               color: "white",
               fontFamily: "Poppins, sans-serif",
               fontWeight: 600,
             }}
           />
-          <Box sx={{ display: "flex", gap: { xs: 1, md: 2 } }}>
+          <Box sx={{display: "flex", gap: {xs: 1, md: 2}}}>
             <Button
               variant="outlined"
               size="small"
-              startIcon={<ChevronLeftRoundedIcon/>}
+              startIcon={<ChevronLeftRoundedIcon />}
               sx={{
                 borderRadius: 1,
                 borderColor: "#1565c0",
@@ -363,27 +366,27 @@ const TodaysWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "12%", md: "7%" }}
+        size={{xs: 12}}
+        height={{xs: "12%", md: "7%"}}
         alignContent="center"
       >
         <Box
           sx={{
             maxWidth: "100%",
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
+            flexDirection: {xs: "column", md: "row"},
             gap: 1,
             alignItems: "center",
             px: 4,
           }}
         >
-          <Box width={{ xs: "100%", md: "50%" }} display="flex" gap={1}>
+          <Box width={{xs: "100%", md: "50%"}} display="flex" gap={1}>
             <Autocomplete
               disablePortal
               options={splitList}
               noOptionsText="Splits not found"
               sx={{
-                width: { xs: "50%", md: "50%" },
+                width: {xs: "50%", md: "50%"},
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -399,7 +402,7 @@ const TodaysWorkoutPlan = () => {
                   placeholder="Select a split"
                   size="small"
                   required
-                  sx={{ ...entryTextFieldsStyles }}
+                  sx={{...entryTextFieldsStyles}}
                 />
               )}
               slotProps={{
@@ -422,7 +425,7 @@ const TodaysWorkoutPlan = () => {
               disablePortal
               options={daysList}
               sx={{
-                width: { xs: "50%", md: "50%" },
+                width: {xs: "50%", md: "50%"},
                 color: "white",
                 bgcolor: "#444451",
                 borderRadius: 1,
@@ -438,7 +441,7 @@ const TodaysWorkoutPlan = () => {
                   placeholder="Select a day"
                   size="small"
                   required
-                  sx={{ ...entryTextFieldsStyles }}
+                  sx={{...entryTextFieldsStyles}}
                 />
               )}
               slotProps={{
@@ -468,7 +471,7 @@ const TodaysWorkoutPlan = () => {
             options={workoutList}
             noOptionsText="Workouts not found"
             sx={{
-              width: { xs: "100%", md: "30%" },
+              width: {xs: "100%", md: "30%"},
               color: "white",
               bgcolor: "#444451",
               borderRadius: 1,
@@ -484,7 +487,30 @@ const TodaysWorkoutPlan = () => {
                 placeholder="Select a Workout"
                 size="small"
                 required
-                sx={{ ...entryTextFieldsStyles }}
+                sx={{...entryTextFieldsStyles}}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <>
+                      {params.InputProps.endAdornment}
+                      {selectedWorkout && (
+                        <IconButton
+                          children={
+                            <SlideshowRoundedIcon
+                              fontSize="small"
+                              color="info"
+                            />
+                          }
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // viewModel.handlePlayVideo();
+                            viewModel.handleShowVideoList();
+                          }}
+                        />
+                      )}
+                    </>
+                  ),
+                }}
               />
             )}
             slotProps={{
@@ -507,8 +533,8 @@ const TodaysWorkoutPlan = () => {
       </Grid2>
 
       <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "74%", md: "79%" }}
+        size={{xs: 12}}
+        height={{xs: "74%", md: "79%"}}
         sx={{
           overflow: "auto",
           overflowX: "hidden",
@@ -518,6 +544,15 @@ const TodaysWorkoutPlan = () => {
       >
         {tableView(structure)}
       </Grid2>
+      {viewModel.openVideoListDialog?.state ? (
+        <DemoVideoListDialog
+          viewModel={viewModel}
+          open={viewModel.openVideoListDialog?.state}
+          setOpen={viewModel.setOpenVideoListDialog}
+        />
+      ) : (
+        <></>
+      )}
     </Grid2>
   );
 };
