@@ -140,20 +140,14 @@ const useTodaysWokout = () => {
     setSelectedWorkout(todaysWorkoutList?.[0]);
   };
 
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e) => {
-  //     e.preventDefault();
-  //     e.returnValue = ""; // Required for most browsers
-  //     console.log('==test');
-
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [location]);
+  const handleDayOnChange = (newValue) => {
+    setSelectedDay(newValue);
+    const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
+      newValue
+    ]?.workoutList?.map((row) => row?.name);
+    setWorkoutList(todaysWorkoutList || []);
+    setSelectedWorkout(todaysWorkoutList?.[0]);
+  };
 
   // MARK: Handle update
   const handleUpdate = async () => {
@@ -194,6 +188,7 @@ const useTodaysWokout = () => {
     repsOnChange,
     weightsOnChange,
     handleSelectSplitAutoCompleteOnChange,
+    handleDayOnChange,
   };
 };
 

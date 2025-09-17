@@ -6,11 +6,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useRef, useState } from "react";
 import useCustomHook from "../custom-hook/useCustomHook";
 import useTodaysWokout from "./useTodayWorkout";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import StopwatchView from "./stopwatch-view";
+import { motion } from "framer-motion";
+import ScrollableButtons from "../custom-components/scrollable-buttons/scrollable-buttons";
 
 const TodaysWorkoutPlan = () => {
   const { commonTextFieldStyles, entryTextFieldsStyles, scrollBarStyle } =
@@ -35,6 +37,19 @@ const TodaysWorkoutPlan = () => {
     weightsOnChange,
     handleSelectSplitAutoCompleteOnChange,
   } = viewModel;
+  const [selected, setSelected] = useState(null);
+  const buttonRefs = useRef([]); // store refs for each button
+
+  const handleSelect = (i) => {
+    setSelected(i);
+
+    // scroll the clicked button to the center
+    buttonRefs.current[i]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  };
 
   const tableView = (props) => {
     const selectedWorkoutList =
@@ -293,10 +308,11 @@ const TodaysWorkoutPlan = () => {
     );
   };
   return (
-    <Grid2 container height="100vh">
+    // <Grid2 container height="100vh">
+    <Grid2 container gap={2}>
       <Grid2
         size={{ xs: 12 }}
-        height="7%"
+        // height="7%"
         sx={{
           position: "sticky",
           top: 0,
@@ -308,7 +324,7 @@ const TodaysWorkoutPlan = () => {
         <StopwatchView />
       </Grid2>
 
-      <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
+      {/* <Grid2 size={{ xs: 12 }} height="7%" alignContent="center">
         <Box
           sx={{
             maxWidth: "100%",
@@ -344,25 +360,11 @@ const TodaysWorkoutPlan = () => {
             >
               Back
             </Button>
-            {/* <Button
-              variant="contained"
-              size="small"
-              sx={{
-                bgcolor: "#1565c0",
-                borderRadius: 1,
-                textTransform: "none",
-                fontFamily: "Poppins, sans-serif",
-              }}
-              startIcon={<BackupRoundedIcon />}
-              // onClick={handleUpdate}
-            >
-              Update
-            </Button> */}
           </Box>
         </Box>
-      </Grid2>
+      </Grid2> */}
 
-      <Grid2
+      {/* <Grid2
         size={{ xs: 12 }}
         height={{ xs: "12%", md: "7%" }}
         alignContent="center"
@@ -504,6 +506,177 @@ const TodaysWorkoutPlan = () => {
             }}
           />
         </Box>
+      </Grid2> */}
+      <Grid2
+        size={{ xs: 12 }}
+        // height={{ xs: "10%", md: "7%" }}
+        alignContent="center"
+        px={4}
+      >
+        <Box maxWidth="100%" mb={1}>
+          <ScrollableButtons
+            title="Day"
+            data={daysList}
+            handleClick={(rowValue) => {
+              viewModel.handleDayOnChange(rowValue);
+            }}
+          />
+        </Box>
+        <Box maxWidth="100%" mb={1}>
+          <ScrollableButtons
+            title="Split"
+            data={splitList}
+            handleClick={(rowValue) => {
+              handleSelectSplitAutoCompleteOnChange(rowValue);
+            }}
+          />
+        </Box>
+        <Box maxWidth="100%">
+          <ScrollableButtons
+            title="Workout"
+            data={workoutList}
+            handleClick={(rowValue) => {
+              setSelectedWorkout(rowValue);
+            }}
+          />
+        </Box>
+        {/* <Box
+          sx={{
+            maxWidth: "100%",
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 1,
+            alignItems: "center",
+            px: 4,
+          }}
+        >
+          <Box width={{ xs: "100%", md: "50%" }} display="flex" gap={1}>
+            <Autocomplete
+              disablePortal
+              options={splitList}
+              noOptionsText="Splits not found"
+              sx={{
+                width: { xs: "50%", md: "50%" },
+                color: "white",
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a split"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    bgcolor: "#E6E6E6",
+                    color: "black",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                  },
+                },
+              }}
+              disableClearable
+              value={selectedSplit}
+              onChange={(e, newValue) => {
+                handleSelectSplitAutoCompleteOnChange(newValue);
+              }}
+            />
+            <Autocomplete
+              disablePortal
+              options={daysList}
+              sx={{
+                width: { xs: "50%", md: "50%" },
+                color: "white",
+                bgcolor: "#444451",
+                borderRadius: 1,
+                "& .MuiInputBase-input": {
+                  color: "white",
+                  fontFamily: "Poppins, sans-serif",
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  placeholder="Select a day"
+                  size="small"
+                  required
+                  sx={{ ...entryTextFieldsStyles }}
+                />
+              )}
+              slotProps={{
+                paper: {
+                  sx: {
+                    bgcolor: "#E6E6E6",
+                    color: "black",
+                    fontFamily: "Poppins, sans-serif",
+                    fontWeight: 600,
+                  },
+                },
+              }}
+              disableClearable
+              value={selectedDay || ""}
+              onChange={(e, newValue) => {
+                setSelectedDay(newValue);
+                const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
+                  newValue
+                ]?.workoutList?.map((row) => row?.name);
+                setWorkoutList(todaysWorkoutList || []);
+                setSelectedWorkout(todaysWorkoutList?.[0]);
+              }}
+            />
+          </Box>
+          <Autocomplete
+            disablePortal
+            options={workoutList}
+            noOptionsText="Workouts not found"
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              color: "white",
+              bgcolor: "#444451",
+              borderRadius: 1,
+              "& .MuiInputBase-input": {
+                color: "white",
+                fontFamily: "Poppins, sans-serif",
+              },
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                placeholder="Select a Workout"
+                size="small"
+                required
+                sx={{ ...entryTextFieldsStyles }}
+              />
+            )}
+            slotProps={{
+              paper: {
+                sx: {
+                  bgcolor: "#E6E6E6",
+                  color: "black",
+                  fontFamily: "Poppins, sans-serif",
+                  fontWeight: 600,
+                },
+              },
+            }}
+            disableClearable
+            value={selectedWorkout}
+            onChange={(e, newValue) => {
+              setSelectedWorkout(newValue);
+            }}
+          />
+        </Box> */}
       </Grid2>
 
       <Grid2
