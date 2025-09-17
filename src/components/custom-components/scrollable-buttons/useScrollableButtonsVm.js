@@ -1,15 +1,26 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const useScrollableButtonsVm = (props) => {
-  const {  handleClick } = props;
-  const [selected, setSelected] = useState(null);
-  const buttonRefs = useRef([]); // store refs for each button
+  const { handleClick, defaultValue } = props;
+  const [selected, setSelected] = useState(defaultValue || null);
+  const buttonRefs = useRef({}); // store refs for each button
 
-  const handleSelect = (row, i) => {
-    setSelected(i);
-    handleClick(row, i);
+  useEffect(() => {
+    if (defaultValue?.length) {
+      setSelected(defaultValue);
+       buttonRefs.current[defaultValue]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+    }
+  }, [defaultValue]);
+
+  const handleSelect = (rowValue, i) => {
+    setSelected(rowValue);
+    handleClick(rowValue, i);
     // scroll the clicked button to the center
-    buttonRefs.current[i]?.scrollIntoView({
+    buttonRefs.current[rowValue]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",
       block: "nearest",

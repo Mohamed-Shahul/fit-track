@@ -37,19 +37,6 @@ const TodaysWorkoutPlan = () => {
     weightsOnChange,
     handleSelectSplitAutoCompleteOnChange,
   } = viewModel;
-  const [selected, setSelected] = useState(null);
-  const buttonRefs = useRef([]); // store refs for each button
-
-  const handleSelect = (i) => {
-    setSelected(i);
-
-    // scroll the clicked button to the center
-    buttonRefs.current[i]?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  };
 
   const tableView = (props) => {
     const selectedWorkoutList =
@@ -307,6 +294,9 @@ const TodaysWorkoutPlan = () => {
       </>
     );
   };
+
+  console.log('==check',selectedSplit);
+  
   return (
     // <Grid2 container height="100vh">
     <Grid2 container gap={2}>
@@ -511,11 +501,12 @@ const TodaysWorkoutPlan = () => {
         size={{ xs: 12 }}
         // height={{ xs: "10%", md: "7%" }}
         alignContent="center"
-        px={4}
+        px={3}
       >
         <Box maxWidth="100%" mb={1}>
           <ScrollableButtons
             title="Day"
+            defaultValue={selectedDay}
             data={daysList}
             handleClick={(rowValue) => {
               viewModel.handleDayOnChange(rowValue);
@@ -525,6 +516,7 @@ const TodaysWorkoutPlan = () => {
         <Box maxWidth="100%" mb={1}>
           <ScrollableButtons
             title="Split"
+            defaultValue={selectedSplit}
             data={splitList}
             handleClick={(rowValue) => {
               handleSelectSplitAutoCompleteOnChange(rowValue);
@@ -534,6 +526,7 @@ const TodaysWorkoutPlan = () => {
         <Box maxWidth="100%">
           <ScrollableButtons
             title="Workout"
+            defaultValue={selectedWorkout}
             data={workoutList}
             handleClick={(rowValue) => {
               setSelectedWorkout(rowValue);

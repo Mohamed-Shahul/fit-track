@@ -1,14 +1,21 @@
 import { Box, Button } from "@mui/material";
 import useScrollableButtonsVm from "./useScrollableButtonsVm";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { KeyboardArrowRight } from "@mui/icons-material";
-import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
+// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+// import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+// import { KeyboardArrowRight } from "@mui/icons-material";
+import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 
 const ScrollableButtons = (props) => {
   const viewModel = useScrollableButtonsVm(props);
   const { handleSelect, selected, buttonRefs } = viewModel;
-  const { data, title } = props;
+  const { data, title, defaultValue } = props;
+
+  const isSelected = (props) => {
+    const { value } = props;
+    console.log("==val", value, defaultValue, selected);
+
+    return value === selected;
+  };
 
   return (
     <Box
@@ -21,37 +28,23 @@ const ScrollableButtons = (props) => {
         overflow: "hidden",
       }}
     >
-      {/* Left Arrow */}
-      {/* <Box
-        sx={{
-          position: "absolute",
-          left: 5,
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 3,
-          animation: "blink 1.5s infinite",
-          color: "silver",
-          pointerEvents: "none", // ✅ not clickable
-        }}
-      >
-        <ArrowBackIosNewIcon fontSize="small" />
-      </Box> */}
+      
 
       {/* Right Arrow */}
-      {/* <Box
+      <Box
         sx={{
           position: "absolute",
           right: 0,
-          top: "50%",
+          top: "55%",
           transform: "translateY(-50%)",
           color: "silver",
           animation: "blink 1.5s infinite",
           pointerEvents: "none", // ✅ not clickable,
-          zIndex:999999
+          zIndex: 999999,
         }}
       >
         <ArrowRightRoundedIcon fontSize="large" />
-      </Box> */}
+      </Box>
 
       {/* Title */}
       <Box
@@ -74,7 +67,7 @@ const ScrollableButtons = (props) => {
           display: "flex",
           gap: 2,
           px: 3,
-          py: 0.8,
+          py: 0.5,
           scrollBehavior: "smooth",
           "&::-webkit-scrollbar": { display: "none" },
         }}
@@ -83,8 +76,11 @@ const ScrollableButtons = (props) => {
           data?.map((split, i) => (
             <Button
               key={i}
-              ref={(el) => (buttonRefs.current[i] = el)}
-              variant={selected === i ? "contained" : "outlined"}
+              // ref={(el) => (buttonRefs.current[i] = el)}
+              ref={(el) => {
+                if (el) buttonRefs.current[split] = el; // ✅ use value as key
+              }}
+              variant={isSelected({ value: split }) ? "contained" : "outlined"}
               onClick={() => handleSelect(split, i)}
               sx={{
                 px: 4,
@@ -92,14 +88,17 @@ const ScrollableButtons = (props) => {
                 minWidth: "200px",
                 maxWidth: "300px",
                 height: "30px",
-                transform: selected === i ? "scale(0.9)" : "scale(1)",
+                transform: isSelected({ value: split })
+                  ? "scale(0.9)"
+                  : "scale(1)",
                 transition: "all 0.3s ease",
-                boxShadow:
-                  selected === i ? "0px 4px 12px rgba(0,0,0,0.25)" : "none",
-                zIndex: selected === i ? 2 : 1,
+                boxShadow: isSelected({ value: split })
+                  ? "0px 4px 12px rgba(0,0,0,0.25)"
+                  : "none",
+                zIndex: isSelected({ value: split }) ? 2 : 1,
                 textTransform: "none",
                 fontWeight: "bold",
-                ...(selected !== i && {
+                ...(selected !== split && {
                   color: "silver",
                   border: "1px solid silver",
                 }),
@@ -128,7 +127,7 @@ const ScrollableButtons = (props) => {
               color: "white",
             }}
           >
-            No {title} created...
+            No {title} found...
           </Box>
         )}
       </Box>
