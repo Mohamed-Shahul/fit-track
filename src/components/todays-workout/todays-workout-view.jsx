@@ -61,220 +61,251 @@ const TodaysWorkoutPlan = () => {
     return (
       <>
         {selectedWorkoutList?.length ? (
-          <Box
-            sx={{
-              color: "white",
-              borderRadius: 2,
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
+          <>
             <Box
               sx={{
-                maxWidth: "100%",
-                borderColor: "white",
+                color: "white",
                 borderRadius: 2,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
             >
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  bgcolor: "#1976d2",
                   maxWidth: "100%",
-                  border: 1,
                   borderColor: "white",
-                  borderTopRightRadius: 5,
-                  borderTopLeftRadius: 5,
+                  borderRadius: 2,
                 }}
               >
                 <Box
                   sx={{
-                    width: "20%",
-                    textAlign: "center",
-                    p: 2,
-                    fontWeight: 600,
-                    fontFamily: "Poppins, sans-serif",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    bgcolor: "#1976d2",
+                    maxWidth: "100%",
+                    border: 1,
+                    borderColor: "white",
+                    borderTopRightRadius: 5,
+                    borderTopLeftRadius: 5,
                   }}
                 >
-                  Sets
+                  <Box
+                    sx={{
+                      width: "100%",
+                      textAlign: "center",
+                      p: 1,
+                      fontWeight: 600,
+                      fontFamily: "Poppins, sans-serif",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {selectedWorkout || ""} Progress
+                  </Box>
                 </Box>
-                {Array(4)
-                  .fill("")
-                  ?.map((key, i, arr) => (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    bgcolor: "#1976d2",
+                    maxWidth: "100%",
+                    border: 1,
+                    borderColor: "white",
+                    // borderTopRightRadius: 5,
+                    // borderTopLeftRadius: 5,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontWeight: 600,
+                      fontFamily: "Poppins, sans-serif",
+                    }}
+                  >
+                    Sets
+                  </Box>
+                  {Array(4)
+                    .fill("")
+                    ?.map((key, i, arr) => (
+                      <Box
+                        sx={{
+                          width: "20%",
+                          borderLeft: 1,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontWeight: 600,
+                          fontFamily: "Poppins, sans-serif",
+                        }}
+                      >
+                        {i + 1}
+                      </Box>
+                    ))}
+                </Box>
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    bgcolor: "#4C4B4B",
+                    maxWidth: "100%",
+                    borderLeft: 1,
+                    borderRight: 1,
+                    borderBottom: 1,
+                    borderColor: "white",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "20%",
+                      textAlign: "center",
+                      p: 2,
+                      fontWeight: 600,
+                      fontFamily: "Poppins, sans-serif",
+                      bgcolor: "#1976d2",
+                    }}
+                  >
+                    Reps
+                  </Box>
+                  {repsKeys?.map((key, i) => (
                     <Box
                       sx={{
                         width: "20%",
                         borderLeft: 1,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: 600,
-                        fontFamily: "Poppins, sans-serif",
                       }}
                     >
-                      {i + 1}
+                      <TextField
+                        type="number"
+                        autoComplete="off"
+                        variant="outlined"
+                        sx={{
+                          width: "100%",
+                          ...commonTextFieldStyles,
+                          color: "white",
+                          bgcolor: "#444451",
+                        }}
+                        value={selectedWorkoutRepsObj?.[`set${i + 1}Reps`]}
+                        onChange={(e) => {
+                          repsOnChange({
+                            e,
+                            selectedWorkoutRepsObj,
+                            selectedWorkoutList,
+                            i,
+                          });
+                        }}
+                        onBlur={() => handleUpdate()}
+                      />
                     </Box>
                   ))}
-              </Box>
+                </Box>
 
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  bgcolor: "#4C4B4B",
-                  maxWidth: "100%",
-                  borderLeft: 1,
-                  borderRight: 1,
-                  borderBottom: 1,
-                  borderColor: "white",
-                }}
-              >
                 <Box
                   sx={{
-                    width: "20%",
-                    textAlign: "center",
-                    p: 2,
-                    fontWeight: 600,
-                    fontFamily: "Poppins, sans-serif",
-                    bgcolor: "#1976d2",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    bgcolor: "#4C4B4B",
+                    maxWidth: "100%",
+                    borderLeft: 1,
+                    borderRight: 1,
+                    borderBottom: 1,
+                    borderColor: "white",
+                    borderBottomRightRadius: 5,
+                    borderBottomLeftRadius: 5,
                   }}
                 >
-                  Reps
-                </Box>
-                {repsKeys?.map((key, i) => (
                   <Box
                     sx={{
                       width: "20%",
-                      borderLeft: 1,
+                      textAlign: "center",
+                      p: 2,
+                      fontWeight: 600,
+                      fontFamily: "Poppins, sans-serif",
+                      bgcolor: "#1976d2",
                     }}
                   >
-                    <TextField
-                      type="number"
-                      autoComplete="off"
-                      variant="outlined"
-                      sx={{
-                        width: "100%",
-                        ...commonTextFieldStyles,
-                        color: "white",
-                        bgcolor: "#444451",
-                      }}
-                      value={selectedWorkoutRepsObj?.[`set${i + 1}Reps`]}
-                      onChange={(e) => {
-                        repsOnChange({
-                          e,
-                          selectedWorkoutRepsObj,
-                          selectedWorkoutList,
-                          i,
-                        });
-                      }}
-                      onBlur={() => handleUpdate()}
-                    />
+                    Kg
                   </Box>
-                ))}
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  bgcolor: "#4C4B4B",
-                  maxWidth: "100%",
-                  borderLeft: 1,
-                  borderRight: 1,
-                  borderBottom: 1,
-                  borderColor: "white",
-                  borderBottomRightRadius: 5,
-                  borderBottomLeftRadius: 5,
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "20%",
-                    textAlign: "center",
-                    p: 2,
-                    fontWeight: 600,
-                    fontFamily: "Poppins, sans-serif",
-                    bgcolor: "#1976d2",
-                  }}
-                >
-                  Kg
+                  {weightsKeys?.map((key, i) => (
+                    <Box
+                      sx={{
+                        width: "20%",
+                        borderLeft: 1,
+                      }}
+                    >
+                      <TextField
+                        autoComplete="off"
+                        variant="outlined"
+                        type="number"
+                        sx={{
+                          width: "100%",
+                          ...commonTextFieldStyles,
+                          color: "white",
+                          bgcolor: "#444451",
+                        }}
+                        value={
+                          selectedWorkoutWeightsObj?.[`set${i + 1}Weights`]
+                        }
+                        onChange={(e) => {
+                          weightsOnChange({
+                            e,
+                            selectedWorkoutWeightsObj,
+                            selectedWorkoutList,
+                            i,
+                          });
+                        }}
+                        onBlur={() => handleUpdate()}
+                      />
+                    </Box>
+                  ))}
                 </Box>
-                {weightsKeys?.map((key, i) => (
-                  <Box
-                    sx={{
-                      width: "20%",
-                      borderLeft: 1,
-                    }}
-                  >
-                    <TextField
-                      autoComplete="off"
-                      variant="outlined"
-                      type="number"
-                      sx={{
-                        width: "100%",
-                        ...commonTextFieldStyles,
-                        color: "white",
-                        bgcolor: "#444451",
-                      }}
-                      value={selectedWorkoutWeightsObj?.[`set${i + 1}Weights`]}
-                      onChange={(e) => {
-                        weightsOnChange({
-                          e,
-                          selectedWorkoutWeightsObj,
-                          selectedWorkoutList,
-                          i,
-                        });
-                      }}
-                      onBlur={() => handleUpdate()}
-                    />
-                  </Box>
-                ))}
               </Box>
-            </Box>
 
-            <Box>
-              <TextField
-                variant="outlined"
-                multiline
-                minRows={3}
-                sx={{
-                  borderRadius: 2,
-                  bgcolor: "#444451",
-                  width: "100%",
-                  "& .MuiInputBase-input::placeholder": {
-                    color: "white",
-                  },
-                  ...entryTextFieldsStyles,
-                }}
-                placeholder="Take a notes..."
-                value={notesValue || ""}
-                onChange={(e) => {
-                  const tempWrktList = selectedWorkoutList?.map((row) => {
-                    if (row?.name === selectedWorkout) {
-                      return {
-                        ...row,
-                        notes: e?.target?.value,
-                      };
-                    } else {
-                      return { ...row };
-                    }
-                  });
-                  setWorkoutDetails((prev) => ({
-                    ...prev,
-                    [selectedSplit]: {
-                      ...prev?.[selectedSplit],
-                      [selectedDay]: {
-                        workoutList: [...(tempWrktList || [])],
-                      },
+              <Box>
+                <TextField
+                  variant="outlined"
+                  multiline
+                  minRows={3}
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: "#444451",
+                    width: "100%",
+                    "& .MuiInputBase-input::placeholder": {
+                      color: "white",
                     },
-                  }));
-                }}
-                onBlur={() => handleUpdate()}
-              />
+                    ...entryTextFieldsStyles,
+                  }}
+                  placeholder="Take a notes..."
+                  value={notesValue || ""}
+                  onChange={(e) => {
+                    const tempWrktList = selectedWorkoutList?.map((row) => {
+                      if (row?.name === selectedWorkout) {
+                        return {
+                          ...row,
+                          notes: e?.target?.value,
+                        };
+                      } else {
+                        return { ...row };
+                      }
+                    });
+                    setWorkoutDetails((prev) => ({
+                      ...prev,
+                      [selectedSplit]: {
+                        ...prev?.[selectedSplit],
+                        [selectedDay]: {
+                          workoutList: [...(tempWrktList || [])],
+                        },
+                      },
+                    }));
+                  }}
+                  onBlur={() => handleUpdate()}
+                />
+              </Box>
             </Box>
-          </Box>
+          </>
         ) : (
           <Box
             sx={{
@@ -295,8 +326,8 @@ const TodaysWorkoutPlan = () => {
     );
   };
 
-  console.log('==check',selectedSplit);
-  
+  console.log("==check", selectedSplit);
+
   return (
     // <Grid2 container height="100vh">
     <Grid2 container gap={2}>

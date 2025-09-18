@@ -1,19 +1,15 @@
 import { Box, Button } from "@mui/material";
 import useScrollableButtonsVm from "./useScrollableButtonsVm";
-// import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-// import { KeyboardArrowRight } from "@mui/icons-material";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
+import { alpha } from "@mui/material/styles";
 
 const ScrollableButtons = (props) => {
   const viewModel = useScrollableButtonsVm(props);
   const { handleSelect, selected, buttonRefs } = viewModel;
-  const { data, title, defaultValue } = props;
+  const { data, title } = props;
 
   const isSelected = (props) => {
     const { value } = props;
-    console.log("==val", value, defaultValue, selected);
-
     return value === selected;
   };
 
@@ -28,8 +24,6 @@ const ScrollableButtons = (props) => {
         overflow: "hidden",
       }}
     >
-      
-
       {/* Right Arrow */}
       <Box
         sx={{
@@ -46,6 +40,7 @@ const ScrollableButtons = (props) => {
         <ArrowRightRoundedIcon fontSize="large" />
       </Box>
 
+
       {/* Title */}
       <Box
         color="white"
@@ -54,7 +49,10 @@ const ScrollableButtons = (props) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        borderRadius={1}
+        sx={{
+          borderTopLeftRadius: 2,
+          borderBottomLeftRadius: 2,
+        }}
         fontWeight="bold"
       >
         {title}
@@ -99,8 +97,8 @@ const ScrollableButtons = (props) => {
                 textTransform: "none",
                 fontWeight: "bold",
                 ...(selected !== split && {
+                  bgcolor: alpha("#1976d2", 0.4),
                   color: "silver",
-                  border: "1px solid silver",
                 }),
               }}
             >
