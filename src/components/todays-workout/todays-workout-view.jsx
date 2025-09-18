@@ -74,7 +74,7 @@ const TodaysWorkoutPlan = () => {
               <Box
                 sx={{
                   maxWidth: "100%",
-                  borderColor: "white",
+                  // borderColor: "white",
                   borderRadius: 2,
                 }}
               >
@@ -82,18 +82,18 @@ const TodaysWorkoutPlan = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    bgcolor: "#1976d2",
+                    // bgcolor: "#1976d2",
                     maxWidth: "100%",
-                    border: 1,
-                    borderColor: "white",
-                    borderTopRightRadius: 5,
-                    borderTopLeftRadius: 5,
+                    // border: 1,
+                    // borderColor: "white",
+                    // borderTopRightRadius: 5,
+                    // borderTopLeftRadius: 5,
                   }}
                 >
                   <Box
                     sx={{
                       width: "100%",
-                      textAlign: "center",
+                      textAlign: "left",
                       p: 1,
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
@@ -106,15 +106,25 @@ const TodaysWorkoutPlan = () => {
                   </Box>
                 </Box>
                 <Box
+                  // sx={{
+                  //   display: "flex",
+                  //   justifyContent: "space-between",
+                  //   // bgcolor: "#1976d2",
+                  //   bgcolor: "#282C35", // todo
+                  //   maxWidth: "100%",
+                  //   // border: 1,
+                  //   // borderColor: "white",
+                  //   // borderColor: "silver",
+                  //   borderTopRightRadius: 5,
+                  //   borderTopLeftRadius: 5,
+                  // }}
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    bgcolor: "#1976d2",
+                    bgcolor: "#282C35",
                     maxWidth: "100%",
-                    border: 1,
-                    borderColor: "white",
-                    // borderTopRightRadius: 5,
-                    // borderTopLeftRadius: 5,
+                    borderTopRightRadius: 5,
+                    borderTopLeftRadius: 5,
                   }}
                 >
                   <Box
@@ -134,12 +144,13 @@ const TodaysWorkoutPlan = () => {
                       <Box
                         sx={{
                           width: "20%",
-                          borderLeft: 1,
+                          // borderLeft: 1,
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
                           fontWeight: 600,
                           fontFamily: "Poppins, sans-serif",
+                          bgcolor: "#282C35",
                         }}
                       >
                         {i + 1}
@@ -151,11 +162,13 @@ const TodaysWorkoutPlan = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    bgcolor: "#4C4B4B",
+                    // bgcolor: "#4C4B4B",
+                    bgcolor: "#282C35",
+
                     maxWidth: "100%",
-                    borderLeft: 1,
-                    borderRight: 1,
-                    borderBottom: 1,
+                    // borderLeft: 1,
+                    // borderRight: 1,
+                    // borderBottom: 1,
                     borderColor: "white",
                   }}
                 >
@@ -166,7 +179,7 @@ const TodaysWorkoutPlan = () => {
                       p: 2,
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
-                      bgcolor: "#1976d2",
+                      // bgcolor: "#1976d2",
                     }}
                   >
                     Reps
@@ -175,7 +188,7 @@ const TodaysWorkoutPlan = () => {
                     <Box
                       sx={{
                         width: "20%",
-                        borderLeft: 1,
+                        // borderLeft: 1,
                       }}
                     >
                       <TextField
@@ -186,7 +199,7 @@ const TodaysWorkoutPlan = () => {
                           width: "100%",
                           ...commonTextFieldStyles,
                           color: "white",
-                          bgcolor: "#444451",
+                          // bgcolor: "#444451",
                         }}
                         value={selectedWorkoutRepsObj?.[`set${i + 1}Reps`]}
                         onChange={(e) => {
@@ -207,12 +220,13 @@ const TodaysWorkoutPlan = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    bgcolor: "#4C4B4B",
+                    // bgcolor: "#4C4B4B",
+                    bgcolor: "#282C35",
                     maxWidth: "100%",
-                    borderLeft: 1,
-                    borderRight: 1,
-                    borderBottom: 1,
-                    borderColor: "white",
+                    // borderLeft: 1,
+                    // borderRight: 1,
+                    // borderBottom: 1,
+                    // borderColor: "white",
                     borderBottomRightRadius: 5,
                     borderBottomLeftRadius: 5,
                   }}
@@ -224,7 +238,7 @@ const TodaysWorkoutPlan = () => {
                       p: 2,
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
-                      bgcolor: "#1976d2",
+                      // bgcolor: "#1976d2",
                     }}
                   >
                     Kg
@@ -233,7 +247,7 @@ const TodaysWorkoutPlan = () => {
                     <Box
                       sx={{
                         width: "20%",
-                        borderLeft: 1,
+                        // borderLeft: 1,
                       }}
                     >
                       <TextField
@@ -244,7 +258,7 @@ const TodaysWorkoutPlan = () => {
                           width: "100%",
                           ...commonTextFieldStyles,
                           color: "white",
-                          bgcolor: "#444451",
+                          // bgcolor: "#444451",
                         }}
                         value={
                           selectedWorkoutWeightsObj?.[`set${i + 1}Weights`]

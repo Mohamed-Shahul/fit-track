@@ -18,7 +18,7 @@ const ScrollableButtons = (props) => {
       sx={{
         width: "100%",
         display: "flex",
-        border: "1px solid silver",
+        // border: "1px solid silver",
         borderRadius: 1,
         position: "relative", // ✅ so arrows can be placed
         overflow: "hidden",
@@ -40,11 +40,10 @@ const ScrollableButtons = (props) => {
         <ArrowRightRoundedIcon fontSize="large" />
       </Box>
 
-
       {/* Title */}
       <Box
         color="white"
-        bgcolor="#1976d2"
+        // bgcolor="#1976d2"
         minWidth="30%"
         display="flex"
         justifyContent="center"
@@ -52,6 +51,7 @@ const ScrollableButtons = (props) => {
         sx={{
           borderTopLeftRadius: 2,
           borderBottomLeftRadius: 2,
+          background: "transparent",
         }}
         fontWeight="bold"
       >
@@ -96,6 +96,7 @@ const ScrollableButtons = (props) => {
                 zIndex: isSelected({ value: split }) ? 2 : 1,
                 textTransform: "none",
                 fontWeight: "bold",
+              
                 ...(selected !== split && {
                   bgcolor: alpha("#1976d2", 0.4),
                   color: "silver",

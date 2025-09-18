@@ -131,6 +131,8 @@ const useTodaysWokout = () => {
     const todaysWorkoutList = selectedWorkoutSplit?.[
       selectedDay
     ]?.workoutList?.map((row) => row?.name);
+    // console.log("==tt", todaysWorkoutList, selectedWorkoutSplit,date,newValue);
+
     setWorkoutList(todaysWorkoutList || []);
     setSelectedWorkout(todaysWorkoutList?.[0]);
   };
@@ -157,7 +159,6 @@ const useTodaysWokout = () => {
           ...workoutDetails,
         },
       });
-      // navigate("/home");
     } catch (error) {
       console.error("Error updating user:", error);
     }
