@@ -40,7 +40,7 @@ const TableView = (props) => {
         <>
           <Box
             sx={{
-              color: "white",
+              color: "#D3D3D3",
               borderRadius: 2,
               display: "flex",
               flexDirection: "column",
@@ -50,27 +50,13 @@ const TableView = (props) => {
             <Box
               sx={{
                 maxWidth: "100%",
-                // borderColor: "white",
                 borderRadius: 2,
               }}
             >
               <Box
-                // sx={{
-                //   display: "flex",
-                //   justifyContent: "space-between",
-                //   // bgcolor: "#1976d2",
-                //   bgcolor: "#282C35", // todo
-                //   maxWidth: "100%",
-                //   // border: 1,
-                //   // borderColor: "white",
-                //   // borderColor: "silver",
-                //   borderTopRightRadius: 5,
-                //   borderTopLeftRadius: 5,
-                // }}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  // bgcolor: "#282C35",
                   maxWidth: "100%",
                   borderTopRightRadius: 5,
                   borderTopLeftRadius: 5,
@@ -84,6 +70,7 @@ const TableView = (props) => {
                     fontWeight: 600,
                     fontFamily: "Poppins, sans-serif",
                     bgcolor: "#282C35",
+                    borderTopLeftRadius: 5,
                   }}
                 >
                   Sets
@@ -94,13 +81,15 @@ const TableView = (props) => {
                     <Box
                       sx={{
                         width: "20%",
-                        // borderLeft: 1,
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         fontWeight: 600,
                         fontFamily: "Poppins, sans-serif",
                         bgcolor: "#282C35",
+                        ...(i === 3 && {
+                          borderTopRightRadius: 5,
+                        }),
                       }}
                     >
                       {i + 1}
@@ -112,13 +101,7 @@ const TableView = (props) => {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  // bgcolor: "#4C4B4B",
-                  // bgcolor: "#282C35",
-
                   maxWidth: "100%",
-                  // borderLeft: 1,
-                  // borderRight: 1,
-                  // borderBottom: 1,
                   borderColor: "white",
                 }}
               >
@@ -129,7 +112,6 @@ const TableView = (props) => {
                     p: 2,
                     fontWeight: 600,
                     fontFamily: "Poppins, sans-serif",
-                    // bgcolor: "#1976d2",
                     bgcolor: "#282C35",
                   }}
                 >
@@ -139,8 +121,10 @@ const TableView = (props) => {
                   <Box
                     sx={{
                       width: "20%",
-                      // borderLeft: 1,
                       bgcolor: "#282C35",
+                      border: "1px solid grey",
+                      ...(i === 0 && { borderTopLeftRadius: 5 }),
+                      ...(i === 3 && { borderTopRightRadius: 5 }),
                     }}
                   >
                     <TextField
@@ -151,7 +135,6 @@ const TableView = (props) => {
                         width: "100%",
                         ...commonTextFieldStyles,
                         color: "white",
-                        // bgcolor: "#444451",
                       }}
                       value={selectedWorkoutRepsObj?.[`set${i + 1}Reps`]}
                       onChange={(e) => {
@@ -172,14 +155,7 @@ const TableView = (props) => {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  // bgcolor: "#4C4B4B",
-                  // bgcolor: "#282C35",
-
                   maxWidth: "100%",
-                  // borderLeft: 1,
-                  // borderRight: 1,
-                  // borderBottom: 1,
-                  // borderColor: "white",
                   borderBottomRightRadius: 5,
                   borderBottomLeftRadius: 5,
                 }}
@@ -192,6 +168,7 @@ const TableView = (props) => {
                     fontWeight: 600,
                     fontFamily: "Poppins, sans-serif",
                     bgcolor: "#282C35",
+                    borderBottomLeftRadius: 5,
                   }}
                 >
                   Kg
@@ -200,8 +177,10 @@ const TableView = (props) => {
                   <Box
                     sx={{
                       width: "20%",
-                      // borderLeft: 1,
                       bgcolor: "#282C35",
+                      border: "1px solid grey",
+                      ...(i === 0 && { borderBottomLeftRadius: 5 }),
+                      ...(i === 3 && { borderBottomRightRadius: 5 }),
                     }}
                   >
                     <TextField
@@ -212,7 +191,6 @@ const TableView = (props) => {
                         width: "100%",
                         ...commonTextFieldStyles,
                         color: "white",
-                        // bgcolor: "#444451",
                       }}
                       value={selectedWorkoutWeightsObj?.[`set${i + 1}Weights`]}
                       onChange={(e) => {
@@ -237,9 +215,7 @@ const TableView = (props) => {
                 minRows={3}
                 sx={{
                   borderRadius: 2,
-                  // bgcolor: "#444451",
                   bgcolor: "#282C35",
-
                   width: "100%",
                   "& .MuiInputBase-input::placeholder": {
                     color: "white",
@@ -290,149 +266,6 @@ const TableView = (props) => {
           "No workouts found!"
         </Box>
       )}
-      {/* <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "12%", md: "7%" }}
-        alignContent="center"
-      >
-        <Box
-          sx={{
-            maxWidth: "100%",
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 1,
-            alignItems: "center",
-            px: 4,
-          }}
-        >
-          <Box width={{ xs: "100%", md: "50%" }} display="flex" gap={1}>
-            <Autocomplete
-              disablePortal
-              options={splitList}
-              noOptionsText="Splits not found"
-              sx={{
-                width: { xs: "50%", md: "50%" },
-                color: "white",
-                bgcolor: "#444451",
-                borderRadius: 1,
-                "& .MuiInputBase-input": {
-                  color: "white",
-                  fontFamily: "Poppins, sans-serif",
-                },
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder="Select a split"
-                  size="small"
-                  required
-                  sx={{ ...entryTextFieldsStyles }}
-                />
-              )}
-              slotProps={{
-                paper: {
-                  sx: {
-                    bgcolor: "#E6E6E6",
-                    color: "black",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 600,
-                  },
-                },
-              }}
-              disableClearable
-              value={selectedSplit}
-              onChange={(e, newValue) => {
-                handleSelectSplitAutoCompleteOnChange(newValue);
-              }}
-            />
-            <Autocomplete
-              disablePortal
-              options={daysList}
-              sx={{
-                width: { xs: "50%", md: "50%" },
-                color: "white",
-                bgcolor: "#444451",
-                borderRadius: 1,
-                "& .MuiInputBase-input": {
-                  color: "white",
-                  fontFamily: "Poppins, sans-serif",
-                },
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  placeholder="Select a day"
-                  size="small"
-                  required
-                  sx={{ ...entryTextFieldsStyles }}
-                />
-              )}
-              slotProps={{
-                paper: {
-                  sx: {
-                    bgcolor: "#E6E6E6",
-                    color: "black",
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 600,
-                  },
-                },
-              }}
-              disableClearable
-              value={selectedDay || ""}
-              onChange={(e, newValue) => {
-                setSelectedDay(newValue);
-                const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
-                  newValue
-                ]?.workoutList?.map((row) => row?.name);
-                setWorkoutList(todaysWorkoutList || []);
-                setSelectedWorkout(todaysWorkoutList?.[0]);
-              }}
-            />
-          </Box>
-          <Autocomplete
-            disablePortal
-            options={workoutList}
-            noOptionsText="Workouts not found"
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              color: "white",
-              bgcolor: "#444451",
-              borderRadius: 1,
-              "& .MuiInputBase-input": {
-                color: "white",
-                fontFamily: "Poppins, sans-serif",
-              },
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                placeholder="Select a Workout"
-                size="small"
-                required
-                sx={{ ...entryTextFieldsStyles }}
-              />
-            )}
-            slotProps={{
-              paper: {
-                sx: {
-                  bgcolor: "#E6E6E6",
-                  color: "black",
-                  fontFamily: "Poppins, sans-serif",
-                  fontWeight: 600,
-                },
-              },
-            }}
-            disableClearable
-            value={selectedWorkout}
-            onChange={(e, newValue) => {
-              setSelectedWorkout(newValue);
-            }}
-          />
-        </Box>
-      </Grid2> */}
     </>
   );
 };

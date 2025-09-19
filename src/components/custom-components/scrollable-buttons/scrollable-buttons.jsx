@@ -43,7 +43,6 @@ const ScrollableButtons = (props) => {
       {/* Title */}
       <Box
         color="white"
-        // bgcolor="#1976d2"
         minWidth="30%"
         display="flex"
         justifyContent="center"
@@ -74,7 +73,6 @@ const ScrollableButtons = (props) => {
           data?.map((split, i) => (
             <Button
               key={i}
-              // ref={(el) => (buttonRefs.current[i] = el)}
               ref={(el) => {
                 if (el) buttonRefs.current[split] = el; // ✅ use value as key
               }}
