@@ -58,7 +58,10 @@ const useTodaysWokout = () => {
     // setWorkoutDetails({ "Push pull leg": selectedWorkoutSplit });
     const userSplitLists = Object.keys(loggedInuserDetails?.[0]?.DETAILS);
     setSplitList(userSplitLists);
-    handleSelectSplitAutoCompleteOnChange(userSplitLists?.[0]);
+    handleSelectSplitAutoCompleteOnChange(
+      userSplitLists?.[0],
+      loggedInuserDetails
+    );
   };
 
   // MARK: Onchange
@@ -118,11 +121,11 @@ const useTodaysWokout = () => {
     }));
   };
 
-  const handleSelectSplitAutoCompleteOnChange = (newValue) => {
+  const handleSelectSplitAutoCompleteOnChange = (newValue, userDetails) => {
     setSelectedSplit(newValue);
-    const loggedInuserDetails = dbCollections?.filter(
-      (row) => row?.EMAIL === loggedInUserEmail
-    );
+    const loggedInuserDetails =
+      userDetails ||
+      dbCollections?.filter((row) => row?.EMAIL === loggedInUserEmail);
     const selectedWorkoutSplit = loggedInuserDetails?.[0]?.DETAILS?.[newValue];
     setWorkoutDetails((prev) => ({
       ...prev,
@@ -131,8 +134,6 @@ const useTodaysWokout = () => {
     const todaysWorkoutList = selectedWorkoutSplit?.[
       selectedDay
     ]?.workoutList?.map((row) => row?.name);
-    // console.log("==tt", todaysWorkoutList, selectedWorkoutSplit,date,newValue);
-
     setWorkoutList(todaysWorkoutList || []);
     setSelectedWorkout(todaysWorkoutList?.[0]);
   };
