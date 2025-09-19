@@ -1,4 +1,3 @@
-import cloudBg from "../../images/cloudBg.jpg";
 
 const useCustomHook = () => {
   const commonTextFieldStyles = {

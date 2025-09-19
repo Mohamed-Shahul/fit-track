@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase/config";
 import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
-  const location = useLocation();
 
   // MARK: States
   const todaysTitleFormat = dayjs().format("dddd");
@@ -58,12 +57,10 @@ const useTodaysWokout = () => {
     // setWorkoutDetails({ "Push pull leg": selectedWorkoutSplit });
     const userSplitLists = Object.keys(loggedInuserDetails?.[0]?.DETAILS);
     setSplitList(userSplitLists);
-    // setSelectedSplit(selectedWorkoutSplit?.splitName); // new key selectedWorkoutSplit currently hardcoded
-    // const todaysWorkoutList = selectedWorkoutSplit?.[
-    //   todaysTitleFormat
-    // ]?.workoutList?.map((row) => row?.name);
-    // setWorkoutList(todaysWorkoutList);
-    // setSelectedWorkout(todaysWorkoutList?.[0]);
+    handleSelectSplitAutoCompleteOnChange(
+      userSplitLists?.[0],
+      loggedInuserDetails
+    );
   };
 
   // MARK: Onchange
@@ -123,11 +120,11 @@ const useTodaysWokout = () => {
     }));
   };
 
-  const handleSelectSplitAutoCompleteOnChange = (newValue) => {
+  const handleSelectSplitAutoCompleteOnChange = (newValue, userDetails) => {
     setSelectedSplit(newValue);
-    const loggedInuserDetails = dbCollections?.filter(
-      (row) => row?.EMAIL === loggedInUserEmail
-    );
+    const loggedInuserDetails =
+      userDetails ||
+      dbCollections?.filter((row) => row?.EMAIL === loggedInUserEmail);
     const selectedWorkoutSplit = loggedInuserDetails?.[0]?.DETAILS?.[newValue];
     setWorkoutDetails((prev) => ({
       ...prev,
@@ -140,20 +137,14 @@ const useTodaysWokout = () => {
     setSelectedWorkout(todaysWorkoutList?.[0]);
   };
 
-  // useEffect(() => {
-  //   const handleBeforeUnload = (e) => {
-  //     e.preventDefault();
-  //     e.returnValue = ""; // Required for most browsers
-  //     console.log('==test');
-
-  //   };
-
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-  // }, [location]);
+  const handleDayOnChange = (newValue) => {
+    setSelectedDay(newValue);
+    const todaysWorkoutList = workoutDetails?.[selectedSplit]?.[
+      newValue
+    ]?.workoutList?.map((row) => row?.name);
+    setWorkoutList(todaysWorkoutList || []);
+    setSelectedWorkout(todaysWorkoutList?.[0]);
+  };
 
   // MARK: Handle update
   const handleUpdate = async () => {
@@ -168,7 +159,6 @@ const useTodaysWokout = () => {
           ...workoutDetails,
         },
       });
-      // navigate("/home");
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -194,6 +184,7 @@ const useTodaysWokout = () => {
     repsOnChange,
     weightsOnChange,
     handleSelectSplitAutoCompleteOnChange,
+    handleDayOnChange,
   };
 };
 
