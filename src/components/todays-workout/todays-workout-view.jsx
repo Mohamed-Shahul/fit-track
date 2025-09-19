@@ -79,33 +79,6 @@ const TodaysWorkoutPlan = () => {
                 }}
               >
                 <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    // bgcolor: "#1976d2",
-                    maxWidth: "100%",
-                    // border: 1,
-                    // borderColor: "white",
-                    // borderTopRightRadius: 5,
-                    // borderTopLeftRadius: 5,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "100%",
-                      textAlign: "left",
-                      p: 1,
-                      fontWeight: 600,
-                      fontFamily: "Poppins, sans-serif",
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {selectedWorkout || ""} Progress
-                  </Box>
-                </Box>
-                <Box
                   // sx={{
                   //   display: "flex",
                   //   justifyContent: "space-between",
@@ -121,7 +94,7 @@ const TodaysWorkoutPlan = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    bgcolor: "#282C35",
+                    // bgcolor: "#282C35",
                     maxWidth: "100%",
                     borderTopRightRadius: 5,
                     borderTopLeftRadius: 5,
@@ -134,6 +107,8 @@ const TodaysWorkoutPlan = () => {
                       p: 2,
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
+                    bgcolor: "#282C35",
+
                     }}
                   >
                     Sets
@@ -163,7 +138,7 @@ const TodaysWorkoutPlan = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     // bgcolor: "#4C4B4B",
-                    bgcolor: "#282C35",
+                    // bgcolor: "#282C35",
 
                     maxWidth: "100%",
                     // borderLeft: 1,
@@ -180,6 +155,8 @@ const TodaysWorkoutPlan = () => {
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
                       // bgcolor: "#1976d2",
+                    bgcolor: "#282C35",
+
                     }}
                   >
                     Reps
@@ -189,6 +166,8 @@ const TodaysWorkoutPlan = () => {
                       sx={{
                         width: "20%",
                         // borderLeft: 1,
+                    bgcolor: "#282C35",
+
                       }}
                     >
                       <TextField
@@ -221,7 +200,8 @@ const TodaysWorkoutPlan = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     // bgcolor: "#4C4B4B",
-                    bgcolor: "#282C35",
+                    // bgcolor: "#282C35",
+
                     maxWidth: "100%",
                     // borderLeft: 1,
                     // borderRight: 1,
@@ -238,7 +218,8 @@ const TodaysWorkoutPlan = () => {
                       p: 2,
                       fontWeight: 600,
                       fontFamily: "Poppins, sans-serif",
-                      // bgcolor: "#1976d2",
+                                          bgcolor: "#282C35",
+
                     }}
                   >
                     Kg
@@ -248,6 +229,7 @@ const TodaysWorkoutPlan = () => {
                       sx={{
                         width: "20%",
                         // borderLeft: 1,
+                        bgcolor: "#282C35",
                       }}
                     >
                       <TextField
@@ -285,7 +267,9 @@ const TodaysWorkoutPlan = () => {
                   minRows={3}
                   sx={{
                     borderRadius: 2,
-                    bgcolor: "#444451",
+                    // bgcolor: "#444451",
+                    bgcolor: "#282C35",
+
                     width: "100%",
                     "& .MuiInputBase-input::placeholder": {
                       color: "white",
