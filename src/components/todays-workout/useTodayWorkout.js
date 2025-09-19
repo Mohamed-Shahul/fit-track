@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase/config";
 import dayjs from "dayjs";
 
 const useTodaysWokout = () => {
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const navigate = useNavigate();
-  const location = useLocation();
 
   // MARK: States
   const todaysTitleFormat = dayjs().format("dddd");

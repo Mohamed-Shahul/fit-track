@@ -3,7 +3,6 @@ import useHome from "./useHome";
 import AppBarView from "../app-bar/app-bar-view";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import useCustomHook from "../custom-hook/useCustomHook";
-import img from "../../images/dumbells.jpg";
 
 const Home = () => {
   const {cloudBgImg} = useCustomHook();

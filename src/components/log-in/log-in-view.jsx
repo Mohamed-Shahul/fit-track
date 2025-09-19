@@ -15,10 +15,7 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import useLogIn from "./useLogIn";
-import {
-  circularIndeterminate,
-  snackBarComponent,
-} from "../custom-components/custom-components";
+import { snackBarComponent } from "../custom-components/custom-components";
 
 const LogInView = () => {
   const { cloudBgImg, logInTextFieldsStyles } = useCustomHook();

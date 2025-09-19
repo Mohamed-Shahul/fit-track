@@ -2,7 +2,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import PauseCircleFilledRoundedIcon from "@mui/icons-material/PauseCircleFilledRounded";
 import { useContext } from "react";
-import MyContext from "../context/my-context";
+import MyContext from "../../context/my-context";
 import { useNavigate } from "react-router-dom";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import ReplayCircleFilledRoundedIcon from "@mui/icons-material/ReplayCircleFilledRounded";
