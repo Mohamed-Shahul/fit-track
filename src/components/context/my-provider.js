@@ -12,7 +12,6 @@ const MyProvider = ({children}) => {
     min: 0,
     hour: 0,
   });
-  console.log("==stopwatch", stopwatchState);
 
   const handlePlayPause = (mode) => {
     setIsPlay((prev) => !prev);
