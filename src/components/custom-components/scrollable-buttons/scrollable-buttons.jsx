@@ -18,7 +18,6 @@ const ScrollableButtons = (props) => {
       sx={{
         width: "100%",
         display: "flex",
-        // border: "1px solid silver",
         borderRadius: 1,
         position: "relative", // ✅ so arrows can be placed
         overflow: "hidden",

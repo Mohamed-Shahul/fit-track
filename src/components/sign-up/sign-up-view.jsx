@@ -6,7 +6,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 import useCustomHook from "../custom-hook/useCustomHook";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
@@ -94,8 +93,6 @@ const SignUpView = () => {
         >
           <Typography
             sx={{
-              //   border: 1,
-              //   borderColor: "white",
               width: { xs: "75%", md: "50%" },
               color: "silver",
               fontFamily: "Poppins, sans-serif",
@@ -266,7 +263,6 @@ const SignUpView = () => {
             children="Sign Up"
             sx={{
               width: { xs: "75%", md: "50%" },
-              // bgcolor: "silver",
               borderRadius: 1,
               textTransform: "none",
               fontFamily: "Poppins, sans-serif",

@@ -24,8 +24,6 @@ export const snackBarComponent = (props) => {
 };
 
 export const circularIndeterminate = (props) => {
-  console.log('==call');
-  
   return (
     <Box sx={{ display: "flex" ,bgcolor:'white'}}>
       <CircularProgress />

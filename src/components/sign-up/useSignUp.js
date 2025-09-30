@@ -20,8 +20,6 @@ const useSignUp = () => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("==userDetails", userDetails);
-
   // MARK: Validation
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const validateUserName = () => userDetails?.name?.length > 0;
@@ -36,7 +34,6 @@ const useSignUp = () => {
       !userDetails?.name?.length
     );
   };
-  console.log("==valid", isUserDetailsIsInValid());
 
   // MARK: On change
   const handleOnChange = (e, field) => {

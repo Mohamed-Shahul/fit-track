@@ -46,11 +46,9 @@ const AccountInfoPopupView = (props) => {
                   alignItems: "left",
                   gap: 2,
                   backgroundImage: `url(${img})`,
-                  // backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url("images/newBg.jpg")`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
-                  // bgcolor:'black'
                 }}
               >
                 <Typography
