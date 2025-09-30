@@ -17,13 +17,7 @@ const Home = () => {
           borderRadius: 2,
           padding: "5px",
           bgcolor: "#1976d2",
-          // backgroundColor: "transparent",
-          // backgroundImage: `url(${img})`,
-          // backgroundSize: "cover",
-          // backgroundPosition: "center",
-          // backgroundRepeat: "no-repeat",
           "&:hover": {
-            // bgcolor: "#1565c0",
             cursor: "pointer",
           },
         }}

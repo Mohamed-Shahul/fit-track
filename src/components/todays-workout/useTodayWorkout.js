@@ -26,12 +26,11 @@ const useTodaysWokout = () => {
   const [selectedSplit, setSelectedSplit] = useState("");
   const [selectedWorkout, setSelectedWorkout] = useState("");
   const [workoutDetails, setWorkoutDetails] = useState({});
-
-  console.log("==details", workoutDetails);
+  // console.log("==details", workoutDetails);
 
   // MARK: Firebase database fetch
   const [dbCollections, setDbCollections] = useState([]);
-  console.log("==db", dbCollections);
+  // console.log("==db", dbCollections);
 
   useEffect(() => {
     const collectionRef = collection(db, "fit-track");

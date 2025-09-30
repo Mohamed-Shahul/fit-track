@@ -7,7 +7,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 import useCustomHook from "../custom-hook/useCustomHook";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
@@ -113,7 +112,6 @@ const LogInView = () => {
             required
             variant="outlined"
             type="text"
-            // autoComplete="off"
             placeholder="User email"
             sx={{
               width: { xs: "75%", md: "50%" },
@@ -148,7 +146,6 @@ const LogInView = () => {
             required
             variant="outlined"
             type={userDetails?.isPasswordVisibility ? "text" : "password"}
-            // autoComplete="off"
             placeholder="Password"
             sx={{
               width: { xs: "75%", md: "50%" },
@@ -222,17 +219,6 @@ const LogInView = () => {
           setOpen: setOpenSnackBar,
           severity: "error",
         })}
-      {/* {
-        <Box
-          display="flex"
-          sx={{
-            position:'absolute',
-            top:'50%'
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      } */}
     </Grid2>
   );
 };

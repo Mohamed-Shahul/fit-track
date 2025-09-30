@@ -394,11 +394,6 @@ const CreateWorkoutPlan = () => {
                 width: {xs: "100%", md: "40%"},
                 color: "white",
                 bgcolor: "#444451",
-                // backgroundImage: `url(${img})`,
-                // // backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url("images/newBg.jpg")`,
-                // backgroundSize: "cover",
-                // backgroundPosition: "center",
-                // backgroundRepeat: "no-repeat",
                 borderRadius: 1,
                 "& .MuiInputBase-input": {
                   color: "white",
@@ -501,7 +496,6 @@ const CreateWorkoutPlan = () => {
 
       <Grid2
         size={{xs: 12}}
-        // border={1} borderColor="white"
         height={{xs: "76%", md: "79%"}}
       >
         <Box
@@ -532,8 +526,6 @@ const CreateWorkoutPlan = () => {
         }}
       />
     </Grid2>
-
-    // </Box>
   );
 };
 
