@@ -37,7 +37,7 @@ const useCreateWorkout = () => {
     "Saturday",
     "Sunday",
   ];
-  console.log("==details", workoutDetails);
+  // console.log("==details", workoutDetails);
 
   // MARK: Firebase database fetch
   const [dbCollections, setDbCollections] = useState([]);
@@ -53,7 +53,7 @@ const useCreateWorkout = () => {
       })
       .catch((err) => console.log("==err", err));
   }, []);
-  console.log("==db", dbCollections);
+  // console.log("==db", dbCollections);
 
   // MARK: Handle drag and drop
   const [draggedIndex, setDraggedIndex] = useState(null);

@@ -16,16 +16,12 @@ const AccountInfoPopupView = (props) => {
   const loggedInUseName = localStorage.getItem("USER_NAME");
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
   const { viewModel } = props;
-  const { openAccountInfoPopup, setOpenAccountInfoPopup } = viewModel;
+  const { openAccountInfoPopup } = viewModel;
   const [isLogOut, setIsLogOut] = useState({ state: false });
 
   return (
     <>
-      <ClickAwayListener
-        onClickAway={() =>
-          setOpenAccountInfoPopup({ state: false, anchorEl: null })
-        }
-      >
+      <ClickAwayListener onClickAway={() => console.log()}>
         <Popper
           open={openAccountInfoPopup.state}
           anchorEl={openAccountInfoPopup.anchorEl}
@@ -79,14 +75,18 @@ const AccountInfoPopupView = (props) => {
         </Popper>
       </ClickAwayListener>
 
-      <DeleteDialog
-        open={isLogOut?.state}
-        setOpen={setIsLogOut}
-        modeTitle="Log out"
-        handleConfirm={() => {
-          logout();
-        }}
-      />
+      {isLogOut?.state ? (
+        <DeleteDialog
+          open={isLogOut?.state}
+          setOpen={setIsLogOut}
+          modeTitle="Log out"
+          handleConfirm={() => {
+            logout();
+          }}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

@@ -8,12 +8,12 @@ const useHome = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([
     {
-      title: `Make workout plan`,
+      title: `Create workouts`,
       url: "/create-workout",
       icon: AddCircleOutlineSharpIcon,
     },
     {
-      title: "Today's workout plan",
+      title: "Today workouts",
       url: "/todays-workout",
       icon: TodaySharpIcon,
     },
