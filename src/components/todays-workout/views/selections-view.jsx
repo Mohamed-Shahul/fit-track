@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import ScrollableButtons from "../../custom-components/scrollable-buttons/scrollable-buttons";
+import DayViewButtons from "../../custom-components/day-view-buttons/day-view-buttons";
 
 const SelectionsView = (props) => {
   const { viewModel } = props;
@@ -16,7 +17,7 @@ const SelectionsView = (props) => {
   return (
     <>
       <Box maxWidth="100%" mb={1}>
-        <ScrollableButtons
+        <DayViewButtons
           title="Day"
           defaultValue={selectedDay}
           data={daysList}
