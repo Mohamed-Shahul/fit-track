@@ -17,8 +17,7 @@ const TodaysWorkoutPlan = () => {
           position: "sticky",
           top: 0,
           borderBottom: 1,
-          borderBottomColor: "gray",
-          px: 2,
+          borderBottomColor: "gray"
         }}
       >
         <StopwatchView />
