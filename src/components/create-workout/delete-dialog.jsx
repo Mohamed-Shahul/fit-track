@@ -1,4 +1,4 @@
-import {  Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import React from "react";
 import cloudBg from "../../images/cloudBg.jpg";
 
@@ -60,7 +60,10 @@ const DeleteDialog = (props) => {
         </Button>
         <Button
           variant="contained"
-          onClick={handleConfirm}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleConfirm();
+          }}
           autoFocus
           sx={{
             textTransform: "none",

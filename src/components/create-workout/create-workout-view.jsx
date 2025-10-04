@@ -61,18 +61,22 @@ const CreateWorkoutPlan = () => {
         </Box>
       </Grid2>
 
-      <DeleteDialog
-        open={isDelete?.state}
-        setOpen={setIsDelete}
-        title={isDelete?.title}
-        handleConfirm={() => {
-          if (isDelete?.path === "split") {
-            handleDeleteSplit();
-          } else {
-            handleRemoveWorkout(isDelete?.index);
-          }
-        }}
-      />
+      {isDelete?.state ? (
+        <DeleteDialog
+          open={isDelete?.state}
+          setOpen={setIsDelete}
+          title={isDelete?.title}
+          handleConfirm={() => {
+            if (isDelete?.path === "split") {
+              handleDeleteSplit();
+            } else {
+              handleRemoveWorkout(isDelete?.index);
+            }
+          }}
+        />
+      ) : (
+        <></>
+      )}
     </Grid2>
   );
 };

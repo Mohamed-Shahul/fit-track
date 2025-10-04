@@ -1,21 +1,20 @@
 import { useState } from "react";
 import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
-import TodaySharpIcon from "@mui/icons-material/TodaySharp";
 import { useNavigate } from "react-router-dom";
-
+import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 
 const useHome = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([
     {
-      title: `Make workout plan`,
+      title: `Create workouts`,
       url: "/create-workout",
       icon: AddCircleOutlineSharpIcon,
     },
     {
-      title: "Today's workout plan",
+      title: "Today workouts",
       url: "/todays-workout",
-      icon: TodaySharpIcon,
+      icon: FitnessCenterRoundedIcon,
     },
   ]);
   return {
