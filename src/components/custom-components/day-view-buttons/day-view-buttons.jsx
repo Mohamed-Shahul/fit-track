@@ -20,22 +20,25 @@ const DayViewButtons = (props) => {
         borderRadius: "30px",
         position: "relative", // ✅ so arrows can be placed
         overflow: "hidden",
-        background:
-          "linear-gradient(270deg, #000000, #1a1a1a, #2b2b2b, #000000)", // darker greys
-        backgroundSize: "400% 400%",
-        animation: "glowBackground 12s ease infinite",
-        boxShadow: "0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(50,50,50,0.4)", // soft dark glow
-        // subtle glow
       }}
     >
       <style>
         {`
-      @keyframes glowBackground {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    @keyframes cartoonGradient {
+      0% { background-position: 200% 0%; }
+      100% { background-position: -200% 0%; }
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 12px rgba(25,118,210,0.6), 0 0 25px rgba(25,118,210,0.4); }
+      50% { box-shadow: 0 0 22px rgba(25,118,210,0.9), 0 0 40px rgba(25,118,210,0.6); }
+      100% { box-shadow: 0 0 12px rgba(25,118,210,0.6), 0 0 25px rgba(25,118,210,0.4); }
+    }
+        @keyframes cartoonBackground {
+        0% { background-position: 200% 0%; }
+        100% { background-position: -200% 0%; }
       }
-    `}
+  `}
       </style>
 
       {/* Scrollable Buttons */}
@@ -65,25 +68,27 @@ const DayViewButtons = (props) => {
                 maxWidth: "300px",
                 height: "30px",
                 transform: isSelected({ value: split })
-                  ? "scale(0.95)"
+                  ? "scale(0.96)"
                   : "scale(1)",
-                transition: "all 0.3s ease",
+                transition: "all 0.35s ease",
                 zIndex: isSelected({ value: split }) ? 2 : 1,
                 textTransform: "none",
                 fontWeight: "bold",
+                color: isSelected({ value: split }) ? "white" : "#bdbdbd",
 
-                // 🌟 Glow for selected
-                boxShadow: isSelected({ value: split })
-                  ? "0 0 12px rgba(25,118,210,0.7), 0 0 25px rgba(25,118,210,0.6), 0 0 40px rgba(25,118,210,0.4)"
+                // Cartoon-style moving gradient
+                background: isSelected({ value: split })
+                  ? "linear-gradient(90deg, #0d47a1 20%, #1976d2 40%, #42a5f5 60%, #0d47a1 80%)"
+                  : "rgba(28,28,28,0.95)",
+                backgroundSize: "200% 100%",
+                animation: isSelected({ value: split })
+                  ? "cartoonGradient 5s linear infinite, pulseGlow 2s infinite ease-in-out"
                   : "none",
 
-                // 🎨 Backgrounds
-                background: isSelected({ value: split })
-                  ? "linear-gradient(135deg, #1976d2, #42a5f5)" // brighter glowing blue gradient
-                  : "rgba(28, 28, 28, 0.95)", // muted dark grey
-
-                // 🖋️ Text Colors
-                color: isSelected({ value: split }) ? "white" : "#bdbdbd",
+                // Glow for selected button
+                boxShadow: isSelected({ value: split })
+                  ? "0 0 15px rgba(25,118,210,0.8), 0 0 35px rgba(25,118,210,0.6)"
+                  : "none",
               }}
             >
               <span
