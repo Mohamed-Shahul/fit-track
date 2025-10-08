@@ -60,7 +60,7 @@ const AppBarView = () => {
               state: !prev.state,
               anchorEl: e.currentTarget,
             }))
-          }
+          } 
         />
       </Box>
       {openAccountInfoPopup.state ? (
