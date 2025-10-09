@@ -61,7 +61,7 @@ const Home = () => {
           ...cloudBgImg,
         }}
       >
-        <AppBarView />
+        <AppBarView caller='home'/>
       </Grid2>
 
       <Grid2

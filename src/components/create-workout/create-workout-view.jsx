@@ -1,11 +1,11 @@
 import { Box, Grid2 } from "@mui/material";
 import useCreateWorkout from "./useCreateWorkout";
 import useCustomHook from "../custom-hook/useCustomHook";
-import AppBarView from "../app-bar/app-bar-view";
 import DeleteDialog from "./delete-dialog";
 import WorkoutListView from "./views/workout-list-view";
 import SplitActionsPanel from "./views/split-actions-panel";
 import SplitSetupPanel from "./views/split-setup-panel";
+import TopBar from "./views/top-bar";
 
 const CreateWorkoutPlan = () => {
   const { scrollBarStyle } = useCustomHook();
@@ -26,7 +26,8 @@ const CreateWorkoutPlan = () => {
           px: 2,
         }}
       >
-        <AppBarView />
+        {/* <AppBarView  /> */}
+        <TopBar viewModel={viewModel}/>
       </Grid2>
 
       <Grid2

@@ -4,7 +4,6 @@ import useAppBar from "./useAppBar";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import AccountInfoPopupView from "./views/account-info-popup-view";
 import useCustomHook from "../custom-hook/useCustomHook";
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 
 const AppBarView = () => {
   const { cloudBgImg } = useCustomHook();
@@ -32,7 +31,6 @@ const AppBarView = () => {
         onClick={() => navigate("/home")}
       >
         <FitnessCenterRoundedIcon fontSize="medium" sx={{ color: "#2392eb" }} />
-
         <Typography
           sx={{
             color: "white",
@@ -45,14 +43,13 @@ const AppBarView = () => {
           Fit track
         </Typography>
       </Box>
+
       <Box
         sx={{
           width: "50%",
           textAlign: "right",
         }}
       >
-        <IconButton children={<MenuRoundedIcon  sx={{ color: "#2392eb" }}/>} />
-
         <IconButton
           children={<AccountCircleSharpIcon sx={{ color: "#2392eb" }} />}
           onClick={(e) =>
@@ -60,7 +57,7 @@ const AppBarView = () => {
               state: !prev.state,
               anchorEl: e.currentTarget,
             }))
-          } 
+          }
         />
       </Box>
       {openAccountInfoPopup.state ? (
