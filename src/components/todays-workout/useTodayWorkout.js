@@ -33,6 +33,11 @@ const useTodaysWokout = () => {
   // console.log("==db", dbCollections);
 
   useEffect(() => {
+    fetchDbCollections({ mode: "initialFetch" });
+  }, []);
+
+  const fetchDbCollections = (props = {}) => {
+    const { mode = "" } = props;
     const collectionRef = collection(db, "fit-track");
     getDocs(collectionRef)
       .then((snapshot) => {
@@ -41,10 +46,10 @@ const useTodaysWokout = () => {
           result.push({ ...doc.data(), id: doc.id });
         });
         setDbCollections(result);
-        handleInitialFetch(result);
+        mode === "initialFetch" && handleInitialFetch(result);
       })
       .catch((err) => console.log("==err", err));
-  }, []);
+  };
 
   const handleInitialFetch = (result) => {
     const loggedInuserDetails = result?.filter(
@@ -118,7 +123,7 @@ const useTodaysWokout = () => {
       },
     }));
   };
-
+  
   const handleSelectSplitAutoCompleteOnChange = (newValue, userDetails) => {
     setSelectedSplit(newValue);
     const loggedInuserDetails =
@@ -158,6 +163,7 @@ const useTodaysWokout = () => {
           ...workoutDetails,
         },
       });
+      fetchDbCollections();
     } catch (error) {
       console.error("Error updating user:", error);
     }
