@@ -1,11 +1,5 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { Box, Button, CircularProgress, IconButton } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
 
 const SplitActionsPanel = (props) => {
@@ -16,86 +10,73 @@ const SplitActionsPanel = (props) => {
     handleSaveWorkout,
     radioButtonValue,
     selectedSplit,
-    handleEditRadioFetch,
     isLoading,
     isLoadingDelete,
   } = viewModel;
   return (
     <Box
       sx={{
-        borderColor: "white",
-        maxWidth: "100%",
-        maxHeight: "100%",
+        width: "100%",
+        height: "100%",
         display: "flex",
-        flexDirection: { xs: "column-reverse", md: "row" },
-        rowGap: 2,
+        justifyContent: "space-between",
         alignItems: "center",
-        px: 4,
       }}
     >
-      <Box width={{ xs: "100%", md: "50%" }}>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="create"
-          name="radio-buttons-group"
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            fontFamily: "Poppins, sans-serif",
-          }}
-          value={radioButtonValue}
-          onChange={(e) => {
-            handleEditRadioFetch(e?.target?.value);
-          }}
-        >
-          <FormControlLabel
-            value="create"
-            control={
-              <Radio
-                sx={{
-                  color: "#1565c0",
-                  "&.Mui-checked": { color: "#1565c0" },
-                }}
-              />
-            }
-            label="Create split"
-            sx={{
-              "& .MuiFormControlLabel-label": {
-                color: "white",
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 500,
-              },
-            }}
-          />
-          <FormControlLabel
-            value="edit"
-            control={
-              <Radio
-                sx={{
-                  color: "#1565c0",
-                  "&.Mui-checked": { color: "#1565c0" },
-                }}
-              />
-            }
-            label="Edit split"
-            sx={{
-              "& .MuiFormControlLabel-label": {
-                color: "white",
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 500,
-              },
-            }}
-          />
-        </RadioGroup>
+      <Box>
+        <IconButton sx={{
+          transform:`rotate(-180deg)`
+        }} onClick={() => navigate("/home")}>
+          <LogoutIcon color="error" fontSize="medium" />
+        </IconButton>
       </Box>
       <Box
-        width={{ xs: "100%", md: "50%" }}
+        width="100%"
         sx={{
           display: "flex",
           justifyContent: "right",
           gap: { xs: 1, md: 2 },
         }}
       >
+        <Button
+          variant="contained"
+          color="error"
+          size="small"
+          disableTouchRipple={!selectedSplit?.length || isLoadingDelete}
+          sx={{
+            borderRadius: 1,
+            borderColor: "#1565c0",
+            textTransform: "none",
+            fontFamily: "Poppins, sans-serif",
+            display: radioButtonValue === "create" ? "none" : "",
+            ...((!selectedSplit?.length || isLoadingDelete) && {
+              backgroundColor: "silver !important",
+              cursor: "default",
+            }),
+          }}
+          disabled={!selectedSplit?.length || isLoadingDelete}
+          onClick={() => {
+            if (
+              radioButtonValue !== "create" &&
+              !isLoadingDelete &&
+              selectedSplit?.length
+            ) {
+              setIsDelete((prev) => ({
+                ...prev,
+                state: true,
+                title: selectedSplit,
+                index: 0,
+                path: "split",
+              }));
+            }
+          }}
+        >
+          {isLoadingDelete ? (
+            <CircularProgress size={20} sx={{ color: "white" }} />
+          ) : (
+            "Delete this split"
+          )}
+        </Button>
         <Button
           variant="outlined"
           size="small"
@@ -136,45 +117,6 @@ const SplitActionsPanel = (props) => {
           }}
         >
           {isLoading ? "" : radioButtonValue === "create" ? "Save" : "Update"}
-        </Button>
-        <Button
-          variant="contained"
-          color="error"
-          size="small"
-          disableTouchRipple={!selectedSplit?.length || isLoadingDelete}
-          sx={{
-            borderRadius: 1,
-            borderColor: "#1565c0",
-            textTransform: "none",
-            fontFamily: "Poppins, sans-serif",
-            display: radioButtonValue === "create" ? "none" : "",
-            ...((!selectedSplit?.length || isLoadingDelete) && {
-              backgroundColor: "silver !important",
-              cursor: "default",
-            }),
-          }}
-          disabled={!selectedSplit?.length || isLoadingDelete}
-          onClick={() => {
-            if (
-              radioButtonValue !== "create" &&
-              !isLoadingDelete &&
-              selectedSplit?.length
-            ) {
-              setIsDelete((prev) => ({
-                ...prev,
-                state: true,
-                title: selectedSplit,
-                index: 0,
-                path: "split",
-              }));
-            }
-          }}
-        >
-          {isLoadingDelete ? (
-            <CircularProgress size={20} sx={{ color: "white" }} />
-          ) : (
-            "Delete this split"
-          )}
         </Button>
       </Box>
     </Box>

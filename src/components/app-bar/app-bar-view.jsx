@@ -1,16 +1,15 @@
 import { Box, IconButton, Typography } from "@mui/material";
-import React from "react";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import useAppBar from "./useAppBar";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
-import AccountInfoPopupView from "./account-info-popup-view";
+import AccountInfoPopupView from "./views/account-info-popup-view";
 import useCustomHook from "../custom-hook/useCustomHook";
 
 const AppBarView = () => {
   const { cloudBgImg } = useCustomHook();
   const viewModel = useAppBar();
   const { navigate, setOpenAccountInfoPopup, openAccountInfoPopup } = viewModel;
+
   return (
     <Box
       sx={{
@@ -27,10 +26,11 @@ const AppBarView = () => {
           display: "flex",
           alignItems: "center",
           gap: 1,
+          cursor: "pointer",
         }}
+        onClick={() => navigate("/home")}
       >
         <FitnessCenterRoundedIcon fontSize="medium" sx={{ color: "#2392eb" }} />
-
         <Typography
           sx={{
             color: "white",
@@ -43,18 +43,13 @@ const AppBarView = () => {
           Fit track
         </Typography>
       </Box>
+
       <Box
         sx={{
           width: "50%",
           textAlign: "right",
         }}
       >
-        <IconButton
-          children={
-            <HomeRoundedIcon fontSize="medium" sx={{ color: "#2392eb" }} />
-          }
-          onClick={() => navigate("/home")}
-        />
         <IconButton
           children={<AccountCircleSharpIcon sx={{ color: "#2392eb" }} />}
           onClick={(e) =>
@@ -70,8 +65,6 @@ const AppBarView = () => {
       ) : (
         <></>
       )}
-
-
     </Box>
   );
 };

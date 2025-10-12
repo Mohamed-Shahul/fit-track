@@ -14,6 +14,8 @@ const WorkoutListView = (props) => {
     handleDragStart,
     handleDragOver,
     handleDrop,
+    radioButtonValue,
+    handleRemoveWorkout,
   } = viewModel;
 
   return (
@@ -37,6 +39,7 @@ const WorkoutListView = (props) => {
         workoutDetails?.[selectedSplit]?.[selectedDay]?.workoutList?.map(
           (row, i) => (
             <Box
+              key={i}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -82,12 +85,16 @@ const WorkoutListView = (props) => {
                         }
                         onClick={(e) => {
                           e.stopPropagation();
-                          setIsDelete((prev) => ({
-                            ...prev,
-                            state: true,
-                            index: i,
-                            title: row?.name,
-                          }));
+                          if (radioButtonValue === "create") {
+                            handleRemoveWorkout(i);
+                          } else {
+                            setIsDelete((prev) => ({
+                              ...prev,
+                              state: true,
+                              index: i,
+                              title: row?.name,
+                            }));
+                          }
                         }}
                       />
                     ),
