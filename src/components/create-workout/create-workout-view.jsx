@@ -5,7 +5,7 @@ import DeleteDialog from "./delete-dialog";
 import WorkoutListView from "./views/workout-list-view";
 import SplitActionsPanel from "./views/split-actions-panel";
 import SplitSetupPanel from "./views/split-setup-panel";
-import TopBar from "./views/top-bar";
+import TopBar from "./views/top-bar/top-bar-view";
 
 const CreateWorkoutPlan = () => {
   const { scrollBarStyle } = useCustomHook();
@@ -14,7 +14,14 @@ const CreateWorkoutPlan = () => {
     viewModel;
 
   return (
-    <Grid2 container height="100vh" overflow="hidden" rowGap={1}>
+    <Grid2
+      container
+      height="100vh"
+      overflow="hidden"
+      rowGap={1}
+      position="relative"
+      alignContent="flex-start"
+    >
       <Grid2
         size={{ xs: 12 }}
         height="7%"
@@ -26,16 +33,7 @@ const CreateWorkoutPlan = () => {
           px: 2,
         }}
       >
-        {/* <AppBarView  /> */}
-        <TopBar viewModel={viewModel}/>
-      </Grid2>
-
-      <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "12%", md: "7%" }}
-        alignContent="center"
-      >
-        <SplitActionsPanel viewModel={viewModel} />
+        <TopBar viewModel={viewModel} topBarVm={viewModel.topBarVm} />
       </Grid2>
 
       <Grid2
@@ -46,7 +44,10 @@ const CreateWorkoutPlan = () => {
         <SplitSetupPanel viewModel={viewModel} />
       </Grid2>
 
-      <Grid2 size={{ xs: 12 }} height={{ xs: "76%", md: "79%" }}>
+      <Grid2
+        size={{ xs: 12 }}
+        height={{ xs: "70%", md: "60%" }}
+      >
         <Box
           sx={{
             maxWidth: "100%",
@@ -60,6 +61,20 @@ const CreateWorkoutPlan = () => {
         >
           <WorkoutListView viewModel={viewModel} />
         </Box>
+      </Grid2>
+      <Grid2
+        size={{ xs: 12 }}
+        sx={{
+          position: "absolute", 
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          borderTop: "1px solid gray",
+          zIndex: 10,
+          p: 1,
+        }}
+      >
+        <SplitActionsPanel viewModel={viewModel} />
       </Grid2>
 
       {isDelete?.state ? (
