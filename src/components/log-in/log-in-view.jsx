@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
@@ -17,7 +17,7 @@ import useLogIn from "./useLogIn";
 import { snackBarComponent } from "../custom-components/custom-components";
 
 const LogInView = () => {
-  const { cloudBgImg, logInTextFieldsStyles } = useCustomHook();
+  const { cloudBgImg, logInTextFieldsStyles } = useUiComponentStyles();
   const {
     handleLogin,
     userDetails,

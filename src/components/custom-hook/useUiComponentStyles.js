@@ -1,5 +1,6 @@
 
-const useCustomHook = () => {
+const useUiComponentStyles = () => {
+  
   const commonTextFieldStyles = {
     "& .MuiOutlinedInput-input": {
       textAlign: "center",
@@ -116,10 +117,11 @@ const useCustomHook = () => {
     },
   };
 
+
   const cloudBgImg = {
     // backgroundImage: `
     //           linear-gradient(to right, black 50%, transparent 100%),
-    //           url(${cloudBg})
+    //           url(${})
     //         `,
     //     backgroundImage: `
     //   linear-gradient(to right, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.3) 70%, transparent 100%),
@@ -157,4 +159,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default useUiComponentStyles;

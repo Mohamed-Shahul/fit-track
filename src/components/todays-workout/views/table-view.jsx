@@ -1,8 +1,8 @@
 import { Box, TextField } from "@mui/material";
-import useCustomHook from "../../custom-hook/useCustomHook";
+import useUiComponentStyles from "../../custom-hook/useUiComponentStyles";
 
 const TableView = (props) => {
-  const { commonTextFieldStyles, entryTextFieldsStyles } = useCustomHook();
+  const { commonTextFieldStyles, entryTextFieldsStyles } = useUiComponentStyles();
   const { viewModel } = props;
   const {
     workoutDetails,

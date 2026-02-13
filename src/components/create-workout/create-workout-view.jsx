@@ -1,6 +1,6 @@
 import { Box, Grid2 } from "@mui/material";
 import useCreateWorkout from "./useCreateWorkout";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 import DeleteDialog from "./delete-dialog";
 import WorkoutListView from "./views/workout-list-view";
 import SplitActionsPanel from "./views/split-actions-panel";
@@ -8,7 +8,7 @@ import SplitSetupPanel from "./views/split-setup-panel";
 import TopBar from "./views/top-bar/top-bar-view";
 
 const CreateWorkoutPlan = () => {
-  const { scrollBarStyle } = useCustomHook();
+  const { scrollBarStyle } = useUiComponentStyles();
   const viewModel = useCreateWorkout();
   const { isDelete, setIsDelete, handleRemoveWorkout, handleDeleteSplit } =
     viewModel;

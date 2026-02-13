@@ -2,10 +2,10 @@ import {Box, Card, CardContent, Grid2, Typography} from "@mui/material";
 import useHome from "./useHome";
 import AppBarView from "../app-bar/app-bar-view";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 
 const Home = () => {
-  const {cloudBgImg} = useCustomHook();
+  const {cloudBgImg} = useUiComponentStyles();
   const viewModel = useHome();
   const {items, navigate} = viewModel;
 
@@ -58,7 +58,7 @@ const Home = () => {
           borderBottom: 1,
           borderBottomColor: "gray",
           px: 2,
-          ...cloudBgImg,
+          // ...cloudBgImg,
         }}
       >
         <AppBarView caller='home'/>
