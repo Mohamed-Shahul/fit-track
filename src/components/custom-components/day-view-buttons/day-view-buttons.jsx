@@ -22,24 +22,6 @@ const DayViewButtons = (props) => {
         overflow: "hidden",
       }}
     >
-      <style>
-        {`
-    @keyframes cartoonGradient {
-      0% { background-position: 200% 0%; }
-      100% { background-position: -200% 0%; }
-    }
-
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 12px rgba(25,118,210,0.6), 0 0 25px rgba(25,118,210,0.4); }
-      50% { box-shadow: 0 0 22px rgba(25,118,210,0.9), 0 0 40px rgba(25,118,210,0.6); }
-      100% { box-shadow: 0 0 12px rgba(25,118,210,0.6), 0 0 25px rgba(25,118,210,0.4); }
-    }
-        @keyframes cartoonBackground {
-        0% { background-position: 200% 0%; }
-        100% { background-position: -200% 0%; }
-      }
-  `}
-      </style>
 
       {/* Scrollable Buttons */}
       <Box
@@ -81,9 +63,6 @@ const DayViewButtons = (props) => {
                   ? "linear-gradient(90deg, #0d47a1 20%, #1976d2 40%, #42a5f5 60%, #0d47a1 80%)"
                   : "rgba(28,28,28,0.95)",
                 backgroundSize: "200% 100%",
-                animation: isSelected({ value: split })
-                  ? "cartoonGradient 5s linear infinite, pulseGlow 2s infinite ease-in-out"
-                  : "none",
 
                 // Glow for selected button
                 boxShadow: isSelected({ value: split })
@@ -114,17 +93,6 @@ const DayViewButtons = (props) => {
           </Box>
         )}
       </Box>
-
-      {/* Blink Animation Keyframes */}
-      <style>
-        {`
-          @keyframes blink {
-            0% { opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { opacity: 0.2; }
-          }
-        `}
-      </style>
     </Box>
   );
 };
