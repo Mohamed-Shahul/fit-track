@@ -36,10 +36,11 @@ const MenuPopup = (props) => {
                   flexDirection: "column",
                   justifyContent: "left",
                   alignItems: "left",
-                  backgroundImage: `url(${img})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
+                  bgcolor: "#393737",
+                  // backgroundImage: `url(${img})`,
+                  // backgroundSize: "cover",
+                  // backgroundPosition: "center",
+                  // backgroundRepeat: "no-repeat",
                 }}
               >
                 <Typography
