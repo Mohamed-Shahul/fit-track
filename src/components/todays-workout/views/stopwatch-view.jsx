@@ -22,7 +22,7 @@ const StopwatchView = () => {
   return (
     <Box
       sx={{
-        maxWidth:'100%',
+        maxWidth: "100%",
         display: "flex",
         alignItems: "center",
         gap: 2,
@@ -36,12 +36,13 @@ const StopwatchView = () => {
         onClick={() => handlePlayPause(isPlay ? "pause" : "play")}
         sx={{
           color: "#42a5f5",
-          transition: "all 0.2s ease",
-          "&:hover": { transform: "scale(1.05)", color: "#64b5f6" },
-          animation: isPlay ? "iconGlow 1.5s infinite ease-in-out" : "none",
         }}
       >
-        {isPlay ? <PauseCircleFilledRoundedIcon fontSize="small" /> : <PlayCircleRoundedIcon fontSize="small" />}
+        {isPlay ? (
+          <PauseCircleFilledRoundedIcon fontSize="small" />
+        ) : (
+          <PlayCircleRoundedIcon fontSize="small" />
+        )}
       </IconButton>
 
       {/* Timer */}
@@ -63,13 +64,9 @@ const StopwatchView = () => {
         onClick={handleReset}
         sx={{
           color: "#42a5f5",
-          transition: "all 0.2s ease",
-          "&:hover": { transform: "scale(1.05)", color: "#64b5f6" },
-          animation: isPlay ? "iconGlow 1.5s infinite ease-in-out" : "none",
-          visibility: isPlay ? "visible" : "hidden",
         }}
       >
-        <ReplayCircleFilledRoundedIcon fontSize="small"/>
+        <ReplayCircleFilledRoundedIcon fontSize="small" />
       </IconButton>
 
       <Box sx={{ flexGrow: 1 }} />
@@ -79,29 +76,10 @@ const StopwatchView = () => {
         onClick={() => navigate("/home")}
         sx={{
           color: "white",
-          transition: "all 0.2s ease",
-          "&:hover": { transform: "scale(1.05)", color: "#f44336" },
-          animation: "cancelGlow 2s infinite ease-in-out", // subtle glow
         }}
       >
         <CancelRoundedIcon fontSize="small" />
       </IconButton>
-
-      {/* Keyframes */}
-      <style>
-        {`
-          @keyframes iconGlow {
-            0% { box-shadow: 0 0 4px #42a5f5; }
-            50% { box-shadow: 0 0 12px #42a5f5; }
-            100% { box-shadow: 0 0 4px #42a5f5; }
-          }
-          @keyframes cancelGlow {
-            0% { box-shadow: 0 0 2px #f44336; }
-            50% { box-shadow: 0 0 8px #f44336; }
-            100% { box-shadow: 0 0 2px #f44336; }
-          }
-        `}
-      </style>
     </Box>
   );
 };
