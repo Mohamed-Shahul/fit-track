@@ -127,17 +127,6 @@ const ScrollableButtons = (props) => {
           </Box>
         )}
       </Box>
-
-      {/* Blink Animation Keyframes */}
-      <style>
-        {`
-          @keyframes blink {
-            0% { opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { opacity: 0.2; }
-          }
-        `}
-      </style>
     </Box>
   );
 };
