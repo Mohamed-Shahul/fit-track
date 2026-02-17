@@ -3,7 +3,6 @@ import useCreateWorkout from "./useCreateWorkout";
 import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 import DeleteDialog from "./delete-dialog";
 import WorkoutListView from "./views/workout-list-view";
-import SplitActionsPanel from "./views/split-actions-panel";
 import SplitSetupPanel from "./views/split-setup-panel";
 import TopBar from "./views/top-bar/top-bar-view";
 
@@ -33,7 +32,7 @@ const CreateWorkoutPlan = () => {
           px: 2,
         }}
       >
-        <TopBar viewModel={viewModel} topBarVm={viewModel.topBarVm} />
+        <TopBar viewModel={viewModel}  />
       </Grid2>
 
       <Grid2
@@ -44,10 +43,7 @@ const CreateWorkoutPlan = () => {
         <SplitSetupPanel viewModel={viewModel} />
       </Grid2>
 
-      <Grid2
-        size={{ xs: 12 }}
-        height={{ xs: "70%", md: "60%" }}
-      >
+      <Grid2 size={{ xs: 12 }} height={{ xs: "70%", md: "60%" }}>
         <Box
           sx={{
             maxWidth: "100%",
@@ -61,20 +57,6 @@ const CreateWorkoutPlan = () => {
         >
           <WorkoutListView viewModel={viewModel} />
         </Box>
-      </Grid2>
-      <Grid2
-        size={{ xs: 12 }}
-        sx={{
-          position: "absolute", 
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          borderTop: "1px solid gray",
-          zIndex: 10,
-          p: 1,
-        }}
-      >
-        <SplitActionsPanel viewModel={viewModel} />
       </Grid2>
 
       {isDelete?.state ? (

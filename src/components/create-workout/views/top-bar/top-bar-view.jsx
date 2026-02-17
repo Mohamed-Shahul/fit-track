@@ -1,12 +1,20 @@
-import { Box, IconButton, Typography } from "@mui/material";
-import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
-import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
-import MenuPopup from "./menu-popup";
+import { Box, Button, CircularProgress, IconButton } from "@mui/material";
+import ModeAutocomplete from "./mode-autocomplete";
+import LogoutIcon from "@mui/icons-material/Logout";
+import BackupRoundedIcon from "@mui/icons-material/BackupRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
 const TopBarView = (props) => {
-  const { viewModel, topBarVm } = props;
-  const { handleMenuPopup, openMenuPopup } = topBarVm;
-  const { navigate } = viewModel;
+  const { viewModel } = props;
+  const {
+    navigate,
+    isLoading,
+    handleSaveWorkout,
+    selectedSplit,
+    radioButtonValue,
+    setIsDelete,
+    isLoadingDelete,
+  } = viewModel;
 
   return (
     <Box
@@ -14,13 +22,15 @@ const TopBarView = (props) => {
         maxWidth: "100%",
         height: "100%",
         display: "flex",
+        justifyContent: "space-between",
         alignItems: "center",
+        gap: 1,
         color: "white",
       }}
     >
       <Box
         sx={{
-          width: "50%",
+          width: "30%",
           display: "flex",
           alignItems: "center",
           gap: 1,
@@ -28,39 +38,88 @@ const TopBarView = (props) => {
         }}
         onClick={() => navigate("/home")}
       >
-        <FitnessCenterRoundedIcon fontSize="medium" sx={{ color: "#2392eb" }} />
-        <Typography
+        <IconButton
           sx={{
-            color: "white",
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
+            transform: `rotate(-180deg)`,
           }}
-          fontSize={22}
-          fontWeight="bold"
+          onClick={() => navigate("/home")}
         >
-          Fit track
-        </Typography>
+          <LogoutIcon color="error" fontSize="medium" />
+        </IconButton>
       </Box>
 
       <Box
         sx={{
-          width: "50%",
-          textAlign: "right",
+          width: "70%",
+          display: "flex",
+          justifyContent: "right",
+          gap: 1,
         }}
       >
-        <IconButton
-          children={
-            <MenuTwoToneIcon fontSize="large" sx={{ color: "#2392eb" }} />
-          }
-          onClick={(e) => handleMenuPopup(e)}
-        />
+        <ModeAutocomplete viewModel={viewModel} />
+        <Button
+          variant="contained"
+          size="small"
+          sx={{
+            borderRadius: 1,
+            textTransform: "none",
+            fontFamily: "Poppins, sans-serif",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            bgcolor: !selectedSplit?.length ? "silver !important" : "#1565c0",
+          }}
+          disabled={!selectedSplit?.length}
+          onClick={() => {
+            !isLoading && handleSaveWorkout();
+          }}
+        >
+          {isLoading ? (
+            <CircularProgress size={20} sx={{ color: "white" }} />
+          ) : (
+            <BackupRoundedIcon />
+          )}
+        </Button>
+        <Button
+          variant="contained"
+          color="error"
+          size="small"
+          disableTouchRipple={!selectedSplit?.length || isLoadingDelete}
+          sx={{
+            borderRadius: 1,
+            borderColor: "#1565c0",
+            textTransform: "none",
+            fontFamily: "Poppins, sans-serif",
+            display: radioButtonValue === "create" ? "none" : "",
+            ...((!selectedSplit?.length || isLoadingDelete) && {
+              backgroundColor: "silver !important",
+              cursor: "default",
+            }),
+          }}
+          disabled={!selectedSplit?.length || isLoadingDelete}
+          onClick={() => {
+            if (
+              radioButtonValue !== "create" &&
+              !isLoadingDelete &&
+              selectedSplit?.length
+            ) {
+              setIsDelete((prev) => ({
+                ...prev,
+                state: true,
+                title: selectedSplit,
+                index: 0,
+                path: "split",
+              }));
+            }
+          }}
+        >
+          {isLoadingDelete ? (
+            <CircularProgress size={20} sx={{ color: "white" }} />
+          ) : (
+            <DeleteOutlineRoundedIcon />
+          )}
+        </Button>
       </Box>
-
-      {openMenuPopup ? (
-        <MenuPopup topBarVm={topBarVm} viewModel={viewModel} />
-      ) : (
-        <></>
-      )}
     </Box>
   );
 };
