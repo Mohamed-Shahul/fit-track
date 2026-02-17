@@ -1,16 +1,14 @@
-import {Box, Card, CardContent, Grid2, Typography} from "@mui/material";
+import { Box, Card, CardContent, Grid2, Typography } from "@mui/material";
 import useHome from "./useHome";
 import AppBarView from "../app-bar/app-bar-view";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
-import useCustomHook from "../custom-hook/useCustomHook";
 
 const Home = () => {
-  const {cloudBgImg} = useCustomHook();
   const viewModel = useHome();
-  const {items, navigate} = viewModel;
+  const { items, navigate } = viewModel;
 
   const viewButtons = (props) => {
-    const {title, url, icon: Icon} = props;
+    const { title, url, icon: Icon } = props;
     return (
       <Card
         sx={{
@@ -32,7 +30,7 @@ const Home = () => {
             gap: 1,
           }}
         >
-          <Icon fontSize="large" sx={{color: "white"}} />
+          <Icon fontSize="large" sx={{ color: "white" }} />
           <Typography
             sx={{
               fontFamily: "Poppins, sans-serif",
@@ -48,9 +46,12 @@ const Home = () => {
     );
   };
   return (
-    <Grid2 container height="100vh">
+    <Grid2
+      container
+      height="100vh"
+    >
       <Grid2
-        size={{xs: 12}}
+        size={{ xs: 12 }}
         height="7%"
         sx={{
           position: "sticky",
@@ -58,14 +59,13 @@ const Home = () => {
           borderBottom: 1,
           borderBottomColor: "gray",
           px: 2,
-          ...cloudBgImg,
         }}
       >
-        <AppBarView caller='home'/>
+        <AppBarView caller="home" />
       </Grid2>
 
       <Grid2
-        size={{xs: 12}}
+        size={{ xs: 12 }}
         height="93%"
         display="flex"
         flexDirection="column"
@@ -73,14 +73,14 @@ const Home = () => {
         alignItems="center"
         gap={2}
       >
-        <Box maxWidth="100%" mt={{xs: 5, md: 10}}>
+        <Box maxWidth="100%" mt={{ xs: 5, md: 10 }}>
           <Typography
             color="white"
             sx={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 500,
               textAlign: "center",
-              fontSize: {xs: 20, md: 34},
+              fontSize: { xs: 20, md: 34 },
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -88,20 +88,20 @@ const Home = () => {
           >
             Track your fitness goals
             <TrendingUpRoundedIcon
-              sx={{color: "#1976d2", fontSize: {xs: 25, md: 50}}}
+              sx={{ color: "#1976d2", fontSize: { xs: 25, md: 50 } }}
             />
           </Typography>
         </Box>
         <Box
           maxWidth="100%"
           display="flex"
-          flexDirection={{xs: "column", md: "row"}}
+          flexDirection={{ xs: "column", md: "row" }}
           justifyContent="center"
           alignItems="center"
           gap={2}
         >
           {items.map((items, i) => (
-            <Box minWidth={{xs: "100%", md: ""}}>{viewButtons(items)}</Box>
+            <Box minWidth={{ xs: "100%", md: "" }}>{viewButtons(items)}</Box>
           ))}
         </Box>
       </Grid2>

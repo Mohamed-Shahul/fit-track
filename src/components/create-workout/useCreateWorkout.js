@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
 import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
 import {db} from "../../firebase/config";
-import useTopBarVm from "./views/top-bar/useTopBarVm";
 
 const useCreateWorkout = () => {
   const loggedInUserEmail = localStorage.getItem("USER_EMAIL");
@@ -220,11 +219,7 @@ const useCreateWorkout = () => {
     }
   };
 
-
-  const topBarVm=useTopBarVm({})
-
   return {
-    topBarVm,
     handleDeleteSplit,
     days,
     handleAddWorkout,

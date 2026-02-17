@@ -1,9 +1,9 @@
 import { Box, IconButton, TextField } from "@mui/material";
-import useCustomHook from "../../custom-hook/useCustomHook";
+import useUiComponentStyles from "../../custom-hook/useUiComponentStyles";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 
 const WorkoutListView = (props) => {
-  const { entryTextFieldsStyles, scrollBarStyle } = useCustomHook();
+  const { entryTextFieldsStyles, scrollBarStyle } = useUiComponentStyles();
   const { viewModel } = props;
   const {
     setIsDelete,

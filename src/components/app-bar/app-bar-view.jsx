@@ -3,10 +3,10 @@ import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import useAppBar from "./useAppBar";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import AccountInfoPopupView from "./views/account-info-popup-view";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 
 const AppBarView = () => {
-  const { cloudBgImg } = useCustomHook();
+  const { cloudBgImg } = useUiComponentStyles();
   const viewModel = useAppBar();
   const { navigate, setOpenAccountInfoPopup, openAccountInfoPopup } = viewModel;
 

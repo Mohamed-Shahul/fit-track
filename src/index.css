@@ -11,12 +11,10 @@ body {
     rgba(0, 0, 0, 0.3) 70%,
     transparent 100%
   ),
-  url("images/plates.jpg");
-  /* url("images/cloudBg.jpg"); */
+  url("images/plates.jpg"); 
 background-size: cover;
 background-position: center;
 background-repeat: "no-repeat";
-/* height: "100vh"; */
 }
 
 code {

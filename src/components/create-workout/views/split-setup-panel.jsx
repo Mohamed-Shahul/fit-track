@@ -1,8 +1,8 @@
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
-import useCustomHook from "../../custom-hook/useCustomHook";
+import useUiComponentStyles from "../../custom-hook/useUiComponentStyles";
 
 const SplitSetupPanel = (props) => {
-  const { entryTextFieldsStyles } = useCustomHook();
+  const { entryTextFieldsStyles } = useUiComponentStyles();
   const { viewModel } = props;
   const {
     days,

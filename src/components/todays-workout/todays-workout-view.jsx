@@ -1,12 +1,12 @@
 import { Grid2 } from "@mui/material";
-import useCustomHook from "../custom-hook/useCustomHook";
+import useUiComponentStyles from "../custom-hook/useUiComponentStyles";
 import useTodaysWokout from "./useTodayWorkout";
 import StopwatchView from "./views/stopwatch-view";
 import TableView from "./views/table-view";
 import SelectionsView from "./views/selections-view";
 
 const TodaysWorkoutPlan = () => {
-  const { scrollBarStyle } = useCustomHook();
+  const { scrollBarStyle } = useUiComponentStyles();
   const viewModel = useTodaysWokout();
 
   return (
