@@ -5,19 +5,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: black;
-  /* background-image: linear-gradient(
+  background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.7) 30%,
     rgba(0, 0, 0, 0.3) 70%,
     transparent 100%
   ),
-  url("images/plates.jpg"); */
-  /* url("images/cloudBg.jpg"); */
-/* background-size: cover;
+  url("images/plates.jpg"); 
+background-size: cover;
 background-position: center;
-background-repeat: "no-repeat"; */
-/* height: "100vh"; */
+background-repeat: "no-repeat";
 }
 
 code {
