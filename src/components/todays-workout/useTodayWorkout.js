@@ -96,6 +96,9 @@ const useTodaysWokout = () => {
     }));
   };
 
+  console.log('==list',workoutDetails);
+  
+
   const weightsOnChange = (props) => {
     const { e, selectedWorkoutWeightsObj, selectedWorkoutList, i } = props;
     const typedValue = e?.target?.value?.toString() || "0";

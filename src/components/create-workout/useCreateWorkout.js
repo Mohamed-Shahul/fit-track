@@ -145,6 +145,7 @@ const useCreateWorkout = () => {
       },
     }));
   };
+console.log('==wor',workoutDetails);
 
   // MARK: Handle edit radio fetch details
   const handleEditRadioFetch = (value) => {
